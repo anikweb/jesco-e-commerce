@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\RoleController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -27,5 +28,6 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/',[FrontController::class, 'index'])->name('frontend');
 // Dashboard
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::resource('/dashboard/role',RoleController::class);
 
 require __DIR__.'/auth.php';
