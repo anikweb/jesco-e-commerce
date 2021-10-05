@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Http\Requests\RoleForm;
+use App\Http\Requests\AssignUserForm;
+use App\Models\User;
 
 class RoleController extends Controller
 {
@@ -16,7 +18,13 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        if(auth()->user()->can('role management')){
+            return view('backend.pages.role.index',[
+                "roles" => Role::orderBy('name','asc')->paginate(5),
+            ]);
+        }else{
+            return abort(404);
+        }
     }
 
     /**
@@ -26,11 +34,17 @@ class RoleController extends Controller
      */
     public function create()
     {
-        // $permission = Permission::create(['name' => 'Editor']);
-        // return 'added';
-        return view('backend.pages.role.create',[
-            'permissions' => Permission::orderBy('name','asc')->get(),
-        ]);
+        if(auth()->user()->can('role management')){
+            // Permission::create(['name' => 'buy product']);
+            // Permission::create(['name' => 'product review']);
+            // Permission::create(['name' => 'role management']);
+            // return 'added';
+            return view('backend.pages.role.create',[
+                'permissions' => Permission::orderBy('name','asc')->get(),
+            ]);
+        }else{
+            return abort(404);
+        }
     }
 
     /**
@@ -41,14 +55,18 @@ class RoleController extends Controller
      */
     public function store(RoleForm $request)
     {
-        if($request->permissions == ''){
-            return back()->with('permissionBlank','Please Choose Permission to create role!');
+        if(auth()->user()->can('role management')){
+            if($request->permissions == ''){
+                return back()->with('permissionBlank','Please Choose Permission to create role!');
+            }
+            $role = Role::create(['name' => $request->name]);
+            foreach($request->permissions as $permission){
+                $role->givePermissionTo($permission);
+            }
+            return redirect()->route('role.show',$role->name)->with('success','Role Created!');
+        }else{
+            return abort(404);
         }
-        $role = Role::create(['name' => $request->name]);
-        foreach($request->permissions as $permission){
-            $role->givePermissionTo($permission);
-        }
-        return back()->with('success','Role Created!');
     }
 
     /**
@@ -57,9 +75,16 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($name)
     {
-        //
+        if(auth()->user()->can('role management')){
+            // return $id;
+            return view('backend.pages.role.show',[
+                'role' => Role::where('name',$name)->first(),
+            ]);
+        }else{
+            return abort(404);
+        }
     }
 
     /**
@@ -68,9 +93,16 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($name)
     {
-        //
+        if(auth()->user()->can('role management')){
+            return view('backend.pages.role.edit',[
+                "permissions" =>Permission::orderBy('name','asc')->get(),
+                "role" =>Role::where('name',$name)->first(),
+            ]);
+        }else{
+            return abort(404);
+        }
     }
 
     /**
@@ -82,7 +114,20 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(auth()->user()->can('role management')){
+            // return $request;
+            // return $id;
+            $role = Role::find($id);
+            if($role->syncPermissions($request->permissions)){
+                return redirect()->route('role.show',$role->name)->with('success','Role Updated!');
+            }else{
+                return back()->with('error','Failed!');
+    
+            }
+        }else{
+            return abort(404);
+        }
+
     }
 
     /**
@@ -93,6 +138,41 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(auth()->user()->can('role management')){
+            
+            $role = Role::find($id);
+            session()->put('deleted_role',$role->name);
+            foreach($role->permissions as $permissions){
+                $role->revokePermissionTo($permissions);
+            }
+            if($role->delete()){
+                return back()->with('success',session()->get('deleted_role').' Role Permanently Deleted');
+            }else{
+                return back()->with('success',session()->get('deleted_role').' Role Permanently Deleted');
+            }
+        }else{
+            return abort(404);
+        }
+    }
+    public function assignUser(){
+        if(auth()->user()->can('role management')){
+            return view('backend.pages.role.assign_user',[
+                'users' => User::orderBy('name','asc')->get(),
+                'usersV' => User::orderBy('name','asc')->paginate(5),
+                'roles' =>Role::orderBy('name','asc')->get(),
+            ]);
+        }else{
+            return abort(404);
+        }
+    }
+    public function assignUserPost(AssignUserForm $request){
+        if(auth()->user()->can('role management')){
+            // return $request;
+            $user = User::find($request->user);
+            $user->syncRoles($request->role);
+            return back();
+        }else{
+            return abort(404);
+        }
     }
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role  @endif | Dashboard</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -181,7 +181,8 @@
           <img src="{{ asset('backend/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <span class="text-white">({{ Auth::user()->roles->first()->name }})</span>
         </div>
       </div>
 
@@ -202,32 +203,47 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item">
+            <a href="{{ route('dashboard') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
             </a>
           </li>
-
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Role Managements
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('role.create') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add Roles</p>
+          @can('role management')
+            {{-- Role management --}}
+            <li class="nav-item @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')) menu-open @endif">
+                <a href="#" class="nav-link @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')) active @endif">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                    Role Managements
+                    <i class="fas fa-angle-left right"></i>
+                </p>
                 </a>
-              </li>
-            </ul>
-          </li>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('role.create') }}" class="nav-link @if(Route::is('role.create')) active @endif">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Create Role</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('role.index') }}" class="nav-link @if(Route::is('role.index')) active @endif">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>View Roles</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('assign.user') }}" class="nav-link @if(Route::is('assign.user')) active @endif">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Assign User</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+          @endcan
+          {{-- Logout  --}}
           <li class="nav-item">
             <form id="logout_form" action="{{ route('logout') }}" method="POST">
                 @csrf
