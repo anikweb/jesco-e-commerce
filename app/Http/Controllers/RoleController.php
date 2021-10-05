@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use App\Http\Requests\RoleForm;
-use App\Http\Requests\AssignUserForm;
+use Spatie\Permission\Models\{
+    Role,
+    Permission,
+};
+use App\Http\Requests\{
+    RoleForm,
+    AssignUserForm,
+    createUserForm,
+};
 use App\Models\User;
+use Illuminate\Support\Facades\{
+    Hash,
+    Auth,
+};
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
@@ -122,7 +132,7 @@ class RoleController extends Controller
                 return redirect()->route('role.show',$role->name)->with('success','Role Updated!');
             }else{
                 return back()->with('error','Failed!');
-    
+
             }
         }else{
             return abort(404);
@@ -139,7 +149,7 @@ class RoleController extends Controller
     public function destroy($id)
     {
         if(auth()->user()->can('role management')){
-            
+
             $role = Role::find($id);
             session()->put('deleted_role',$role->name);
             foreach($role->permissions as $permissions){
@@ -170,6 +180,29 @@ class RoleController extends Controller
             // return $request;
             $user = User::find($request->user);
             $user->syncRoles($request->role);
+            return back();
+        }else{
+            return abort(404);
+        }
+    }
+    public function createUser(){
+        if(auth()->user()->can('role management')){
+            return view('backend.pages.role.create_user',[
+                "roles" => Role::orderBy('name','asc')->get(),
+            ]);
+        }else{
+            return abort(404);
+        }
+    }
+    public function createUserPost(createUserForm $request){
+        if(auth()->user()->can('role management')){
+            $password = Str::random(5);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($password),
+            ]);
+            $user->assignRole($request->role);
             return back();
         }else{
             return abort(404);

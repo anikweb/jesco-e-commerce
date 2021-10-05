@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role  @endif | Dashboard</title>
+  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -213,8 +213,8 @@
           </li>
           @can('role management')
             {{-- Role management --}}
-            <li class="nav-item @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')) menu-open @endif">
-                <a href="#" class="nav-link @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')) active @endif">
+            <li class="nav-item @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')||Route::is('create.user')) menu-open @endif">
+                <a href="#" class="nav-link @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')||Route::is('create.user')) active @endif">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
                     Role Managements
@@ -238,6 +238,12 @@
                         <a href="{{ route('assign.user') }}" class="nav-link @if(Route::is('assign.user')) active @endif">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Assign User</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('create.user') }}" class="nav-link @if(Route::is('create.user')) active @endif">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Create User</p>
                         </a>
                     </li>
                 </ul>
