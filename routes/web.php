@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\GithubController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -33,5 +34,8 @@ Route::post('/dashboard/role/assign/user/post',[RoleController::class, 'assignUs
 Route::get('/dashboard/create/user',[RoleController::class, 'createUser'])->name('create.user')->middleware('auth');
 Route::post('/dashboard/create/user/post',[RoleController::class, 'createUserPost'])->name('create.user.post')->middleware('auth');
 Route::resource('/dashboard/role',RoleController::class);
+
+Route::get('github/redirect',[GithubController::class,'githubRedirect']);
+Route::get('github/callback',[GithubController::class,'githubCallback']);
 
 require __DIR__.'/auth.php';

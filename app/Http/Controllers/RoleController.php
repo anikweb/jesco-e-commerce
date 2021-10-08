@@ -12,10 +12,12 @@ use App\Http\Requests\{
     AssignUserForm,
     createUserForm,
 };
+use App\Mail\newAccountCreationMail;
 use App\Models\User;
 use Illuminate\Support\Facades\{
     Hash,
     Auth,
+    Mail,
 };
 use Illuminate\Support\Str;
 
@@ -203,6 +205,13 @@ class RoleController extends Controller
                 'password' => bcrypt($password),
             ]);
             $user->assignRole($request->role);
+            $emailInfo = [
+                "name" => $request->name,
+                "email" => $request->email,
+                "password" => $password,
+
+            ];
+            Mail::to($request->email)->send(new newAccountCreationMail($emailInfo));
             return back();
         }else{
             return abort(404);

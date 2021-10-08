@@ -1,60 +1,5 @@
 @extends('frontend.master')
-{{-- <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
-
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout> --}}
 @section('content')
  <!-- login area start -->
  <div class="login-register-area pt-100px pb-100px">
@@ -76,17 +21,57 @@
                                 <div class="login-register-form">
                                     <form action="{{ route('login') }}" method="post">
                                         @csrf
-                                        <input type="text" name="email" placeholder="E-mail" />
-                                        <input type="password" name="password" placeholder="Password" autocomplete="current-password"  />
+                                        @error('email')
+                                            <div class="text-danger">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                        <input type="text" name="email" class="@error('email') is-invalid @enderror" placeholder="E-mail" />
+                                        @error('password')
+                                            <div class="text-danger">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                        <input type="password" class="@error('password')is-invalid @enderror" name="password" placeholder="Password" autocomplete="current-password"  />
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
-                                                <input type="checkbox" name="remember"/>
-                                                <a class="flote-none" href="javascript:void(0)">Remember me</a>
+                                                <input type="checkbox" id="remember" name="remember"/>
+                                                <label class="flote-none" for="remember">Remember me</label>
                                                 <a href="#">Forgot Password?</a>
                                             </div>
                                             <button type="submit"><span>Login</span></button>
                                         </div>
                                     </form>
+                                    <div class="row mt-3">
+                                        {{-- Github Login --}}
+                                            <div class="col-md-5 mx-auto mt-2 bg-dark p-2 ">
+                                                <a href="{{ url('github/redirect') }}" class="d-inline-block">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <img  width="20px" src="{{ asset('assets/images/socail-login/255-2558173_github-logo-png-transparent-png.png') }}" alt="github">
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <p class="text-white">Continue With Github</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        {{-- Gmail Login
+                                        <div class="col-md-5 mt-2 mx-auto bg-primary p-2 ">
+                                            <a href="" class="d-inline-block">
+                                                <div class="row">
+                                                    <div class="col-md-2 bg">
+                                                        <img width="20px" src="{{ asset('assets/images/socail-login/gmail.png') }}" alt="github">
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <p class="text-white">Continue With Gmail</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div> --}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
