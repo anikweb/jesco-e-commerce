@@ -7,8 +7,10 @@ use App\Http\Controllers\{
     FrontController,
     RoleController,
     GithubController,
+    SubcategoryController,
 };
 use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -50,8 +52,11 @@ Route::resource('/dashboard/role',RoleController::class)->middleware('auth');
 Route::resource('/dashboard/basic-settings', BasicSettingController::class);
 
 // Category
-Route::resource('dashboard/category', CategoryController::class)->middleware('auth');
+Route::resource('/dashboard/category', CategoryController::class)->middleware('auth');
 
+// Subcategory
+
+Route::resource('/dashboard/subcategory', SubcategoryController::class)->middleware('auth');
 // Socialite
 
 Route::get('github/redirect',[GithubController::class,'githubRedirect']);

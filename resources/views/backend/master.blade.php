@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
+  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @elseif(Route::is('subcategory.create')) Create Subcategory @elseif(Route::is('subcategory.edit')) Edit Subcategory @elseif(Route::is('subcategory.index')) Subcategories @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -233,6 +233,36 @@
                         @can("category view")
                             <li class="nav-item">
                                 <a href="{{ route('category.index') }}" class="nav-link @if (Route::is('category.index')||Route::is('category.edit')) active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>View List</p>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+            {{-- Subcategory  --}}
+            @can('subcategory view')
+                <li class="nav-item @if (Route::is('subcategory.create')||Route::is('subcategory.edit')||Route::is('subcategory.index')) menu-open @endif">
+                    <a href="#" class="nav-link @if (Route::is('subcategory.create')||Route::is('subcategory.edit')||Route::is('subcategory.index')) active @endif">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p>
+                    Subcategory
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @can("subcategory view")
+                            <li class="nav-item">
+                                <a href="{{ route('subcategory.create') }}" class="nav-link @if (Route::is('subcategory.create')) active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can("subcategory view")
+                            <li class="nav-item">
+                                <a href="{{ route('subcategory.index') }}" class="nav-link  @if (Route::is('subcategory.index')||Route::is('subcategory.edit')) active @endif">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>View List</p>
                                 </a>

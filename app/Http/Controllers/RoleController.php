@@ -47,10 +47,10 @@ class RoleController extends Controller
     public function create()
     {
         if(auth()->user()->can('role management')){
-            // Permission::create(['name' => 'category add']);
-            // Permission::create(['name' => 'category delete']);
-            // Permission::create(['name' => 'category edit']);
-            // Permission::create(['name' => 'category view']);
+            // Permission::create(['name' => 'subcategory add']);
+            // Permission::create(['name' => 'subcategory delete']);
+            // Permission::create(['name' => 'subcategory edit']);
+            // Permission::create(['name' => 'subcategory view']);
             // return 'added';
             return view('backend.pages.role.create',[
                 'permissions' => Permission::orderBy('name','asc')->get(),
