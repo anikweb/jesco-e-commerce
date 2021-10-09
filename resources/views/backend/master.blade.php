@@ -17,7 +17,6 @@
   <link rel="stylesheet" href="{{ asset('backend/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   {{-- Toastr Nottification --}}
   <link rel="stylesheet" href="{{ asset('backend/plugins/toastr/toastr.min.css') }}">
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -204,7 +203,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link">
+            <a href="{{ route('dashboard') }}" class="nav-link @if (Route::is('dashboard')) active @endif ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -271,6 +270,36 @@
                     </ul>
                 </li>
             @endcan
+            {{-- Products --}}
+            {{--  @can('subcategory view')  --}}
+                <li class="nav-item ">
+                    <a href="#" class="nav-link">
+                    <i class="nav-icon fab fa-product-hunt"></i>
+                    <p>
+                        Products
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        {{--  @can("subcategory view")  --}}
+                            <li class="nav-item">
+                                <a href="{{ route('product.create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add</p>
+                                </a>
+                            </li>
+                        {{--  @endcan  --}}
+                        {{--  @can("subcategory view")  --}}
+                            <li class="nav-item">
+                                <a href="{{ route('product.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>View List</p>
+                                </a>
+                            </li>
+                        {{--  @endcan  --}}
+                    </ul>
+                </li>
+            {{--  @endcan  --}}
             {{-- Role management --}}
             @can('role management')
                 <li class="nav-item @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')||Route::is('create.user')) menu-open @endif">
