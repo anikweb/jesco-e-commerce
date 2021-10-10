@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label for="gender">Gender <span>*</span></label>
                                     <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
-                                        <option value="">-None-</option>
+                                        <option value="none">-None-</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                         <option value="both">Both</option>
@@ -118,7 +118,7 @@
                                 <div class="form-group">
                                     <label for="warranty">Warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
-                                        <option value="">-None-</option>
+                                        <option value="none">-None-</option>
                                         @foreach ($warranties as $warranty)
                                             <option value="{{ $warranty->id }}">{{ $warranty->warranty }}</option>
                                         @endforeach
@@ -129,7 +129,7 @@
                                 <div class="form-group">
                                     <label for="return">Return</label>
                                     <select name="return" id="return" class="form-control">
-                                        <option value="">-None-</option>
+                                        <option value="none">-None-</option>
                                         @foreach ($returns as $return)
                                             <option value="{{ $return->id }}">{{ $return->name }}</option>
                                         @endforeach
@@ -172,13 +172,13 @@
                                 <div class="form-group">
                                     <label for="authentic">Authenticity</label>
                                     <select name="authentic" id="authentic" class="form-control">
-                                        <option value="50">-None-</option>
+                                        <option value="none">-None-</option>
                                         <option value="50">50% Authentic</option>
-                                        <option value="50">60% Authentic</option>
-                                        <option value="50">70% Authentic</option>
-                                        <option value="50">80% Authentic</option>
-                                        <option value="50">90% Authentic</option>
-                                        <option value="50">100% Authentic</option>
+                                        <option value="60">60% Authentic</option>
+                                        <option value="70">70% Authentic</option>
+                                        <option value="80">80% Authentic</option>
+                                        <option value="90">90% Authentic</option>
+                                        <option value="100">100% Authentic</option>
                                     </select>
                                 </div>
                             </div>
@@ -223,9 +223,11 @@
                                                             <div class="form-group">
                                                                 <label for="color">Color</label>
                                                                 <select name="color[]" class="form-control " id="color">
-                                                                    <option value="" class="text-muted">--Select One--</option>
+                                                                    <option value="8">None</option>
                                                                     @foreach ($colors as $color)
-                                                                    <option value="{{ $color->id }}">{{ Str::title($color->name) }}</option>
+                                                                        @if ($color->name !='none')
+                                                                            <option value="{{ $color->id }}">{{ Str::title($color->name) }}</option>
+                                                                        @endif
                                                                     @endforeach
                                                                 </select>
 
@@ -235,9 +237,12 @@
                                                             <div class="form-group">
                                                                 <label for="size">Size</label>
                                                                 <select name="size[]" class="form-control" id="size">
-                                                                    <option value="" class="text-muted">--Select One--</option>
+                                                                    <option value="7" >None</option>
                                                                     @foreach ($sizes as $size)
-                                                                        <option value="{{ $size->id }}" >{{ $size->name }}</option>
+                                                                        @if ($size->name !='none')
+                                                                            <option value="{{ $size->id }}" >{{ $size->name }}</option>
+
+                                                                        @endif
                                                                     @endforeach
                                                                 </select>
                                                             </div>

@@ -48,13 +48,13 @@
                                             <td>{{ $product->created_at->format('d-M-Y, h:i:s A') }}</td>
                                             <td>{{ $product->updated_at->diffForHumans() }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-primary text-center"><i class="fa fa-edit"></i> Edit</a>
+                                                <a href="{{ route('product.edit',$product->slug) }}" class="btn btn-primary text-center"><i class="fa fa-edit"></i> Edit</a>
                                             </td>
                                             <td>
                                                 <a href="{{ route('product.show',$product->slug) }}" class="btn btn-info text-center"><i class="fa fa-eye"></i> Details</a>
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-danger text-center"><i class="fa fa-trash"></i> Delete</a>
+                                                <a href="#" class="btn btn-danger text-center">Force Stock Out</a>
                                             </td>
                                         </tr>
                                     @empty
