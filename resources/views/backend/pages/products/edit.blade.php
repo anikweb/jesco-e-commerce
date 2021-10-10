@@ -108,9 +108,12 @@
                                 <div class="form-group">
                                     <label for="warranty">Warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
-                                        <option value="">-None-</option>
+                                        <option value="4">-None-</option>
                                         @foreach ($warranties as $warranty)
-                                            <option @if ($product->warranty == $warranty->id) selected @endif value="{{ $warranty->id }}">{{ $warranty->warranty }}</option>
+                                            @if ($warranty->warranty != 'none')
+                                                <option @if ($product->warranty == $warranty->id) selected @endif value="{{ $warranty->id }}">{{ $warranty->warranty }}</option>
+
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -119,9 +122,12 @@
                                 <div class="form-group">
                                     <label for="return">Return</label>
                                     <select name="return" id="return" class="form-control">
-                                        <option value="">-None-</option>
+                                        <option value="6">-None-</option>
                                         @foreach ($returns as $return)
-                                            <option @if ($product->return == $return->id) selected @endif value="{{ $return->id }}">{{ $return->name }}</option>
+                                            @if ($return->name != 'none')
+                                                <option @if ($product->return == $return->id) selected @endif value="{{ $return->id }}">{{ $return->name }}</option>
+
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -216,10 +222,13 @@
                                                             <div class="form-group">
                                                                 <label for="color">Color</label>
                                                                 <select name="color[]" class="form-control" id="color">
-                                                                    <option value class="text-muted">--Select One--</option>
+                                                                    <option value='8' class="text-muted">None</option>
                                                                     {{-- color upload start in database  --}}
                                                                     @forelse ($colors as $color)
-                                                                        <option @if($product->color_id == $color->id) selected @endif value="{{ $color->id }}">{{  $color->name }}</option>
+                                                                        @if($color->name != 'none')
+                                                                            <option @if($product->color_id == $color->id) selected @endif value="{{ $color->id }}">{{  Str::title($color->name ) }}</option>
+
+                                                                        @endif
                                                                     @empty
                                                                         <option value class="text-danger">empty</option>
                                                                     @endforelse
@@ -233,9 +242,11 @@
                                                             <div class="form-group">
                                                                 <label for="size">Size</label>
                                                                 <select name="size[]" class="form-control" id="size">
-                                                                    <option value="" class="text-muted">--Select One--</option>
+                                                                    <option value="7" class="text-muted">None</option>
                                                                     @forelse ($sizes as $size)
-                                                                        <option @if ($product->size_id ==  $size->id )selected @endif value="{{ $size->id }}">{{  $size->size_name }}</option>
+                                                                        @if($size->name != 'none')
+                                                                            <option @if ($product->size_id ==  $size->id )selected @endif value="{{ $size->id }}">{{  $size->name }}</option>
+                                                                        @endif
                                                                     @empty
                                                                         <option value class="text-danger">empty</option>
                                                                     @endforelse
@@ -278,7 +289,7 @@
                                                          {{-- quantity end --}}
 
                                                         <div class="col-md-2 remove-field outline-danger text-white my-auto">
-                                                            <span class="text-danger" style="cursor:pointer"><i class=" fas fa-minus-circle"></i> Remove</span>
+                                                            <span class="text-danger"  style="cursor:pointer"><i class=" fas fa-minus-circle"></i> Remove </span>
                                                         </div>
                                                     </div> <!--row-->
                                                 @endforeach
@@ -344,6 +355,8 @@
                 }
             });
         });
+
+
 
     </script>
 @endsection

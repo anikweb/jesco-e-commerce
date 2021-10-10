@@ -42,19 +42,24 @@
                                         <tr>
                                             <td>{{ $products->firstItem() + $loop->index }}</td>
                                             <td>{{ $product->name }}</td>
-                                            <td>{{ $product->thumbnail }}</td>
+                                            <td><img width="120px" class="image-responsive rounded" src="{{ asset('assets/images/product/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail) }}" alt="{{ $product->name }}"></td>
                                             <td>{{ $product->category->name }}</td>
                                             <td>{{ $product->subcategory->name }}</td>
                                             <td>{{ $product->created_at->format('d-M-Y, h:i:s A') }}</td>
                                             <td>{{ $product->updated_at->diffForHumans() }}</td>
                                             <td>
-                                                <a href="{{ route('product.edit',$product->slug) }}" class="btn btn-primary text-center"><i class="fa fa-edit"></i> Edit</a>
+                                                @can('product edit')
+                                                    <a href="{{ route('product.edit',$product->slug) }}" class="btn btn-primary text-center"><i class="fa fa-edit"></i> Edit</a>
+                                                @endcan
+                                                <a href="{{ route('products.image.gallery',$product->slug) }}" class="btn btn-warning text-center"><i class="fa fa-image"></i> Image Gallery </a>
                                             </td>
                                             <td>
                                                 <a href="{{ route('product.show',$product->slug) }}" class="btn btn-info text-center"><i class="fa fa-eye"></i> Details</a>
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-danger text-center">Force Stock Out</a>
+                                                @can('product edit')
+                                                    <a href="#" class="btn btn-danger text-center">Force Stock Out</a>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @empty

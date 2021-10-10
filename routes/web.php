@@ -41,10 +41,12 @@ Route::resource('/dashboard/category', CategoryController::class)->middleware('a
 Route::resource('/dashboard/subcategory', SubcategoryController::class)->middleware('auth');
 // Product
 Route::get('/products/get/subcategory/{subcategory_id}',[ProductController::class,'getSubcategory'])->name('products.get.subcategory')->middleware('auth');
+Route::get('/dashboard/product/image-gallery/{slug}',[ProductController::class,'productImageGallary'])->name('products.image.gallery')->middleware('auth');
+Route::get('/dashboard/product/image-gallery/delete/{id}',[ProductController::class,'productImageGallaryDelete'])->name('products.image.gallery.delete')->middleware('auth');
+Route::post('/dashboard/product/image-gallery/post',[ProductController::class,'productImageGallaryPost'])->name('products.image.gallery.post')->middleware('auth');
 Route::resource('dashboard/product', ProductController::class);
 // Socialite
 Route::get('github/redirect',[GithubController::class,'githubRedirect']);
 Route::get('github/callback',[GithubController::class,'githubCallback']);
-
 
 require __DIR__.'/auth.php';

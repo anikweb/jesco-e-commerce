@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @elseif(Route::is('subcategory.create')) Create Subcategory @elseif(Route::is('subcategory.edit')) Edit Subcategory @elseif(Route::is('subcategory.index')) Subcategories @elseif(Route::is('product.index')) Products @elseif(Route::is('product.edit')) Edit Product @elseif(Route::is('product.create')) Add Product @elseif(Route::is('product.show')) {{ $product->name }} @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
+  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @elseif(Route::is('subcategory.create')) Create Subcategory @elseif(Route::is('subcategory.edit')) Edit Subcategory @elseif(Route::is('subcategory.index')) Subcategories @elseif(Route::is('product.index')) Products @elseif(Route::is('product.edit')) Edit Product @elseif(Route::is('product.create')) Add Product @elseif(Route::is('product.show')) {{ $product->name }} @elseif(Route::is('products.image.gallery')) Image Gallery-{{ $product->name }} @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -271,9 +271,9 @@
                 </li>
             @endcan
             {{-- Products --}}
-            {{--  @can('subcategory view')  --}}
-                <li class="nav-item @if (Route::is('product.index')||Route::is('product.create')||Route::is('product.show')||Route::is('product.edit')) menu-open @endif">
-                    <a href="#" class="nav-link @if (Route::is('product.index')||Route::is('product.create')||Route::is('product.show')||Route::is('product.edit')) active @endif">
+            @can('product view')
+                <li class="nav-item @if (Route::is('product.index')||Route::is('product.create')||Route::is('product.show')||Route::is('product.edit')||Route::is('products.image.gallery')) menu-open @endif">
+                    <a href="#" class="nav-link @if (Route::is('product.index')||Route::is('product.create')||Route::is('product.show')||Route::is('product.edit')||Route::is('products.image.gallery')) active @endif">
                     <i class="nav-icon fab fa-product-hunt"></i>
                     <p>
                         Products
@@ -281,25 +281,25 @@
                     </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        {{--  @can("subcategory view")  --}}
+                        @can("product add")
                             <li class="nav-item">
                                 <a href="{{ route('product.create') }}" class="nav-link @if (Route::is('product.create'))active @endif">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Add</p>
                                 </a>
                             </li>
-                        {{--  @endcan  --}}
-                        {{--  @can("subcategory view")  --}}
+                        @endcan
+                        @can("product view")
                             <li class="nav-item">
-                                <a href="{{ route('product.index') }}" class="nav-link @if (Route::is('product.index')||Route::is('product.edit')||Route::is('product.show'))active @endif">
+                                <a href="{{ route('product.index') }}" class="nav-link @if (Route::is('product.index')||Route::is('product.edit')||Route::is('product.show')||Route::is('products.image.gallery')) active @endif">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>View List</p>
                                 </a>
                             </li>
-                        {{--  @endcan  --}}
+                        @endcan
                     </ul>
                 </li>
-            {{--  @endcan  --}}
+            @endcan
             {{-- Role management --}}
             @can('role management')
                 <li class="nav-item @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')||Route::is('create.user')) menu-open @endif">
@@ -318,7 +318,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('role.index') }}" class="nav-link @if(Route::is('role.index')) active @endif">
+                            <a href="{{ route('role.index') }}" class="nav-link @if(Route::is('role.index')||Route::is('role.show')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>View Roles</p>
                             </a>

@@ -118,9 +118,11 @@
                                 <div class="form-group">
                                     <label for="warranty">Warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
-                                        <option value="none">-None-</option>
+                                        <option value="4">None</option>
                                         @foreach ($warranties as $warranty)
-                                            <option value="{{ $warranty->id }}">{{ $warranty->warranty }}</option>
+                                            @if ($warranty->warranty != 'none')
+                                                <option value="{{ $warranty->id }}">{{ $warranty->warranty }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -129,9 +131,11 @@
                                 <div class="form-group">
                                     <label for="return">Return</label>
                                     <select name="return" id="return" class="form-control">
-                                        <option value="none">-None-</option>
+                                        <option value="6">None</option>
                                         @foreach ($returns as $return)
-                                            <option value="{{ $return->id }}">{{ $return->name }}</option>
+                                            @if ($return->name != 'none')
+                                                <option value="{{ $return->id }}">{{ $return->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
