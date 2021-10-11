@@ -106,7 +106,7 @@ class ProductController extends Controller
                 $path = public_path('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/';
                 File::makeDirectory($path, $mode = 0777, true, true);
                 // Create Dynamic Folder End
-                Image::make($thumbnail)->save($path.$newThumbnailName,80);
+                Image::make($thumbnail)->save($path.$newThumbnailName);
                 $product->thumbnail = $newThumbnailName;
                 $product->save();
             }
@@ -119,7 +119,7 @@ class ProductController extends Controller
                     $path1 = public_path('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/image_galleries/';
                     File::makeDirectory($path1, $mode = 0777, true, true);
                     // Create Dynamic Folder End
-                    Image::make($imageGalleries)->save($path1.$newImageGalleriesName,80);
+                    Image::make($imageGalleries)->save($path1.$newImageGalleriesName);
                     $imageGalleryDB->product_id = $product->id;
                     $imageGalleryDB->name = $newImageGalleriesName;
                     $imageGalleryDB->save();
@@ -224,7 +224,7 @@ class ProductController extends Controller
                 $path = public_path('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/';
                 File::makeDirectory($path, $mode = 0777, true, true);
                 // Create Dynamic Folder End
-                Image::make($thumbnail)->save($path.$newThumbnailName,80);
+                Image::make($thumbnail)->save($path.$newThumbnailName);
                 $product->thumbnail = $newThumbnailName;
                 $product->save();
             }
@@ -308,8 +308,10 @@ class ProductController extends Controller
                     // Create Dynamic Folder Start
                     $path1 = public_path('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/image_galleries/';
                     File::makeDirectory($path1, $mode = 0777, true, true);
+
                     // Create Dynamic Folder End
-                    Image::make($imageGalleries)->save($path1.$newImageGalleriesName,80);
+
+                    Image::make($imageGalleries)->save($path1.$newImageGalleriesName);
                     $imageGalleryDB->product_id = $product->id;
                     $imageGalleryDB->name = $newImageGalleriesName;
                     $imageGalleryDB->save();
@@ -342,7 +344,7 @@ class ProductController extends Controller
         if(auth()->user()->can("product delete")){
             // return $id;
             $productAttrs = Product_Attribute::where('product_id',$id)->get();
-         
+
             foreach ($productAttrs as  $productAttr) {
                 echo $productAttr->quantity = 0;
                 echo $productAttr->save();

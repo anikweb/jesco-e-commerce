@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/vendor/vendor.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/plugins.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.min.css')}}">
-
+    @yield('inline_style')
     <!-- Main Style -->
     <!-- <link rel="stylesheet" href="assets/css/style.css" /> -->
 
@@ -57,65 +57,10 @@
                     <div class="col align-self-center d-none d-lg-block">
                         <div class="main-menu">
                             <ul>
-                                <li class="dropdown"><a href="#">Home <i class="pe-7s-angle-down"></i></a>
-                                    <ul class="sub-menu">
-                                        <li><a href="index.html">Home</a></li>
-                                    </ul>
+                                <li class="dropdown"><a href="{{ route('frontend') }}">Home </a>
                                 </li>
-                                <li class="dropdown position-static"><a href="#">Shop <i
-                                            class="pe-7s-angle-down"></i></a>
-                                    <ul class="mega-menu d-block">
-                                        <li class="d-flex">
-                                            <ul class="d-block">
-
-                                                <li class="title"><a href="#">Shop Page</a></li>
-                                                <li><a href="shop-4-column.html">Shop 4 Column</a></li>
-                                                <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>
-                                            </ul>
-                                            <ul class="d-block">
-                                                <li class="title"><a href="#">product Details Page</a></li>
-                                                <li><a href="single-product.html">Product Single</a></li>
-                                                <li><a href="single-product-variable.html">Product Variable</a></li>
-                                            </ul>
-
-                                            <ul class="d-block">
-                                                <li class="title"><a href="#">Other Shop Pages</a></li>
-                                                <li><a href="cart.html">Cart Page</a></li>
-                                                <li><a href="checkout.html">Checkout Page</a></li>
-                                                <li><a href="wishlist.html">Wishlist Page</a></li>
-                                                <li><a href="my-account.html">Account Page</a></li>
-                                                <li><a href="login.html">Login & Register Page</a></li>
-                                            </ul>
-                                            <ul class="d-block">
-                                                <li class="title"><a href="#">Pages</a></li>
-                                                <li><a href="404.html">404 Page</a></li>
-                                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                                <li><a href="faq.html">Faq Page</a></li>
-                                                <li><a href="coming-soon.html">Coming Soon Page</a></li>
-
-                                            </ul>
-                                        </li>
-                                        <li>
-
-                                            <ul class="menu-banner w-100">
-                                                <li>
-                                                    <a class="p-0" href="shop-left-sidebar.html"><img
-                                                            class="img-responsive w-100"
-                                                            src="assets/images/banner/7.jpg" alt=""></a>
-                                                </li>
-                                                <li>
-                                                    <a class="p-0" href="shop-left-sidebar.html"><img
-                                                            class="img-responsive w-100"
-                                                            src="assets/images/banner/8.jpg" alt=""></a>
-                                                </li>
-                                                <li>
-                                                    <a class="p-0" href="shop-left-sidebar.html"><img
-                                                            class="img-responsive w-100"
-                                                            src="assets/images/banner/9.jpg" alt=""></a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                <li class="dropdown position-static">
+                                    <a href="{{ route('frontend.product') }}">Products </a>
                                 </li>
                                 <li class="dropdown "><a href="#">Blogs <i class="pe-7s-angle-down"></i></a>
                                     <ul class="sub-menu">
@@ -584,6 +529,7 @@
 
     <!-- Main Js -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @yield('footer_js')
 </body>
 
 

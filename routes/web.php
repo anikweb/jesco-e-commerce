@@ -25,6 +25,9 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
 // frontend
 Route::get('/',[FrontController::class, 'index'])->name('frontend');
+Route::get('/products',[FrontController::class, 'productView'])->name('frontend.product');
+Route::get('/product/{slug}',[FrontController::class, 'productSingle'])->name('frontend.product.single');
+Route::get('/get/color/size/{cid}/{pid}',[FrontController::class, 'getColorSizeId']);
 // Dashboard
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 // Role Controller

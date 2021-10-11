@@ -60,11 +60,11 @@
                                             </td>
                                             <td>
                                                 @can('product edit')
-                                                @if ($product->attribute->sum('quantity') > 0) 
-                                                    <a href="{{ route('products.stock.out',$product->id) }}" class="btn btn-danger text-center"> <i class="fa fa-shopping-cart"></i> Force Stock Out</a>
-                                                @else
-                                                    <a href="javascript:void(0)" style="background-color: #e998a0;color:white; border:1px solid #e998a0; cursor:context-menu" class="btn text-center"> <i class="fa fa-shopping-cart"></i> Force Stock Out</a>
-                                                @endif    
+                                                    @if ($product->attribute->sum('quantity') > 0) 
+                                                        <a href="{{ route('products.stock.out',$product->id) }}" class="btn btn-danger text-center"> <i class="fa fa-shopping-cart"></i> Force Stock Out</a>
+                                                    @else
+                                                        <a href="javascript:void(0)" style="background-color: #e998a0;color:white; border:1px solid #e998a0; cursor:context-menu" class="btn text-center"> <i class="fa fa-shopping-cart"></i> Force Stock Out</a>
+                                                    @endif    
                                                 @endcan
                                             </td>
                                         </tr>
