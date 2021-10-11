@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @elseif(Route::is('subcategory.create')) Create Subcategory @elseif(Route::is('subcategory.edit')) Edit Subcategory @elseif(Route::is('subcategory.index')) Subcategories @elseif(Route::is('product.index')) Products @elseif(Route::is('product.edit')) Edit Product @elseif(Route::is('product.create')) Add Product @elseif(Route::is('product.show')) {{ $product->name }} @elseif(Route::is('products.image.gallery')) Image Gallery-{{ $product->name }} @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
+  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @elseif(Route::is('subcategory.create')) Create Subcategory @elseif(Route::is('subcategory.edit')) Edit Subcategory @elseif(Route::is('subcategory.index')) Subcategories @elseif(Route::is('product.index')) Products @elseif(Route::is('product.edit')) Edit Product @elseif(Route::is('product.create')) Add Product @elseif(Route::is('product.show')) {{ $product->name }} @elseif(Route::is('products.image.gallery')) Image Gallery-{{ $product->name }} @elseif(Route::is('voucher.create')) Create Voucher @elseif(Route::is('voucher.deactivate.list')) Deactivated Vouchers @elseif(Route::is('voucher.edit')) Edit Voucher @elseif(Route::is('voucher.index')) Active Vouchers  @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -300,6 +300,44 @@
                     </ul>
                 </li>
             @endcan
+            {{--  Vouchers   --}}
+            @if (auth()->user()->can('voucher actives view')||auth()->user()->can('voucher deactivates view'))
+                <li class="nav-item @if (Route::is('voucher.create')||Route::is('voucher.deactivate.list')||Route::is('voucher.edit')||Route::is('voucher.index')) menu-open @endif">
+                    <a href="javascript:void(0)" class="nav-link @if (Route::is('voucher.create')||Route::is('voucher.deactivate.list')||Route::is('voucher.edit')||Route::is('voucher.index')) active @endif">
+                    <i class="nav-icon fa fa-tags"></i>
+                    <p>
+                        Vouchers
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @can("voucher add")
+                            <li class="nav-item">
+                                <a href="{{ route('voucher.create') }}" class="nav-link @if (Route::is('voucher.create')) active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can("voucher actives view")
+                            <li class="nav-item">
+                                <a href="{{ route('voucher.index') }}" class="nav-link @if (Route::is('voucher.index')||Route::is('voucher.edit')) active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Active Vouchers</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can("voucher deactivates view")
+                            <li class="nav-item">
+                                <a href="{{ route('voucher.deactivate.list') }}" class="nav-link @if (Route::is('voucher.deactivate.list')) active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Deactivated Vouchers</p>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
             {{-- Role management --}}
             @can('role management')
                 <li class="nav-item @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')||Route::is('create.user')) menu-open @endif">

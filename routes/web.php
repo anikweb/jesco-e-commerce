@@ -9,6 +9,7 @@ use App\Http\Controllers\{
     GithubController,
     ProductController,
     SubcategoryController,
+    VoucherController,
 };
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -49,7 +50,14 @@ Route::get('/dashboard/product/image-gallery/delete/{id}',[ProductController::cl
 Route::post('/dashboard/product/image-gallery/post',[ProductController::class,'productImageGallaryPost'])->name('products.image.gallery.post')->middleware('auth');
 Route::get('/dashboard/product/stockout/{id}',[ProductController::class,'productStockout'])->name('products.stock.out')->middleware('auth');
 Route::resource('dashboard/product', ProductController::class);
+
+Route::get('/dashboard/voucher/deactive/{id}',[VoucherController::class, 'voucherDeactivate'])->name('voucher.deactivate')->middleware('auth');
+Route::get('/dashboard/voucher/active/{id}',[VoucherController::class, 'voucherActive'])->name('voucher.active')->middleware('auth');
+Route::get('/dashboard/voucher/deactivated-list',[VoucherController::class, 'voucherDeactivatedList'])->name('voucher.deactivate.list')->middleware('auth');
+Route::resource('/dashboard/voucher', VoucherController::class)->middleware('auth');
+
 // Socialite
+
 Route::get('github/redirect',[GithubController::class,'githubRedirect']);
 Route::get('github/callback',[GithubController::class,'githubCallback']);
 

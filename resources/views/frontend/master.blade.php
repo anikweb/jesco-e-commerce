@@ -77,7 +77,7 @@
                     <div class="col col-lg-auto align-self-center pl-0">
                         <div class="header-actions">
                             @auth
-                                <a href="{{ route('dashboard') }}" class="header-action-btn login-btn">Dashboard</a>
+                                <a target="_blank"  href="{{ route('dashboard') }}" class="header-action-btn login-btn">Dashboard</a>
                             @else
                                 <a href="{{ route('login') }}" class="header-action-btn login-btn">Sign in</a>
                             @endauth
