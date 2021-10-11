@@ -44,6 +44,7 @@ Route::get('/products/get/subcategory/{subcategory_id}',[ProductController::clas
 Route::get('/dashboard/product/image-gallery/{slug}',[ProductController::class,'productImageGallary'])->name('products.image.gallery')->middleware('auth');
 Route::get('/dashboard/product/image-gallery/delete/{id}',[ProductController::class,'productImageGallaryDelete'])->name('products.image.gallery.delete')->middleware('auth');
 Route::post('/dashboard/product/image-gallery/post',[ProductController::class,'productImageGallaryPost'])->name('products.image.gallery.post')->middleware('auth');
+Route::get('/dashboard/product/stockout/{id}',[ProductController::class,'productStockout'])->name('products.stock.out')->middleware('auth');
 Route::resource('dashboard/product', ProductController::class);
 // Socialite
 Route::get('github/redirect',[GithubController::class,'githubRedirect']);

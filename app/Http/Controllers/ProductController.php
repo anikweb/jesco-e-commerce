@@ -338,4 +338,16 @@ class ProductController extends Controller
             return abort(404);
         }
     }
+    public function productStockout($id){
+        if(auth()->user()->can("product delete")){
+            // return $id;
+            $productAttrs = Product_Attribute::where('product_id',$id)->get();
+         
+            foreach ($productAttrs as  $productAttr) {
+                echo $productAttr->quantity = 0;
+                echo $productAttr->save();
+            }
+
+        }
+    }
 }

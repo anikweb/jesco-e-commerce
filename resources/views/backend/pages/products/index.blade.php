@@ -34,6 +34,7 @@
                                         <th>Subcategory</th>
                                         <th>Created</th>
                                         <th>Last Update</th>
+                                        <th>Status</th>
                                         <th colspan="3" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -47,6 +48,7 @@
                                             <td>{{ $product->subcategory->name }}</td>
                                             <td>{{ $product->created_at->format('d-M-Y, h:i:s A') }}</td>
                                             <td>{{ $product->updated_at->diffForHumans() }}</td>
+                                            <td> @if ($product->attribute->sum('quantity') > 0) <span class="badge badge-info">active</span> @else <span class="badge badge-danger">Stock Out</span>@endif</td>
                                             <td>
                                                 @can('product edit')
                                                     <a href="{{ route('product.edit',$product->slug) }}" class="btn btn-primary text-center"><i class="fa fa-edit"></i> Edit</a>
@@ -58,7 +60,11 @@
                                             </td>
                                             <td>
                                                 @can('product edit')
-                                                    <a href="#" class="btn btn-danger text-center">Force Stock Out</a>
+                                                @if ($product->attribute->sum('quantity') > 0) 
+                                                    <a href="{{ route('products.stock.out',$product->id) }}" class="btn btn-danger text-center"> <i class="fa fa-shopping-cart"></i> Force Stock Out</a>
+                                                @else
+                                                    <a href="javascript:void(0)" style="background-color: #e998a0;color:white; border:1px solid #e998a0; cursor:context-menu" class="btn text-center"> <i class="fa fa-shopping-cart"></i> Force Stock Out</a>
+                                                @endif    
                                                 @endcan
                                             </td>
                                         </tr>
