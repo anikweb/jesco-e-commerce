@@ -436,9 +436,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 text-center">
-                            <p class="copy-text"> © 2021 <strong>Jesco</strong> Made With <i class="fa fa-heart"
-                                    aria-hidden="true"></i> By <a class="company-name" href="https://hasthemes.com/">
-                                    <strong> HasThemes</strong></a>.</p>
+                            <p class="copy-text">&copy; {{ date('Y').'-'.(date('y')+1) }} <strong>Jesco E-commerce</strong> <i class="fa fa-heart"
+                                    aria-hidden="true"></i> Developed By <a class="company-name" target="_blank" href="https:/aniknandi.com/">
+                                    <strong> Anik Kumar Nandi</strong></a>.</p>
                         </div>
                     </div>
                 </div>

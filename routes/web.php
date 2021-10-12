@@ -51,6 +51,8 @@ Route::post('/dashboard/product/image-gallery/post',[ProductController::class,'p
 Route::get('/dashboard/product/stockout/{id}',[ProductController::class,'productStockout'])->name('products.stock.out')->middleware('auth');
 Route::resource('dashboard/product', ProductController::class);
 
+Route::get('/dashboard/voucher/trash/restore/{id}',[VoucherController::class, 'voucherRestore'])->name('voucher.restore')->middleware('auth');
+Route::get('/dashboard/voucher/trash',[VoucherController::class, 'voucherTrashView'])->name('voucher.trash.index')->middleware('auth');
 Route::get('/dashboard/voucher/deactive/{id}',[VoucherController::class, 'voucherDeactivate'])->name('voucher.deactivate')->middleware('auth');
 Route::get('/dashboard/voucher/active/{id}',[VoucherController::class, 'voucherActive'])->name('voucher.active')->middleware('auth');
 Route::get('/dashboard/voucher/deactivated-list',[VoucherController::class, 'voucherDeactivatedList'])->name('voucher.deactivate.list')->middleware('auth');

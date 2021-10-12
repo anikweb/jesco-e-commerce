@@ -302,8 +302,8 @@
             @endcan
             {{--  Vouchers   --}}
             @if (auth()->user()->can('voucher actives view')||auth()->user()->can('voucher deactivates view'))
-                <li class="nav-item @if (Route::is('voucher.create')||Route::is('voucher.deactivate.list')||Route::is('voucher.edit')||Route::is('voucher.index')) menu-open @endif">
-                    <a href="javascript:void(0)" class="nav-link @if (Route::is('voucher.create')||Route::is('voucher.deactivate.list')||Route::is('voucher.edit')||Route::is('voucher.index')) active @endif">
+                <li class="nav-item @if (Route::is('voucher.create')||Route::is('voucher.deactivate.list')||Route::is('voucher.edit')||Route::is('voucher.index')||Route::is('voucher.trash.index')) menu-open @endif">
+                    <a href="javascript:void(0)" class="nav-link @if (Route::is('voucher.create')||Route::is('voucher.deactivate.list')||Route::is('voucher.edit')||Route::is('voucher.index')||Route::is('voucher.trash.index')) active @endif">
                     <i class="nav-icon fa fa-tags"></i>
                     <p>
                         Vouchers
@@ -332,6 +332,14 @@
                                 <a href="{{ route('voucher.deactivate.list') }}" class="nav-link @if (Route::is('voucher.deactivate.list')) active @endif">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Deactivated Vouchers</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can("voucher trash view")
+                            <li class="nav-item">
+                                <a href="{{ route('voucher.trash.index') }}" class="nav-link @if (Route::is('voucher.trash.index')) active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Trash</p>
                                 </a>
                             </li>
                         @endcan

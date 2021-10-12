@@ -173,7 +173,28 @@ class VoucherController extends Controller
         }else{
             return abort(404);
         }
+    }
+    public function voucherTrashView(){
+        if(auth()->user()->can('voucher actives view')){
+            return view('backend.pages.voucher.trash',[
+                'vouchers' => Voucher::onlyTrashed()->latest()->paginate(10),
+            ]);
+        }else{
+            return abort(404);
+        }
+    }
+    public function voucherRestore($id){
+        if(auth()->user()->can('voucher trash restore')){
+           $voucher = Voucher::onlyTrashed()->find($id);
+           $voucher->status = 2;
+           if($voucher->restore()){
+               return back()->with('success','\''.$voucher->name.'\' Restored! but status is now deactivated. please active!');
+            }else{
+               return back()->with('error','Failed!');
 
-
+           }
+        }else{
+            return abort(404);
+        }
     }
 }

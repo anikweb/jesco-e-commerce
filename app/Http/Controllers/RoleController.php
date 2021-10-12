@@ -47,7 +47,8 @@ class RoleController extends Controller
     public function create()
     {
         if(auth()->user()->can('role management')){
-            // Permission::create(['name' => 'voucher trash']);
+            // Permission::create(['name' => 'voucher trash view']);
+            // Permission::create(['name' => 'voucher trash restore']);
             // Permission::create(['name' => 'voucher add']);
             // Permission::create(['name' => 'voucher deactivate']);
             // Permission::create(['name' => 'voucher actives view']);

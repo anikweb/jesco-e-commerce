@@ -9,7 +9,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                       <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                      <li class="breadcrumb-item active"> Deactivated Vouchers</li>
+                      <li class="breadcrumb-item active">Trash Vouchers</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -20,7 +20,7 @@
            <div class="col-md-12">
                <div class="card card-primary">
                    <div class="card-header">
-                        <h3 class="card-title"><i class="fa fa-tags"></i>Deactivated Vouchers</h3>
+                        <h3 class="card-title"><i class="fa fa-tags"></i>Trash Vouchers</h3>
                    </div>
                    <div class="card-body">
                         <div class="table-responsive">
@@ -35,9 +35,9 @@
                                         <th>Min Checkout Price</th>
                                         <th>Expiry Date</th>
                                         <th>Created</th>
-                                        @can('voucher active')
-                                            <th class="text-center" colspan="2">Action</th>
-                                        @endcan
+                                        @if (auth()->user()->can("voucher edit")||auth()->user()->can("voucher deactivate")||auth()->user()->can("voucher trash"))
+                                            <th colspan="3" class="text-center">Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,18 +51,9 @@
                                         <td>{{ $voucher->min_checkout_price }}</td>
                                         <td>{{ $voucher->expiry_date }}</td>
                                         <td>{{ $voucher->created_at->format('d-M-Y, h:i A') }}</td>
-                                        @can('voucher active')
+                                        @can('voucher trash restore')
                                             <td class="text-center">
-                                                <a href="{{ route('voucher.active',$voucher->id) }}" class="btn btn-success"> <i class="fas fa-check-circle"></i> Active</a>
-                                            </td>
-                                        @endcan
-                                        @can('voucher trash')
-                                            <td class="text-center">
-                                                <form action="{{ route('voucher.destroy',$voucher->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Trash </button>
-                                                </form>
+                                                <a href="{{ route('voucher.restore',$voucher->id) }}" class="btn btn-success"> <i class="fa fa-trash-restore"></i> Restore</a>
                                             </td>
                                         @endcan
                                     </tr>
@@ -70,7 +61,7 @@
                                     <tr>
                                         <td colspan="9" class="text-center text-muted">
                                             <i class="fa fa-exclamation-circle"></i>
-                                            No Deactivated Voucher Available
+                                            No Trash Voucher Available
                                         </td>
                                     </tr>
                                     @endforelse
