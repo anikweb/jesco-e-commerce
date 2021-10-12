@@ -10,7 +10,9 @@ use App\Http\Controllers\{
     ProductController,
     SubcategoryController,
     VoucherController,
+    WishlistController,
 };
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -29,6 +31,10 @@ Route::get('/',[FrontController::class, 'index'])->name('frontend');
 Route::get('/products',[FrontController::class, 'productView'])->name('frontend.product');
 Route::get('/product/{slug}',[FrontController::class, 'productSingle'])->name('frontend.product.single');
 Route::get('/get/color/size/{cid}/{pid}',[FrontController::class, 'getColorSizeId']);
+Route::get('/wishlist/',[FrontController::class, 'wishlistIndex'])->name('frontend.wishlist.index');
+Route::get('/wishlist/remove/{id}',[FrontController::class, 'wishlistRemove'])->name('frontend.wishlist.remove');
+// wishlist add by ajax
+Route::get('/wishlist/add/{product_id}',[FrontController::class, 'wishliststore']);
 // Dashboard
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 // Role Controller
@@ -58,6 +64,8 @@ Route::get('/dashboard/voucher/active/{id}',[VoucherController::class, 'voucherA
 Route::get('/dashboard/voucher/deactivated-list',[VoucherController::class, 'voucherDeactivatedList'])->name('voucher.deactivate.list')->middleware('auth');
 Route::resource('/dashboard/voucher', VoucherController::class)->middleware('auth');
 
+// Wishlist
+Route::get('/dashboard/wishlists',[WishlistController::class,'index'])->name('dashboard.wishlist')->middleware('auth');
 // Socialite
 
 Route::get('github/redirect',[GithubController::class,'githubRedirect']);

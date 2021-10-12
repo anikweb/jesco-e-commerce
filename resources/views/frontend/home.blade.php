@@ -120,6 +120,7 @@
                         <div class="section-title text-center mb-0">
                             <h2 class="title">
                                 #Product
+
                         </h2>
                             <!-- Tab Start -->
                             <div class="nav-center">
@@ -160,9 +161,19 @@
                                                         @endif
                                                     </span>
                                                     <div class="actions">
-                                                        <a href="wishlist.html" class="action wishlist" title="Wishlist">
-                                                            <i class="pe-7s-like"></i>
-                                                        </a>
+                                                        @php
+                                                            $w = $wishlistProduct->where('cookie_id',Cookie::get('jesco_ecommerce'))->where('product_id',$product->id)->first();
+                                                        @endphp
+
+                                                        @if ($w)
+                                                            <button type="button" style='background:#fb5d5d;color:#ffffff' data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
+                                                                <i class="pe-7s-like"></i>
+                                                            </button>
+                                                        @else
+                                                            <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
+                                                                <i class="pe-7s-like"></i>
+                                                            </button>
+                                                        @endif
                                                         <a href="#" class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
                                                         <a href="compare.html" class="action compare" title="Compare">
                                                             <i class="pe-7s-refresh-2"></i>
@@ -181,12 +192,14 @@
                                                         </span>
                                                         <span class="rating-num">( 5 Review )</span>
                                                         <span style="position: absolute; right:0" class="badge rounded bg-primary text-white">{{ $product->category->name }}</span>
+
                                                     </span>
                                                     <h5 class="title" ><a href="single-product.html">{{ $product->name }}</a>
                                                     </h5>
 
                                                     <span class="price">
                                                         <span class="new">{{ $product->attribute->min('offer_price') }}</span>
+
                                                     </span>
                                                 </div>
                                             </div>
@@ -213,8 +226,9 @@
                                                         @endif
                                                     </span>
                                                     <div class="actions">
-                                                        <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                                                class="pe-7s-like"></i></a>
+                                                        <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
+                                                            <i class="pe-7s-like"></i>
+                                                        </button>
                                                         <a href="#" class="action quickview" data-link-action="quickview"
                                                             title="Quick view" data-bs-toggle="modal"
                                                             data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
@@ -1447,8 +1461,6 @@
                                 <h5 class="blog-heading"><a class="blog-heading-link"
                                         href="blog-single-left-sidebar.html">Contrary to popular belieflo
                                         lorem Ipsum is not</a></h5>
-
-
                                 <a href="blog-single-left-sidebar.html" class="btn btn-primary blog-btn"> Read More<i
                                         class="fa fa-arrow-right ml-5px" aria-hidden="true"></i></a>
                             </div>
@@ -1460,4 +1472,27 @@
         </div>
         <!--  Blog area End -->
 
+@endsection
+@section('footer_js')
+<script>
+    $(document).ready(function(){
+        $('.add-wishlist').click(function(){
+            var product_id = $(this).attr('data-id');
+            $.ajax({
+                    type: "GET",
+                    url: "{{ url('wishlist/add') }}/"+product_id,
+                    success:function(res){
+                        console.log(res);
+                        if(res.product_id == product_id){
+                            var buttonWishlist = "<button type='button' href='javascript:void(0)' style='background:#fb5d5d;color:#ffffff'  class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
+                            $(".wishlist-product"+res.product_id).html(buttonWishlist);
+                        }else{
+                            var buttonWishlist = "<button type='button' href='javascript:void(0)' class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
+                            $(".wishlist-product"+product_id).html(buttonWishlist);
+                        }
+                    }
+                });
+        });
+    });
+</script>
 @endsection
