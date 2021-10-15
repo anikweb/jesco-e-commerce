@@ -152,9 +152,15 @@
                                             <!-- Single Prodect -->
                                             <div class="product">
                                                 <div class="thumb">
-                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
-                                                        <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                    </a>
+                                                    @if ($product->attribute->sum('quantity') != 0)
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
+                                                            <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
+                                                        </a>
+                                                    @else
+                                                        <a href="javascript:void(0)" class="image">
+                                                            <img style="opacity: .5" src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
+                                                        </a>
+                                                    @endif
                                                     <span class="badges">
                                                         @if ($product->attribute->sum('quantity') == 0)
                                                             <span class="new bg-danger">Sold</span>
@@ -180,7 +186,8 @@
                                                         </a>
                                                     </div>
                                                     @if ($product->attribute->sum('quantity') != 0)
-                                                        <button title="Add To Cart" class="add-to-cart">Add To Cart</button>
+
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart"  class="add-to-cart">Add To Cart</a>
                                                     @else
                                                         <button title="Add To Cart" disabled class="add-to-cart">Out of Stock</button>
                                                     @endif
@@ -199,7 +206,6 @@
 
                                                     <span class="price">
                                                         <span class="new">{{ $product->attribute->min('offer_price') }}</span>
-
                                                     </span>
                                                 </div>
                                             </div>
@@ -217,9 +223,16 @@
                                             <!-- Single Prodect -->
                                             <div class="product">
                                                 <div class="thumb">
-                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
-                                                        <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                    </a>
+                                                    @if ($product->attribute->sum('quantity') != 0)
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
+                                                            <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
+                                                        </a>
+                                                    @else
+                                                        <a href="javascript:void(0)" class="image">
+                                                            <img style="opacity: .5" src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
+                                                        </a>
+                                                    @endif
+
                                                     <span class="badges">
                                                         @if ($product->attribute->sum('quantity') == 0)
                                                             <span class="new bg-danger">Sold</span>
@@ -236,7 +249,7 @@
                                                                 class="pe-7s-refresh-2"></i></a>
                                                     </div>
                                                     @if ($product->attribute->sum('quantity') != 0)
-                                                        <button title="Add To Cart" class="add-to-cart">Add To Cart</button>
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart" class="add-to-cart">Add To Cart</a>
                                                     @else
                                                         <button title="Add To Cart" disabled class="add-to-cart">Out of Stock</button>
                                                     @endif
@@ -1479,20 +1492,21 @@
         $('.add-wishlist').click(function(){
             var product_id = $(this).attr('data-id');
             $.ajax({
-                    type: "GET",
-                    url: "{{ url('wishlist/add') }}/"+product_id,
-                    success:function(res){
-                        console.log(res);
-                        if(res.product_id == product_id){
-                            var buttonWishlist = "<button type='button' href='javascript:void(0)' style='background:#fb5d5d;color:#ffffff'  class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
-                            $(".wishlist-product"+res.product_id).html(buttonWishlist);
-                        }else{
-                            var buttonWishlist = "<button type='button' href='javascript:void(0)' class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
-                            $(".wishlist-product"+product_id).html(buttonWishlist);
-                        }
+                type: "GET",
+                url: "{{ url('wishlist/add') }}/"+product_id,
+                success:function(res){
+                    console.log(res);
+                    if(res.product_id == product_id){
+                        var buttonWishlist = "<button type='button' href='javascript:void(0)' style='background:#fb5d5d;color:#ffffff'  class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
+                        $(".wishlist-product"+res.product_id).html(buttonWishlist);
+                    }else{
+                        var buttonWishlist = "<button type='button' href='javascript:void(0)' class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
+                        $(".wishlist-product"+product_id).html(buttonWishlist);
                     }
-                });
+                }
+            });
         });
+
     });
 </script>
 @endsection

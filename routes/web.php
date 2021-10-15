@@ -11,6 +11,7 @@ use App\Http\Controllers\{
     SubcategoryController,
     VoucherController,
     WishlistController,
+    CartController,
 };
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Route;
@@ -33,8 +34,12 @@ Route::get('/product/{slug}',[FrontController::class, 'productSingle'])->name('f
 Route::get('/get/color/size/{cid}/{pid}',[FrontController::class, 'getColorSizeId']);
 Route::get('/wishlist/',[FrontController::class, 'wishlistIndex'])->name('frontend.wishlist.index');
 Route::get('/wishlist/remove/{id}',[FrontController::class, 'wishlistRemove'])->name('frontend.wishlist.remove');
+
 // wishlist add by ajax
 Route::get('/wishlist/add/{product_id}',[FrontController::class, 'wishliststore']);
+// Cart
+Route::resource('cart', CartController::class);
+
 // Dashboard
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 // Role Controller

@@ -76,7 +76,7 @@ class FrontController extends Controller
         $sizes = Product_Attribute::where('product_id',$pid)->where('color_id',$cid)->get();
         $outpot = '';
         foreach ($sizes as $key => $size) {
-            $outpot =  $outpot.'<input class="sizeCheck @error("size_id") is-invalid @enderror" style="cursor: pointer; width: auto; height:auto" data-rPrice="'.$size->regular_price.'" data-price="'.$size->offer_price.'" data-quantity="'.$size->quantity.'" id="size" type="radio" value="'.$size->size_id.'" name="size_id"><label style="cursor: pointer;" for="size">'.' '. $size->size->name .'</label>';
+            $outpot =  $outpot.'<input class="sizeCheck @error("size_id")  is-invalid @enderror" style="cursor: pointer; width: auto; height:auto" data-rPrice="'.$size->regular_price.'" data-price="'.$size->offer_price.'" data-quantity="'.$size->quantity.'" id="size" type="radio" value="'.$size->size_id.'" name="size_id"><label style="cursor: pointer;" for="size">'.' '. $size->size->name .'</label>';
         }
         return response()->json($outpot);
         // echo $outpot;
