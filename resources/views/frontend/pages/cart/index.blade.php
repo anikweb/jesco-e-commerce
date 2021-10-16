@@ -34,6 +34,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $cartTotalPrice =0;
+                                    @endphp
                                     @forelse ($carts as $cart)
                                         <tr>
                                             <td class="product-thumbnail">
@@ -43,16 +46,19 @@
                                             @php
                                                 $offer_price = App\Models\Product_Attribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price;
                                             @endphp
-                                            <td class="product-price-cart"><span class="amount">{{ $offer_price }}</span></td>
+                                            <td class="product-price-cart"><span class="amount">৳{{ $offer_price }}</span></td>
                                             <td class="product-quantity">
                                                 <div class="cart-plus-minus"><div class="dec qtybutton">-</div>
                                                     <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{$cart->quantity}}">
                                                 <div class="inc qtybutton">+</div></div>
                                             </td>
-                                            <td class="product-subtotal">{{ $offer_price * $cart->quantity }}</td>
+                                            <td class="product-subtotal">৳{{ $subtotal =  $cart->quantity * $offer_price   }}</td>
+                                            @php
+                                                $cartTotalPrice = $cartTotalPrice + $subtotal;
+                                            @endphp
                                             <td class="product-remove">
                                                 <a href="#"><i class="fa fa-pencil"></i></a>
-                                                <a href="#"><i class="fa fa-times"></i></a>
+                                                <a href="{{ route('cart.delete',$cart->id) }}"><i class="fa fa-times"></i></a>
                                             </td>
                                         </tr>
                                     @empty
@@ -73,7 +79,7 @@
                                     </div>
                                     <div class="cart-clear">
                                         <button>Update Shopping Cart</button>
-                                        <a href="#">Clear Shopping Cart</a>
+                                        <a href="{{ route('cart.all.delete') }}">Clear Shopping Cart</a>
                                     </div>
                                 </div>
                             </div>
@@ -94,62 +100,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-lm-30px">
-                            <div class="cart-tax">
-                                <div class="title-wrap">
-                                    <h4 class="cart-bottom-title section-bg-gray">Estimate Shipping And Tax</h4>
-                                </div>
-                                <div class="tax-wrapper">
-                                    <p>Enter your destination to get a shipping estimate.</p>
-                                    <div class="tax-select-wrapper">
-                                        <div class="tax-select">
-                                            <label>
-                                                * Country
-                                            </label>
-                                            <select class="email s-email s-wid">
-                                                <option>Bangladesh</option>
-                                                <option>Albania</option>
-                                                <option>Åland Islands</option>
-                                                <option>Afghanistan</option>
-                                                <option>Belgium</option>
-                                            </select>
-                                        </div>
-                                        <div class="tax-select">
-                                            <label>
-                                                * Region / State
-                                            </label>
-                                            <select class="email s-email s-wid">
-                                                <option>Bangladesh</option>
-                                                <option>Albania</option>
-                                                <option>Åland Islands</option>
-                                                <option>Afghanistan</option>
-                                                <option>Belgium</option>
-                                            </select>
-                                        </div>
-                                        <div class="tax-select mb-25px">
-                                            <label>
-                                                * Zip/Postal Code
-                                            </label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-12 mt-md-30px">
+                        <div class="col-lg-8 col-md-12 mt-md-30px">
                             <div class="grand-totall">
                                 <div class="title-wrap">
                                     <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                                 </div>
-                                <h5>Total products <span>$260.00</span></h5>
-                                <div class="total-shipping">
-                                    <h5>Total shipping</h5>
-                                    <ul>
-                                        <li><input type="checkbox"> Standard <span>$20.00</span></li>
-                                        <li><input type="checkbox"> Express <span>$30.00</span></li>
-                                    </ul>
-                                </div>
+                                <h5>Total <span>৳{{ $cartTotalPrice }}</span></h5>
                                 <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
                                 <a href="checkout.html">Proceed to Checkout</a>
                             </div>

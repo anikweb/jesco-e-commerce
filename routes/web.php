@@ -38,6 +38,8 @@ Route::get('/wishlist/remove/{id}',[FrontController::class, 'wishlistRemove'])->
 // wishlist add by ajax
 Route::get('/wishlist/add/{product_id}',[FrontController::class, 'wishliststore']);
 // Cart
+Route::get('cart/delete/all',[CartController::class, 'cartDeleteAll'])->name('cart.all.delete');
+Route::get('cart/delete/{slug}',[CartController::class, 'cartDelete'])->name('cart.delete');
 Route::resource('cart', CartController::class);
 
 // Dashboard

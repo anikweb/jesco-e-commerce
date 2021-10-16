@@ -36,9 +36,9 @@
                                         <td class="product-thumbnail">
                                             <a href="#"><img class="img-responsive ml-15px rounded" src="{{ asset('assets/images/product').'/'.$wishlist->product->created_at->format('Y/m/d/').$wishlist->product->id.'/thumbnail/'.$wishlist->product->thumbnail }}" alt="{{ $wishlist->product->name }}"></a>
                                         </td>
-                                        <td class="product-name"><a href="#">{{ $wishlist->product->name }}</a></td>
+                                        <td class="product-name">{{ $wishlist->product->name }}</td>
                                         <td class="product-wishlist-cart">
-                                            <a href="#"> <i class="fa fa-cart-plus"></i> Add to cart</a>
+                                            <a href="{{ route('frontend.product.single',$wishlist->product->slug) }}"> <i class="fa fa-cart-plus"></i> Add to cart</a>
                                             <a href="{{ route('frontend.wishlist.remove',$wishlist->product_id) }}"> <i class="fa fa-trash"></i> Remove</a>
                                         </td>
                                     </tr>

@@ -39,15 +39,32 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
-        $cookie_id = Cookie::get('jesco_ecommerce');
-        if(Cart::where('cookie_id',$cookie_id)->where('product_id',$request->product_id)->where('color_id',$request->color_id)->where('size_id',$request->size_id)->exists()){
-            Cart::where('cookie_id',$cookie_id)->where('product_id',$request->product_id)->where('color_id',$request->color_id)->where('size_id',$request->size_id)->increment('quantity',$request->quantity);
+        // return ;
+        if($request->size_id){
+            $cookie_id = Cookie::get('jesco_ecommerce');
+            if(Cart::where('cookie_id',$cookie_id)->where('product_id',$request->product_id)->where('color_id',$request->color_id)->where('size_id',$request->size_id)->exists()){
+                Cart::where('cookie_id',$cookie_id)->where('product_id',$request->product_id)->where('color_id',$request->color_id)->where('size_id',$request->size_id)->increment('quantity',$request->quantity);
+                return redirect()->route('cart.index')->with('success','Cart Added!');
+            }else{
+                Cart::create($request->except('_tocken')+[
+                    'cookie_id' => $cookie_id,
+                ]);
+                return redirect()->route('cart.index')->with('success','Cart Added!');
+            }
         }else{
-            Cart::create($request->except('_tocken')+[
-                'cookie_id' => $cookie_id,
-            ]);
+            $cookie_id = Cookie::get('jesco_ecommerce');
+        if(Cart::where('cookie_id',$cookie_id)->where('product_id',$request->product_id)->where('color_id',$request->color_id)->where('size_id',7)->exists()){
+                Cart::where('cookie_id',$cookie_id)->where('product_id',$request->product_id)->where('color_id',$request->color_id)->where('size_id',7)->increment('quantity',$request->quantity);
+                return redirect()->route('cart.index')->with('success','Cart Added!');
+            }else{
+                Cart::create($request->except('_tocken')+[
+                    'cookie_id' => $cookie_id,
+                    'size_id' => 7,
+                ]);
+                return redirect()->route('cart.index')->with('success','Cart Added!');
+            }
         }
+
     }
 
     /**
@@ -92,6 +109,20 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        return $cart;
+    }
+    public function cartDelete($cart_id)
+    {
+        Cart::where('cookie_id',Cookie::get('jesco_ecommerce'))->find($cart_id)->delete();
+        return back();
+    }
+    public function cartDeleteAll()
+    {
+        // return 'hello';
+        $carts = Cart::where('cookie_id',Cookie::get('jesco_ecommerce'))->get();
+        foreach ($carts as  $cart) {
+           $cart->delete();
+        }
+        return back();
     }
 }

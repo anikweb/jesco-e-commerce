@@ -94,7 +94,7 @@
                             <a href="#offcanvas-cart"
                                 class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                                 <i class="pe-7s-shopbag"></i>
-                                <span class="header-action-num">01</span>
+                                <span class="header-action-num">{{ cartsItem()->count() }}</span>
                                 <!-- <span class="cart-amount">€30.00</span> -->
                             </a>
                             <a href="#offcanvas-mobile-menu"
@@ -165,39 +165,29 @@
             </div>
             <div class="body customScroll">
                 <ul class="minicart-product-list">
+
+                    @foreach (cartsItem() as $cart)
                     <li>
-                        <a href="single-product.html" class="image"><img src="assets/images/product-image/1.jpg"
+                        <a href="single-product.html" class="image"><img src="{{ asset('assets/images/product').'/'.$cart->product->created_at->format('Y/m/d/').$cart->product->id.'/thumbnail/'.$cart->product->thumbnail }}" alt="{{ $cart->product->name }}"
                                 alt="Cart product Image"></a>
                         <div class="content">
-                            <a href="single-product.html" class="title">Women's Elizabeth Coat</a>
-                            <span class="quantity-price">1 x <span class="amount">$18.86</span></span>
+                            @php
+                                $offer_price = App\Models\Product_Attribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price;
+                            @endphp
+                            <a href="single-product.html" class="title">{{ $cart->product->name }}</a>
+
+                            <span class="quantity-price">{{ $cart->quantity }} x <span class="amount">৳{{ $offer_price }}</span></span>
                             <a href="#" class="remove">×</a>
                         </div>
                     </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="assets/images/product-image/2.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Long sleeve knee length</a>
-                            <span class="quantity-price">1 x <span class="amount">$43.28</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="assets/images/product-image/3.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Cool Man Wearing Leather</a>
-                            <span class="quantity-price">1 x <span class="amount">$37.34</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
+
+                    @endforeach
+
                 </ul>
             </div>
             <div class="foot">
                 <div class="buttons mt-30px">
                     <a href="{{ route('cart.index') }}" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
-                    <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
                 </div>
             </div>
         </div>

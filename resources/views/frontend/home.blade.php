@@ -205,7 +205,7 @@
                                                     </h5>
 
                                                     <span class="price">
-                                                        <span class="new">{{ $product->attribute->min('offer_price') }}</span>
+                                                        <span class="new">৳{{ $product->attribute->min('offer_price') }}</span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -265,7 +265,7 @@
                                                     <h5 class="title"><a href="single-product.html">{{ $product->name }}</a>
                                                     </h5>
                                                     <span class="price">
-                                                        <span class="new">{{ $product->attribute->min('regular_price') }}</span>
+                                                        <span class="new">৳{{ $product->attribute->min('regular_price') }}</span>
                                                     </span>
                                                 </div>
                                             </div>

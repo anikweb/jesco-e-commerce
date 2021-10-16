@@ -60,7 +60,7 @@
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <div class="pricing-meta">
                                 <ul>
-                                    <li class="old-price not-cut"><del class="rPrice">{{ $product->attribute->max('regular_price') }}</del> <span class="text-primary offer_price">{{ $product->attribute->min('offer_price') }}</span></li>
+                                    <li class="old-price not-cut"><del class="rPrice">৳{{ $product->attribute->max('regular_price') }}</del> <span class="text-primary offer_price">৳{{ $product->attribute->min('offer_price') }}</span></li>
                                 </ul>
                             </div>
                             <div class="pro-details-rating-wrap">
@@ -863,18 +863,34 @@
                     success:function(res){
                         if(res){
                             // console.log(res);
-                            $('.size').empty();
-                            $('.sizeName').empty();
-                            $('.sizeName').append('<div class="badge text-white bg-info">Sizes</div>');
-                            // $('.sizeAdd').empty();
-                            $('.size').html(res);
-                            $('.sizeCheck').change(function(){
-                                var price = $(this).attr('data-price');
-                                var quantity = $(this).attr('data-quantity');
-                                var rPrice = $(this).attr('data-rPrice');
-                                $('.offer_price').html(price);
-                                $('.rPrice').html(rPrice);
-                            });
+                            // if(res !='none'){
+                                $('.size').empty();
+                                $('.sizeName').empty();
+                                $('.sizeName').append('<div class="badge text-white bg-info">Sizes</div>');
+                                // $('.sizeAdd').empty();
+                                $('.size').html(res);
+                                $('.sizeCheck').change(function(){
+                                    var price = $(this).attr('data-price');
+                                    var quantity = $(this).attr('data-quantity');
+                                    var rPrice = $(this).attr('data-rPrice');
+                                    $('.offer_price').html(price);
+                                    $('.rPrice').html(rPrice);
+                                });
+                            // }
+                            // if(res =='none'){
+                            //     // $('.size').empty();
+                            //     // $('.sizeName').empty();
+                            //     // $('.sizeName').append('<div class="badge text-white bg-info">Sizes</div>');
+                            //     // // $('.sizeAdd').empty();
+                            //     // $('.size').html(res);
+                            //     // $('.sizeCheck').change(function(){
+                            //         var price = $(this).attr('data-price');
+                            //         var quantity = $(this).attr('data-quantity');
+                            //         var rPrice = $(this).attr('data-rPrice');
+                            //         $('.offer_price').html(price);
+                            //         $('.rPrice').html(rPrice);
+                            //     // });
+                            // }
                         }
                     }
                 });
