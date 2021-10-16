@@ -12,6 +12,7 @@ use App\Http\Controllers\{
     VoucherController,
     WishlistController,
     CartController,
+    CheckoutController,
 };
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Route;
@@ -40,8 +41,10 @@ Route::get('/wishlist/add/{product_id}',[FrontController::class, 'wishliststore'
 // Cart
 Route::get('cart/delete/all',[CartController::class, 'cartDeleteAll'])->name('cart.all.delete');
 Route::get('cart/delete/{slug}',[CartController::class, 'cartDelete'])->name('cart.delete');
+Route::get('/cart/{voucher}',[CartController::class, 'index']);
 Route::resource('cart', CartController::class);
-
+// Checkout
+Route::resource('checkout', CheckoutController::class);
 // Dashboard
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 // Role Controller

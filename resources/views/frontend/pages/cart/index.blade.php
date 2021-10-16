@@ -7,7 +7,7 @@
                     <h2 class="breadcrumb-title">Shop</h2>
                     <!-- breadcrumb-list start -->
                     <ul class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('frontend') }}">Home</a></li>
                         <li class="breadcrumb-item active">Cart</li>
                     </ul>
                     <!-- breadcrumb-list end -->
@@ -93,10 +93,15 @@
                                 </div>
                                 <div class="discount-code">
                                     <p>Enter your coupon code if you have one.</p>
-                                    <form>
-                                        <input type="text" required="" name="name">
-                                        <button class="cart-btn-2" type="submit">Apply Coupon</button>
-                                    </form>
+
+                                            @if (session('error'))
+                                                <div class="text-danger">
+                                                    <i class="fa fa-exclamation-circle"></i>
+                                                    {{ session('error') }}
+                                                </div>
+                                            @endif
+                                        <input type="text" id="add_voucher_input">
+                                        <button id="add_voucher_btn" class="cart-btn-2" type="submit">Apply Coupon</button>
                                 </div>
                             </div>
                         </div>
@@ -105,14 +110,38 @@
                                 <div class="title-wrap">
                                     <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                                 </div>
-                                <h5>Total <span>৳{{ $cartTotalPrice }}</span></h5>
-                                <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
-                                <a href="checkout.html">Proceed to Checkout</a>
+                                <h5>Sub-Total <span>৳{{ $cartTotalPrice }}</span></h5>
+                                @if ($voucher)
+                                    <h5>Discount (<em class="text-primary"> {{ $voucher->name }} </em>) <span>৳{{ ($cartTotalPrice*$voucher->discount)/100 }}</span></h5>
+                                    <h4 class="grand-totall-title">Total <span>৳{{ $cartTotalPrice - ($cartTotalPrice*$voucher->discount)/100  }}</span></h4>
+                                @else
+                                <h4 class="grand-totall-title">Grand Total <span>৳{{ $cartTotalPrice }}</span></h4>
+
+                                @endif
+                                <a href="{{ route('checkout.index') }}">Proceed to Checkout</a>
                             </div>
                         </div>
+                        @php
+                            session()->put('s_subtotal',$cartTotalPrice);
+                            if($voucher){
+                                session()->put('s_discount',($cartTotalPrice*$voucher->discount)/100);
+                                session()->put('s_voucher',$voucher->name);
+                            }
+                        @endphp
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('footer_js')
+    <script>
+        $("#add_voucher_btn").click(function(){
+            var voucherInput =  $("#add_voucher_input").val();
+            if(voucherInput !=''){
+                window.location.href = "{{ route('cart.index') }}/"+voucherInput;
+
+            }
+        });
+    </script>
 @endsection

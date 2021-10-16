@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Carbon\Carbon;
 
 class CartController extends Controller
 {
@@ -13,11 +15,25 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($voucher = '')
     {
+        if($voucher != ''){
+            if(!Voucher::where('name',$voucher)->exists()){
+                return back()->with('error','Voucher is not exists');
+            }
+            $voucher = Voucher::where('name',$voucher)->first();
+            $currentDate = Carbon::today()->format('Y-m-d');
+            if($voucher->expiry_date < $currentDate){
+                return back()->with('error','Voucher already expired');
+            }
+            if($voucher->limit < 1){
+                return back()->with('error','Voucher ends of limit');
+            }
+        }
         $cookieId = Cookie::get('jesco_ecommerce');
         return view('frontend.pages.cart.index',[
             'carts' =>Cart::where('cookie_id',$cookieId)->get(),
+            'voucher' => $voucher,
         ]);
     }
 
