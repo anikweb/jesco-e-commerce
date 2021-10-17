@@ -17,132 +17,154 @@
 </div>
 <div class="checkout-area pt-100px pb-100px">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-7">
-                <div class="billing-info-wrap">
-                    <h3>Billing Details</h3>
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12">
-                            <div class="billing-info mb-4">
-                                <label>Name</label>
-                                <input type="text" value="{{ Auth::user()->name }}">
+        <form action="{{ route('checkout.store') }}" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="billing-info-wrap">
+                        <h3>Billing Details</h3>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="billing-info mb-4">
+                                    <label for="name">Name</label>
+                                    <input type="text" value="{{ Auth::user()->name }}" name="name" id="name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-info mb-4">
-                                <label>Company / Shop Name <em class="text-muted">(optional)</em> </label>
-                                <input type="text">
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-4">
+                                    <label for="company">Company / Shop Name <em class="text-muted">(optional)</em> </label>
+                                    <input type="text" name="company" id="company">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-select mb-4">
-                                <label>Country</label>
-                                <select>
-                                    <option>Select a country</option>
-                                    <option>Azerbaijan</option>
-                                    <option>Bahamas</option>
-                                    <option>Bahrain</option>
-                                    <option>Bangladesh</option>
-                                    <option>Barbados</option>
-                                </select>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-4">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" name="phone" id="phone">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-info mb-4">
-                                <label>Street Address</label>
-                                <input class="billing-address" placeholder="House number and street name" type="text">
-                                <input placeholder="Apartment, suite, unit etc." type="text">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-4">
+                                    <label for="email">Email Address</label>
+                                    <input type="text" name="email" id="email">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-info mb-4">
-                                <label>Town / City</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-4">
-                                <label>State / County</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-4">
-                                <label>Postcode / ZIP</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-4">
-                                <label>Phone</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-4">
-                                <label>Email Address</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                    </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="billing-select mb-4">
+                                    <label for="region_id">Region</label>
+                                    <select name="region_id" id="region_id">
+                                        <option value="1">Mymensingh</option>
 
-                    <div class="additional-info-wrap">
-                        <h4>Additional information</h4>
-                        <div class="additional-info">
-                            <label>Order notes</label>
-                            <textarea placeholder="Notes about your order, e.g. special notes for delivery. " name="message"></textarea>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-lg-5 mt-md-30px mt-lm-30px ">
-                <div class="your-order-area">
-                    <h3>Your order</h3>
-                    <div class="your-order-wrap gray-bg-4">
-                        <div class="your-order-product-info">
-
-
-                            <div class="your-order-bottom">
-                                <ul>
-                                    <li class="your-order-shipping">Shipping</li>
-                                    <li>Free shipping</li>
-                                </ul>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="your-order-total">
-                                <ul>
-                                    <li class="order-total">Subtotal</li>
-                                    <li class="text-dark">৳{{ session()->get('s_subtotal') }}</li>
-                                </ul>
-                                @if (session()->get('s_discount'))
-                                    <ul>
-                                        <li class="order-total">Discount ( {{ session()->get('s_voucher') }} )</li>
-                                        <li class="text-dark">৳{{ session()->get('s_discount') }}</li>
-                                    </ul>
-                                @endif
-                                @if (session()->get('s_discount'))
-                                    <ul>
-                                        <li class="order-total tx-20 " style="color:#fb5d5d; font-size:28px !important;">Total</li>
-                                        <li style="font-size:22px !important;">৳{{  (session()->get('s_subtotal') - session()->get('s_discount')) }}</li>
-                                    </ul>
-                                @endif
+                            <div class="col-lg-4 col-md-6">
+                                <div class="billing-select mb-4">
+                                    <label for="district_id">City</label>
+                                    <select name="district_id" id="district_id">
+                                        <option value="1">Mymensingh</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="billing-select mb-4">
+                                    <label for="upazila_id">Upazila</label>
+                                    <select name="upazila_id" id="upazila_id">
+                                        <option value="1">Mymensingh Sadar</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-4">
+                                    <label for="street_address1">Street Address</label>
+                                    <input class="billing-address" placeholder="Street Address" type="text" name="street_address1" id="street_address1">
+                                    <input placeholder="Street Address" type="text" name="street_address2">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-4">
+                                    <label for="zip_code">Postcode / ZIP</label>
+                                    <input type="text" name="zip_code" id="zip_code">
+                                </div>
+                            </div>
 
+                        </div>
+                        <div class="additional-info-wrap">
+                            <h4>Additional information</h4>
+                            <div class="additional-info">
+                                <label for="note">Order notes</label>
+                                <textarea placeholder="Notes about your order, e.g. special notes for delivery. " name="note" id="note"></textarea>
                             </div>
                         </div>
-                        <div class="payment-method">
-                            <ul>
-                                <li class="order-total"><input style="height: auto; width:auto" type="radio" id="cod" name="payment_method" value="cod"> <label for="cod">Cash on delivery</label></li>
-                                <li class="order-total"><input style="height: auto; width:auto" type="radio" id="Online" name="payment_method" value="online"> <label for="Online">Online</label></li>
 
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="Place-order mt-25">
-                        <a class="btn-hover" href="#">Place Order</a>
                     </div>
                 </div>
+                <div class="col-lg-5 mt-md-30px mt-lm-30px ">
+                    <div class="your-order-area">
+                        <h3>Your order</h3>
+                        <div class="your-order-wrap gray-bg-4">
+                            <div class="your-order-product-info">
+
+
+                                <div class="your-order-bottom">
+                                    <ul>
+                                        <li class="your-order-shipping">Shipping</li>
+                                        <li>Free shipping</li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-total">
+                                    <ul>
+                                        <li class="order-total">Subtotal</li>
+                                        <li class="text-dark">৳{{ session()->get('s_subtotal') }}</li>
+                                    </ul>
+                                    @if (session()->get('s_discount'))
+                                        <ul>
+                                            <li class="order-total">Discount ( {{ session()->get('s_voucher') }} )</li>
+                                            <li class="text-dark">৳{{ session()->get('s_discount') }}</li>
+                                        </ul>
+                                    @endif
+                                    @if (session()->get('s_discount'))
+                                        <ul>
+                                            <li class="order-total tx-20 " style="color:#fb5d5d; font-size:28px !important;">Total</li>
+                                            <li style="font-size:22px !important;">৳{{  (session()->get('s_subtotal') - session()->get('s_discount')) }}</li>
+                                        </ul>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="payment-method">
+                                <ul>
+                                    <li class="order-total"><input style="height: auto; width:auto" type="radio" id="cod" name="payment_method" value="cod"> <label for="cod">Cash on delivery</label></li>
+                                    <li class="order-total"><input style="height: auto; width:auto" type="radio" id="Online" name="payment_method" value="online"> <label for="Online">Online</label></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="Place-order mt-25">
+                            <button type="submit" class="btn-hover" >Place Order</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
+@endsection
+@section('inline_style')
+<style>
+.your-order-area .Place-order button {
+    background-color: #fb5d5d;
+    color: #fff;
+    display: block;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1;
+    padding: 18px 20px;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 0;
+    z-index: 9;
+    width:100%;
+}
+.your-order-area .Place-order button:hover {
+    background-color: #000;
+}
+</style>
 @endsection

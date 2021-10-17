@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BillingDetails;
 use App\Models\Checkout;
+use App\Models\Order_Summary;
 use Illuminate\Http\Request;
+use Auth;
 
 class CheckoutController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('isCustomer');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +42,26 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        // return Auth::user()->id;
+        $billing_details = new BillingDetails;
+        $billing_details->user_id = Auth::user()->id;
+        $billing_details->name = $request->name;
+        $billing_details->company = $request->company;
+        $billing_details->phone = $request->phone;
+        $billing_details->email = $request->email;
+        $billing_details->region_id = $request->region_id;
+        $billing_details->district_id = $request->district_id;
+        $billing_details->upazila_id = $request->upazila_id;
+        $billing_details->street_adress1 = $request->street_address1;
+        $billing_details->street_adress2 = $request->street_address2;
+        $billing_details->zip_code = $request->zip_code;
+        $billing_details->note = $request->note;
+        $billing_details->payment_method = $request->payment_method;
+        if($billing_details->save()){
+            Order_Summary
+        }
+
     }
 
     /**
@@ -44,7 +70,7 @@ class CheckoutController extends Controller
      * @param  \App\Models\Checkout  $checkout
      * @return \Illuminate\Http\Response
      */
-    public function show(Checkout $checkout)
+    public function show(BillingDetails $checkout)
     {
         //
     }

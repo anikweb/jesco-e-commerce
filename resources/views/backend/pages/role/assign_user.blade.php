@@ -85,7 +85,7 @@
                                         <th>Created</th>
                                     </tr>
                                     @foreach ($usersV as $user)
-                                        @if ($user->roles->first()->name != 'Customer')
+                                        {{--  @if ($user->roles->first()->name != 'Customer')  --}}
                                             <tr>
                                                 <td>{{ $usersV->firstItem() +$loop->index }}</td>
                                                 <td>{{ $user->name }}</td>
@@ -97,7 +97,7 @@
                                                 </td>
                                                 <td>{{ $user->created_at->format('d-M-Y, h:i:s A') }}</td>
                                             </tr>
-                                        @endif
+                                        {{--  @endif  --}}
                                     @endforeach
                                 </thead>
                             </table>

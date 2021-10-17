@@ -70,17 +70,30 @@
                                 </li>
                                 <li><a href="about.html">About us</a></li>
                                 <li><a href="contact.html">Contact us</a></li>
+                                @auth
+                                    <li class="dropdown "><a href="{{ route('dashboard') }}">Dashboard <i class="pe-7s-angle-down"></i></a>
+                                        <ul class="sub-menu">
+                                            @if (auth()->user()->roles->first()->name == 'Customer')
+                                                <li><a href="blog-grid.html">Profile</a></li>
+                                            @endif
+                                            <form id="logoutForm" action="{{ route('logout') }}" method="POST">
+                                                @csrf
+                                            </form>
+                                            <li><a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a></li>
+
+                                        </ul>
+                                    </li>
+                                @else
+                                <li class="dropdown "><a href="{{ route('login') }}">Login</a></li>
+                                <li class="dropdown "><a href="{{ route('register') }}">Sign Up</a></li>
+                                @endauth
                             </ul>
                         </div>
                     </div>
                     <!-- Header Action Start -->
                     <div class="col col-lg-auto align-self-center pl-0">
                         <div class="header-actions">
-                            @auth
-                                <a target="_blank"  href="{{ route('dashboard') }}" class="header-action-btn login-btn">Dashboard</a>
-                            @else
-                                <a href="{{ route('login') }}" class="header-action-btn login-btn">Sign in</a>
-                            @endauth
+
                             <!-- Single Wedge Start -->
                             <a href="#" class="header-action-btn" data-bs-toggle="modal" data-bs-target="#searchActive">
                                 <i class="pe-7s-search"></i>
