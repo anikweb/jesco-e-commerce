@@ -71,10 +71,13 @@
                                 <li><a href="about.html">About us</a></li>
                                 <li><a href="contact.html">Contact us</a></li>
                                 @auth
-                                    <li class="dropdown "><a href="{{ route('dashboard') }}">Dashboard <i class="pe-7s-angle-down"></i></a>
+                                    <li class="dropdown "><a href="{{ route('dashboard') }}">Welcome, {{ Auth::user()->name }} <i class="pe-7s-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             @if (auth()->user()->roles->first()->name == 'Customer')
                                                 <li><a href="blog-grid.html">Profile</a></li>
+                                            @else
+                                                <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+
                                             @endif
                                             <form id="logoutForm" action="{{ route('logout') }}" method="POST">
                                                 @csrf
@@ -85,7 +88,7 @@
                                     </li>
                                 @else
                                 <li class="dropdown "><a href="{{ route('login') }}">Login</a></li>
-                               
+
                                 @endauth
                             </ul>
                         </div>
@@ -179,7 +182,7 @@
             <div class="body customScroll">
                 <ul class="minicart-product-list">
 
-                    @foreach (cartsItem() as $cart)
+                    @forelse (cartsItem() as $cart)
                     <li>
                         <a href="single-product.html" class="image"><img src="{{ asset('assets/images/product').'/'.$cart->product->created_at->format('Y/m/d/').$cart->product->id.'/thumbnail/'.$cart->product->thumbnail }}" alt="{{ $cart->product->name }}"
                                 alt="Cart product Image"></a>
@@ -193,8 +196,10 @@
                             <a href="#" class="remove">×</a>
                         </div>
                     </li>
-
-                    @endforeach
+                    @empty
+                        <li class="bg-gray p-3 rounded"> <span class="lead"> <i class="fa fa-exclamation-circle"></i>  No carts to show!
+                        </span></li>
+                    @endforelse
 
                 </ul>
             </div>

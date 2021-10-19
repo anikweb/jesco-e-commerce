@@ -38,9 +38,20 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        return view('frontend.pages.checkout',[
-            'divisions' => Division::orderBy('name','asc')->get(),
-        ]);
+        // return session('s_subtotal');
+        // if(session('s_subtotal')){
+        //     return 'ase';
+        // }else{
+        //     return 'nai';
+        // }
+
+        if(session('s_subtotal')){
+            return view('frontend.pages.checkout',[
+                'divisions' => Division::orderBy('name','asc')->get(),
+            ]);
+        }else{
+            return back();
+        }
     }
 
     /**

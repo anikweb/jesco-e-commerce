@@ -17,7 +17,7 @@
 </div>
 <div class="checkout-area pt-100px pb-100px">
     <div class="container">
-        <form action="{{ route('checkout.store') }}" method="POST">
+        <form id="checkout_form" action="{{ route('checkout.store') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-lg-7">
@@ -161,8 +161,8 @@
                             </div>
                             <div class="payment-method">
                                 <ul>
-                                    <li class="order-total"><input style="height: auto; width:auto" type="radio" id="cod" name="payment_method" value="cod"> <label for="cod">Cash on delivery</label></li>
-                                    <li class="order-total"><input style="height: auto; width:auto" type="radio" id="Online" name="payment_method" value="online"> <label for="Online">Online</label></li>
+                                    <li class="order-total"><input style="height: auto; width:auto" type="radio"  id="cod" name="payment_method" value="cod"> <label for="cod">Cash on delivery</label></li>
+                                    <li class="order-total"><input style="height: auto; width:auto" type="radio" id="Online"  name="payment_method" value="online"> <label for="Online">Online</label></li>
                                 </ul>
                                 @error('payment_method')
                                     <div class="text-danger">
@@ -181,6 +181,10 @@
         </form>
     </div>
 </div>
+@php
+    $total = (session()->get('s_subtotal') - session()->get('s_discount') + 20);
+    session()->put('s_total',$total);
+@endphp
 @endsection
 @section('inline_style')
     <style>
@@ -242,7 +246,14 @@
                         }
                     }
                 });
+            });
 
+            $('#cod').change(function(){
+                $("#checkout_form").attr("action","{{ route('checkout.store') }}");
+
+            });
+            $('#Online').change(function(){
+                $("#checkout_form").attr("action","{{ url('/pay') }}");
             });
         });
     </script>

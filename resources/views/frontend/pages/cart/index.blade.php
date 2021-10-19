@@ -111,6 +111,9 @@
                                                 <input type="text" id="add_voucher_input" value="{{$voucher->name}}" style="border: 3px solid green; background:gray; color:#fff" disabled>
                                                 <button id="remove_voucher_btn" class="cart-btn-2" type="submit">Remove Voucher</button>
                                             @else
+                                            @php
+                                                session()->forget(['s_voucher','s_discount'])
+                                            @endphp
                                                 <input type="text" id="add_voucher_input">
                                                 <button id="add_voucher_btn" class="cart-btn-2" type="submit">Apply Voucher</button>
                                             @endif
@@ -138,6 +141,7 @@
                             if($voucher){
                                 session()->put('s_discount',($cartTotalPrice*$voucher->discount)/100);
                                 session()->put('s_voucher',$voucher->name);
+                                session()->put('s_total',$voucher->name);
                             }
                         @endphp
                     </div>
