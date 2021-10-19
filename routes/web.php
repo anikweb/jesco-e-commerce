@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     WishlistController,
     CartController,
     CheckoutController,
+    SslCommerzPaymentController,
 };
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Route;
@@ -39,12 +40,15 @@ Route::get('/wishlist/remove/{id}',[FrontController::class, 'wishlistRemove'])->
 // wishlist add by ajax
 Route::get('/wishlist/add/{product_id}',[FrontController::class, 'wishliststore']);
 // Cart
+Route::get('cart/voucher/remove',[CartController::class, 'cartRemoveVoucher'])->name('cart.remove.voucher');
 Route::get('cart/delete/all',[CartController::class, 'cartDeleteAll'])->name('cart.all.delete');
 Route::get('cart/delete/{slug}',[CartController::class, 'cartDelete'])->name('cart.delete');
 Route::get('/cart/{voucher}',[CartController::class, 'index']);
 Route::resource('cart', CartController::class);
 // Checkout
 Route::resource('checkout', CheckoutController::class);
+Route::get('/get/district/{division_id}',[CheckoutController::class,'getDistrict']);
+Route::get('/get/upazila/{district_id}',[CheckoutController::class,'getUpazila']);
 // Dashboard
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 // Role Controller
@@ -80,5 +84,19 @@ Route::get('/dashboard/wishlists',[WishlistController::class,'index'])->name('da
 
 Route::get('github/redirect',[GithubController::class,'githubRedirect']);
 Route::get('github/callback',[GithubController::class,'githubCallback']);
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
 
 require __DIR__.'/auth.php';

@@ -85,7 +85,7 @@
                                     </li>
                                 @else
                                 <li class="dropdown "><a href="{{ route('login') }}">Login</a></li>
-                                <li class="dropdown "><a href="{{ route('register') }}">Sign Up</a></li>
+                               
                                 @endauth
                             </ul>
                         </div>

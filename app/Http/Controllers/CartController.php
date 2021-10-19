@@ -141,4 +141,10 @@ class CartController extends Controller
         }
         return back();
     }
+    public function cartRemoveVoucher()
+    {
+        session()->forget('s_discount');
+        session()->forget('s_voucher');
+        return redirect()->route('cart.index');
+    }
 }

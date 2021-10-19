@@ -89,10 +89,10 @@
                         <div class="col-lg-4 col-md-6 mb-lm-30px">
                             <div class="discount-code-wrapper">
                                 <div class="title-wrap">
-                                    <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4>
+                                    <h4 class="cart-bottom-title section-bg-gray">Use Voucher Code</h4>
                                 </div>
                                 <div class="discount-code">
-                                    <p>Enter your coupon code if you have one.</p>
+                                    <p>Enter your voucher code if you have one.</p>
 
                                             @if (session('error'))
                                                 <div class="text-danger">
@@ -100,8 +100,20 @@
                                                     {{ session('error') }}
                                                 </div>
                                             @endif
-                                        <input type="text" id="add_voucher_input">
-                                        <button id="add_voucher_btn" class="cart-btn-2" type="submit">Apply Coupon</button>
+                                            @if ($voucher)
+                                            <div class="text-success">
+                                                <i class="fa fa-check-circle"></i>
+                                               <span>You applied Voucher</span>
+                                            </div>
+                                        @endif
+
+                                            @if ($voucher)
+                                                <input type="text" id="add_voucher_input" value="{{$voucher->name}}" style="border: 3px solid green; background:gray; color:#fff" disabled>
+                                                <button id="remove_voucher_btn" class="cart-btn-2" type="submit">Remove Voucher</button>
+                                            @else
+                                                <input type="text" id="add_voucher_input">
+                                                <button id="add_voucher_btn" class="cart-btn-2" type="submit">Apply Voucher</button>
+                                            @endif
                                 </div>
                             </div>
                         </div>
@@ -140,8 +152,10 @@
             var voucherInput =  $("#add_voucher_input").val();
             if(voucherInput !=''){
                 window.location.href = "{{ route('cart.index') }}/"+voucherInput;
-
             }
+        });
+        $("#remove_voucher_btn").click(function(){
+            window.location.href = "{{ route('cart.remove.voucher') }}";
         });
     </script>
 @endsection
