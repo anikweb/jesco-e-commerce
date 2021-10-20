@@ -71,10 +71,10 @@
                                 <li><a href="about.html">About us</a></li>
                                 <li><a href="contact.html">Contact us</a></li>
                                 @auth
-                                    <li class="dropdown "><a href="{{ route('dashboard') }}">Welcome, {{ Auth::user()->name }} <i class="pe-7s-angle-down"></i></a>
+                                    <li class="dropdown "><a href="javascript:void(0)">Welcome, {{ Auth::user()->name }} <i class="pe-7s-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             @if (auth()->user()->roles->first()->name == 'Customer')
-                                                <li><a href="blog-grid.html">Profile</a></li>
+                                                <li><a href="{{ route('my-account.index') }}">Profile</a></li>
                                             @else
                                                 <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
 

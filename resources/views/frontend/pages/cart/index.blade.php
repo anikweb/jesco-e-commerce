@@ -138,10 +138,11 @@
                         </div>
                         @php
                             session()->put('s_subtotal',$cartTotalPrice);
+                            session()->put('s_total',$cartTotalPrice);
                             if($voucher){
                                 session()->put('s_discount',($cartTotalPrice*$voucher->discount)/100);
                                 session()->put('s_voucher',$voucher->name);
-                                session()->put('s_total',$voucher->name);
+                                session()->put('s_total',$cartTotalPrice - ($cartTotalPrice*$voucher->discount)/100);
                             }
                         @endphp
                     </div>

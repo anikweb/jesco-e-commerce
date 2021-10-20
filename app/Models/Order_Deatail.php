@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order_Deatail extends Model
 {
     use HasFactory;
+    public function order_summary(){
+        return $this->belongsTo(Order_Summary::class,'order_summary_id');
+    }
 }

@@ -357,6 +357,17 @@
                     </a>
                 </li>
             @endcan
+            {{--  Order   --}}
+            {{--  @can('wishlist view')  --}}
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.orders.index') }}" class="nav-link">
+                    <i class="nav-icon fa fa-truck"></i>
+                    <p>
+                    Orders
+                    </p>
+                    </a>
+                </li>
+            {{--  @endcan  --}}
 
             {{-- @endif --}}
             {{-- Role management --}}

@@ -20,6 +20,7 @@ use App\Models\{
     Order_Summary,
     Upazila,
     Cart,
+    CustomerPersonalInformation,
     Product_Attribute,
     Voucher,
 };
@@ -48,6 +49,7 @@ class CheckoutController extends Controller
         if(session('s_subtotal')){
             return view('frontend.pages.checkout',[
                 'divisions' => Division::orderBy('name','asc')->get(),
+                'cusPerInfo' => CustomerPersonalInformation::where('user_id',Auth::user()->id)->first(),
             ]);
         }else{
             return back();

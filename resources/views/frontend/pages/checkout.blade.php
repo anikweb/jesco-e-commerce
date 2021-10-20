@@ -45,7 +45,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label for="phone">Phone</label>
-                                    <input type="text" name="phone" id="phone" placeholder="Enter phone or mobile number" @error('phone') style="border:1px solid red" @enderror>
+                                    <input type="text" name="phone" value="{{ $cusPerInfo->mobile }}" id="phone" placeholder="Enter phone or mobile number" @error('phone') style="border:1px solid red" @enderror>
                                     @error('phone')
                                         <div class="text-danger">
                                             <i class="fa fa-exclamation-circle"></i>
@@ -57,7 +57,7 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label for="email">Email Address</label>
-                                    <input type="text" name="email" id="email" placeholder="Enter email address.">
+                                    <input type="text" name="email" value="{{ $cusPerInfo->user->email }}" id="email" placeholder="Enter email address.">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
@@ -66,7 +66,7 @@
                                     <select name="region_id" id="region_id" @error('region_id') style="border:1px solid red" @enderror>
                                         <option value="">Select</option>
                                         @foreach ($divisions as $division)
-                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                            <option @if($cusPerInfo->region_id == $division->id ) selected @enderror value="{{ $division->id }}">{{ $division->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('region_id')
@@ -81,7 +81,7 @@
                                 <div class="billing-select mb-4">
                                     <label for="district_id">City</label>
                                     <select name="district_id" id="district_id" @error('district_id') style="border:1px solid red" @enderror>
-                                        <option value="">Select</option>
+                                        <option value="{{ $cusPerInfo->district_id }}">{{ $cusPerInfo->district->name }}</option>
                                     </select>
                                     @error('district_id')
                                         <div class="text-danger">
@@ -95,7 +95,7 @@
                                 <div class="billing-select mb-4">
                                     <label for="upazila_id">Upazila</label>
                                     <select name="upazila_id" id="upazila_id" @error('upazila_id') style="border:1px solid red" @enderror>
-                                        <option value="">Select</option>
+                                        <option value="{{  $cusPerInfo->upazila_id }}">{{ $cusPerInfo->upazila->name }}</option>
                                     </select>
                                     @error('upazila_id')
                                         <div class="text-danger">
@@ -108,14 +108,14 @@
                             <div class="col-lg-12">
                                 <div class="billing-info mb-4">
                                     <label for="street_address1">Street Address</label>
-                                    <input class="billing-address" placeholder="Street Address" type="text" name="street_address1" id="street_address1">
-                                    <input placeholder="Street Address" type="text" name="street_address2">
+                                    <input class="billing-address" value="{{ $cusPerInfo->street_address1 }}" placeholder="Street Address" type="text" name="street_address1" id="street_address1">
+                                    <input placeholder="Street Address" value="{{ $cusPerInfo->street_address2 }}" type="text" name="street_address2">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-4">
                                     <label for="zip_code">Postcode / ZIP</label>
-                                    <input type="text" name="zip_code" id="zip_code" placeholder="Enter postcode / zip code">
+                                    <input type="text" name="zip_code" value="{{ $cusPerInfo->zip_code }}" id="zip_code" placeholder="Enter postcode / zip code">
                                 </div>
                             </div>
 

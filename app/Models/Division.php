@@ -14,5 +14,4 @@ class Division extends Model
     public function upazila(){
         return $this->hasMany(Upazila::class,'division_id');
     }
-
 }

@@ -13,9 +13,13 @@ use Carbon\Carbon;
 class DashboardController extends Controller
 {
     public function index(){
-        return view('backend.dashboard',[
-            'new_order' => Order_Summary::where('payment_status',1)->get(),
-            'users' =>User::all(),
-        ]);
+        if(auth()->user()->roles->first()->name != 'Customer'){
+            return view('backend.dashboard',[
+                'new_order' => Order_Summary::where('payment_status',1)->get(),
+                'users' =>User::all(),
+            ]);
+        }else{
+            return redirect()->route('my-account.index');
+        }
     }
 }

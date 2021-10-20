@@ -13,6 +13,8 @@ use App\Http\Controllers\{
     WishlistController,
     CartController,
     CheckoutController,
+    MyAccountController,
+    OrderController,
     SslCommerzPaymentController,
 };
 use App\Models\Wishlist;
@@ -34,7 +36,7 @@ Route::get('/',[FrontController::class, 'index'])->name('frontend');
 Route::get('/products',[FrontController::class, 'productView'])->name('frontend.product');
 Route::get('/product/{slug}',[FrontController::class, 'productSingle'])->name('frontend.product.single');
 Route::get('/get/color/size/{cid}/{pid}',[FrontController::class, 'getColorSizeId']);
-Route::get('/wishlist/',[FrontController::class, 'wishlistIndex'])->name('frontend.wishlist.index');
+Route::get('/wishlist',[FrontController::class, 'wishlistIndex'])->name('frontend.wishlist.index');
 Route::get('/wishlist/remove/{id}',[FrontController::class, 'wishlistRemove'])->name('frontend.wishlist.remove');
 
 // wishlist add by ajax
@@ -46,9 +48,17 @@ Route::get('cart/delete/{slug}',[CartController::class, 'cartDelete'])->name('ca
 Route::get('/cart/{voucher}',[CartController::class, 'index']);
 Route::resource('cart', CartController::class);
 // Checkout
-Route::resource('checkout', CheckoutController::class);
+Route::resource('checkout', CheckoutController::class)->middleware(['auth','isCustomer']);
 Route::get('/get/district/{division_id}',[CheckoutController::class,'getDistrict']);
 Route::get('/get/upazila/{district_id}',[CheckoutController::class,'getUpazila']);
+
+// Account
+Route::get('/my-account/personal-information',[MyAccountController::class,'indexPersonalOnfo'])->name('my-account.personal.information')->middleware(['isCustomer','auth']);
+Route::get('/my-account/personal-information/{username}/edit',[MyAccountController::class,'editPersonalOnfo'])->name('my-account.personal.information.edit')->middleware(['isCustomer','auth']);
+Route::post('/my-account/personal-information/edit/update',[MyAccountController::class,'updatePersonalOnfo'])->name('my-account.personal.information.update')->middleware(['isCustomer','auth']);
+Route::get('/my-account/orders/invoice/download/{billing_id}',[MyAccountController::class,'downloadInvoice'])->name('my-account.invoice.download')->middleware(['isCustomer','auth']);
+Route::get('/my-account/delivered/orders',[MyAccountController::class,'indexDeliveredOrder'])->name('my-account.delivered.order')->middleware(['isCustomer','auth']);
+Route::resource('my-account', MyAccountController::class)->middleware(['isCustomer','auth']);
 // Dashboard
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 // Role Controller
@@ -80,6 +90,8 @@ Route::resource('/dashboard/voucher', VoucherController::class)->middleware('aut
 
 // Wishlist
 Route::get('/dashboard/wishlists',[WishlistController::class,'index'])->name('dashboard.wishlist')->middleware('auth');
+// Order
+Route::get('/dashboard/orders',[OrderController::class,'index'])->name('dashboard.orders.index')->middleware('auth');
 // Socialite
 
 Route::get('github/redirect',[GithubController::class,'githubRedirect']);
