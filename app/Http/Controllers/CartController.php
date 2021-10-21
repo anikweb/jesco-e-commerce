@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CartAddForm;
 use App\Models\Cart;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
@@ -53,9 +54,9 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CartAddForm $request)
     {
-        // return ;
+        // return $request;
         if($request->size_id){
             $cookie_id = Cookie::get('jesco_ecommerce');
             if(Cart::where('cookie_id',$cookie_id)->where('product_id',$request->product_id)->where('color_id',$request->color_id)->where('size_id',$request->size_id)->exists()){

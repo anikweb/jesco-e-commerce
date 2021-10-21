@@ -26,12 +26,6 @@
                                 </td>
                                 <td><a href="{{ route('my-account.invoice.download',$billing->id) }}" class="view"><i class="fa fa-download"></i> Download Invoice</a></td>
                             </tr>
-                        @else
-                            @if ($loop->index ==0)
-                            <tr>
-                                <td colspan="5"> <i class="fa fa-exclamation-circle"></i> Empty</td>
-                            </tr>
-                            @endif
                         @endif
                     @empty
                     <tr>

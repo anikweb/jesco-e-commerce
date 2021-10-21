@@ -25,17 +25,29 @@
                    <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h2>Status: <span class="badge badge-success">
-                            @if ($order->current_status ==1)
-                                Picup in Progress
-                            @elseif($order->current_status ==2)
-                                Shipped
-                            @elseif($order->current_status ==3)
-                                Out for Delivery
-                            @elseif($order->current_status ==4)
-                                Delivered
+                            @if ($order->current_status !=5)
+                                <h2>Status:
+                                    <span class="badge badge-success">
+                                        @if ($order->current_status ==1)
+                                           <i class="fa fa-dolly"></i> Picup in Progress
+                                        @elseif($order->current_status ==2)
+                                        <i class="fa fa-shipping-fast"></i>  Shipped
+                                        @elseif($order->current_status ==3)
+                                        <i class="fa fa-dolly-flatbed"></i> Out for Delivery
+                                        @elseif($order->current_status ==4)
+                                        <i class="fa fa-truck-loading"></i> Delivered
+                                        @endif
+                                    </span>
+                                </h2>
+                            @else
+                                <h2>Status:
+                                    <span class="badge badge-danger">
+                                        @if ($order->current_status ==5)
+                                        <i class="fa fa-exclamation-circle"></i> Canceled
+                                        @endif
+                                    </span>
+                                </h2>
                             @endif
-                            </span></h2>
                             <h5>
                                 @if($order->delivered_date)
                                     Delivered Date <strong>{{ Carbon\Carbon::parse($order->delivered_date)->format('Y-m-d, h:i A') }}
@@ -112,6 +124,16 @@
                                         <tr>
                                             <td colspan="9" class="text-right font-weight-bold">Total</td>
                                             <td>{{ $total - $order->discount.'/-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="9" class="text-right font-weight-bold">Payment</td>
+                                            <td>
+                                                @if ($order->payment_status == 1)
+                                                    Unpaid
+                                                @elseif($order->payment_status == 2)
+                                                    Paid
+                                                @endif
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

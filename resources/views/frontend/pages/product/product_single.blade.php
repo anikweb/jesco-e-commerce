@@ -25,10 +25,6 @@
                         <!-- Swiper -->
                         <div class="swiper-container zoom-top swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
                             <div class="swiper-wrapper" id="swiper-wrapper-4d2af9454fd6102e9" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
-                                {{--  <div class="swiper-slide zoom-image-hover swiper-slide-active" role="group" aria-label="1 / 4" style="width: 576px; position: relative; overflow: hidden;">
-                                    <img class="img-responsive m-auto" src="assets/images/product-image/zoom-image/1.jpg" alt="">
-                                    <img role="presentation" alt="" src="file:///D:/jesco/assets/images/product-image/zoom-image/1.jpg" class="zoomImg" style="position: absolute; top: -223.611px; left: -181.806px; opacity: 0; width: 800px; height: 800px; border: none; max-width: none; max-height: none;">
-                                </div>  --}}
                                 <div class="swiper-slide zoom-image-hover swiper-slide-active" role="group" aria-label="2 / 4" style="width: 576px; position: relative; overflow: hidden;">
                                     <img class="img-responsive m-auto" src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" >
                                     <img role="presentation" src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" class="zoomImg" style="position: absolute; top: 0px; left: 0px; opacity: 0; width: 800px; height: 800px; border: none; max-width: none; max-height: none;">
@@ -74,6 +70,7 @@
                                 <span class="read-review"><a class="reviews" href="#">( 5 Customer Review )</a></span>
                             </div>
                             <p class="mt-30px mb-0">{{ $product->summary }}</p>
+
                             <div class="colorName badge text-white bg-primary">
                                 Colors
                             </div>
@@ -83,13 +80,26 @@
                                         <input class="color_id" id="color_id{{$attribute->id}}" name="color_id" data-product="{{ $product->id }}" value="{{ $attribute->color_id }}" style="width: auto; height:auto" type="radio"> {{ Str::title($attribute->color->name) }}
                                     </label>
                                 @endforeach
+                                @error('color_id')
+                                    <div class="text-danger">
+                                        <i class="fa fa-exclamation-circle"></i>
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
+
                             <div class="sizeName">
                                 {{-- Size will execute  by ajax --}}
                             </div>
                             <div class="size">
                                 {{-- Size will execute  by ajax --}}
                             </div>
+                            @error('size_id')
+                                <div class="text-danger">
+                                    <i class="fa fa-exclamation-circle"></i>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                             <div class="pro-details-quality">
                                 <div class="cart-plus-minus"><div class="dec qtybutton">-</div>
                                     <input class="cart-plus-minus-box" type="text" name="quantity" value="1">
@@ -109,6 +119,12 @@
                                     <a href="compare.html"><i class="pe-7s-refresh-2"></i></a>
                                 </div>
                             </div>
+                            @error('quantity')
+                                <div class="text-danger">
+                                    <i class="fa fa-exclamation-circle"></i>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                             <div class="pro-details-sku-info pro-details-same-style  d-flex">
                                 <span>SKU: </span>
                                 <ul class="d-flex">

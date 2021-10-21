@@ -99,6 +99,8 @@ Route::get('/dashboard/orders/out-for-delivered',[OrderController::class,'indexO
 Route::get('/dashboard/orders/out-for-delivered/upgrade/delivered/{invoice_no}',[OrderController::class,'upgradeToDelivered'])->middleware('auth');
 Route::get('/dashboard/orders/delivered',[OrderController::class,'indexDelivered'])->name('dashboard.orders.delivered')->middleware('auth');
 Route::get('/dashboard/orders/details/{invoice_no}',[OrderController::class,'indexDetails'])->name('dashboard.orders.details')->middleware('auth');
+Route::get('/dashboard/orders/cancel/{invoice_no}',[OrderController::class,'cancelOrder'])->name('dashboard.orders.cancel')->middleware('auth');
+Route::get('/dashboard/orders/canceled',[OrderController::class,'indexCanceled'])->name('dashboard.orders.canceled')->middleware('auth');
 
 // Socialite
 

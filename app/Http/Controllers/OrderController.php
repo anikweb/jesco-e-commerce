@@ -27,7 +27,7 @@ class OrderController extends Controller
             $order_summary = Order_Summary::where('invoice_no',$invoice_no)->first();
             $order_summary->current_status = 2;
             $order_summary->save();
-            return redirect()->route('dashboard.orders.details',$invoice_no);
+            return redirect()->route('dashboard.orders.details',$invoice_no)->with('success','Order '.$invoice_no.' upgraded to shipped');
         }else{
             return abort(404);
         }
@@ -47,7 +47,7 @@ class OrderController extends Controller
             $order_summary = Order_Summary::where('invoice_no',$invoice_no)->first();
             $order_summary->current_status = 3;
             $order_summary->save();
-            return redirect()->route('dashboard.orders.details',$invoice_no);
+            return redirect()->route('dashboard.orders.details',$invoice_no)->with('success','Order '.$invoice_no.' upgraded to out for delivery');;
         }else{
             return abort(404);
         }
@@ -68,7 +68,7 @@ class OrderController extends Controller
             $order_summary->current_status = 4;
             $order_summary->delivered_date = Carbon::now();
             $order_summary->save();
-            return redirect()->route('dashboard.orders.details',$invoice_no);
+            return redirect()->route('dashboard.orders.details',$invoice_no)->with('success','Order '.$invoice_no.' upgraded to delivered');;
         }else{
             return abort(404);
         }
@@ -77,7 +77,7 @@ class OrderController extends Controller
         if(auth()->user()->can('order management')){
             return view('backend.pages.orders.delivered',[
                 'orders' => Order_Summary::where('current_status',4)->latest()->paginate(10),
-                ]);
+            ]);
         }else{
             return abort(404);
         }
@@ -92,4 +92,25 @@ class OrderController extends Controller
             return abort(404);
         }
     }
+    public function cancelOrder($invoice_no){
+        if(auth()->user()->can('order management')){
+            // return $invoice_no;
+            $order_summary = Order_Summary::where('invoice_no',$invoice_no)->first();
+            $order_summary->current_status = 5;
+            $order_summary->save();
+            return redirect()->route('dashboard.orders.details',$invoice_no)->with('success','Order '.$invoice_no.' canceled! ');;
+        }else{
+            return abort(404);
+        }
+    }
+    public function indexCanceled(){
+        if(auth()->user()->can('order management')){
+            return view('backend.pages.orders.canceled',[
+                'orders' => Order_Summary::where('current_status',5)->latest()->paginate(10),
+            ]);
+        }else{
+            return abort(404);
+        }
+    }
+
 }

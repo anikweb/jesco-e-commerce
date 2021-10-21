@@ -60,7 +60,7 @@
                                                 <button data-invoice="{{ $order->invoice_no }}" class="btn btn-success up-status-btn"><i class="fa fa-truck-loading"></i> Upgrade to Delivered</button>
                                             </td>
                                             <td class="text-center">
-                                                <a href="#" class="btn btn-danger"><i class="fa fa-times-circle"></i> Cencel Order</a>
+                                                <button data-invoice="{{ $order->invoice_no }}" class="btn btn-danger cancel-order-btn"><i class="fa fa-times-circle"></i> Cencel Order</button>
                                             </td>
                                         </tr>
                                     @empty
@@ -129,7 +129,46 @@
             }
             })
         });
+        $('.cancel-order-btn').click(function(){
+            var data_invoice = $(this).attr('data-invoice');
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
 
+            swalWithBootstrapButtons.fire({
+                title: 'Are you upgrading this order to shipped?',
+                text: 'Invoice No: '+data_invoice,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, upgrade it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                'Upgraded!',
+                'This order is now in shipping.',
+                'success'
+                )
+                setTimeout(function(){
+                    window.location.href = "{{ url('dashboard/orders/cancel') }}/"+data_invoice;
+                }, 1300);
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'This order steel now in Picup in Progress!',
+                'error',
+                )
+            }
+            })
+        });
 
     </script>
 

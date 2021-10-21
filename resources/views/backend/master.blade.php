@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @elseif(Route::is('subcategory.create')) Create Subcategory @elseif(Route::is('subcategory.edit')) Edit Subcategory @elseif(Route::is('subcategory.index')) Subcategories @elseif(Route::is('product.index')) Products @elseif(Route::is('product.edit')) Edit Product @elseif(Route::is('product.create')) Add Product @elseif(Route::is('product.show')) {{ $product->name }} @elseif(Route::is('products.image.gallery')) Image Gallery-{{ $product->name }} @elseif(Route::is('voucher.create')) Create Voucher @elseif(Route::is('voucher.deactivate.list')) Deactivated Vouchers @elseif(Route::is('voucher.edit')) Edit Voucher @elseif(Route::is('voucher.index')) Active Vouchers @elseif(Route::is('dashboard.orders.index')) Picup In Progress - Orders @elseif(Route::is('dashboard.orders.shipped')) Shipped - Orders @elseif(Route::is('dashboard.orders.outForDelivered')) Out for Delivery - Orders @elseif(Route::is('dashboard.orders.delivered')) Delivered - Orders @elseif(Route::is('dashboard.orders.details')) {{ $order->invoice_no }} - Orders  @elseif(Route::is('dashboard.wishlist')) Active Wishlists  @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
+  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @elseif(Route::is('subcategory.create')) Create Subcategory @elseif(Route::is('subcategory.edit')) Edit Subcategory @elseif(Route::is('subcategory.index')) Subcategories @elseif(Route::is('product.index')) Products @elseif(Route::is('product.edit')) Edit Product @elseif(Route::is('product.create')) Add Product @elseif(Route::is('product.show')) {{ $product->name }} @elseif(Route::is('products.image.gallery')) Image Gallery-{{ $product->name }} @elseif(Route::is('voucher.create')) Create Voucher @elseif(Route::is('voucher.deactivate.list')) Deactivated Vouchers @elseif(Route::is('voucher.edit')) Edit Voucher @elseif(Route::is('voucher.index')) Active Vouchers @elseif(Route::is('dashboard.orders.index')) Picup In Progress - Orders @elseif(Route::is('dashboard.orders.shipped')) Shipped - Orders @elseif(Route::is('dashboard.orders.outForDelivered')) Out for Delivery - Orders @elseif(Route::is('dashboard.orders.delivered')) Delivered - Orders @elseif(Route::is('dashboard.orders.details')) {{ $order->invoice_no }} - Orders @elseif(Route::is('dashboard.orders.canceled')) Canceled - Orders  @elseif(Route::is('dashboard.wishlist')) Active Wishlists  @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -359,8 +359,8 @@
             @endcan
             {{--  Order   --}}
              @can('order management')
-                <li class="nav-item @if(Route::is('dashboard.orders.index')||Route::is('dashboard.orders.shipped')||Route::is('dashboard.orders.outForDelivered')||Route::is('dashboard.orders.delivered')||Route::is('dashboard.orders.details')) menu-open @endif">
-                    <a href="#" class="nav-link @if(Route::is('dashboard.orders.index')||Route::is('dashboard.orders.shipped')||Route::is('dashboard.orders.outForDelivered')||Route::is('dashboard.orders.delivered')||Route::is('dashboard.orders.details')) active @endif">
+                <li class="nav-item @if(Route::is('dashboard.orders.index')||Route::is('dashboard.orders.shipped')||Route::is('dashboard.orders.outForDelivered')||Route::is('dashboard.orders.delivered')||Route::is('dashboard.orders.details')||Route::is('dashboard.orders.canceled')) menu-open @endif">
+                    <a href="#" class="nav-link @if(Route::is('dashboard.orders.index')||Route::is('dashboard.orders.shipped')||Route::is('dashboard.orders.outForDelivered')||Route::is('dashboard.orders.delivered')||Route::is('dashboard.orders.details')||Route::is('dashboard.orders.canceled')) active @endif">
                     <i class="nav-icon fas fa-dolly"></i>
                     <p>
                         Orders
@@ -390,6 +390,12 @@
                             <a href="{{ route('dashboard.orders.delivered') }}" class="nav-link @if(Route::is('dashboard.orders.delivered')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Delivered</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.orders.canceled') }}" class="nav-link @if(Route::is('dashboard.orders.canceled')) active @endif">
+                                <i class="far fa-circle nav-icon text-danger"></i>
+                                <p>Canceled</p>
                             </a>
                         </li>
                     </ul>
