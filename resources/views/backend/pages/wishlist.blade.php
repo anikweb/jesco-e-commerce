@@ -49,7 +49,7 @@
                                         </tr>
                                     @empty
                                         <tr class="text-center">
-                                            <td colspan="3" class="lead"> <i class="fa fa-exclamation-circle"></i> No Wishlists Available</td>
+                                            <td colspan="6" class="lead"> <i class="fa fa-exclamation-circle"></i> No Wishlists Available</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

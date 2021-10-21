@@ -148,8 +148,9 @@
         <h2><span style="color:#ef4836">JE</span>SKO</h2>
         <p style="padding: 0; margin:0">Address: Mymensingh, Bangladesh</p>
         <p style="padding: 0; margin:0">Web: jesco.com, E-mail: info@jesco  .com </p>
-        <p style="padding: 0 0 10px 0; margin:0">Phone:  01783674575</p>
-      <h1>INVOICE 3-2-1</h1>
+        <p style="padding: 0; margin:0">Phone:  01783674575</p>
+        <p style="padding: 0 0 10px 0; margin:0">Invoice No:  {{ $billing_Details->order_summary->first()->invoice_no }}</p>
+      <h1>INVOICE </h1>
       <div id="project">
         <div><span style="color: rgb(2, 144, 226); font-size:12px">Bill to</span></div>
         <div><span>CLIENT</span> {{ $billing_Details->name }}</div>
@@ -157,7 +158,7 @@
         <div><span>EMAIL</span> {{ $billing_Details->email }}</div>
         <div><span>PHONE</span> {{ $billing_Details->phone }}</div>
         <div><span>DATE</span> {{ $billing_Details->created_at->format('d-M-Y') }}</div>
-        <div><span>DUE DATE</span> {{ $billing_Details->created_at->format('d-M-Y') }}</div>
+
       </div>
     </header>
     <main>
@@ -194,11 +195,11 @@
                         {{ App\Models\ProductSize::find($order_detail->size_id)->name }}
                     </td>
                     <td>
-                        {{ App\Models\Product::find($order_detail->product_id)->attribute->where('color_id',$order_detail->color_id)->where('size_id',$order_detail->size_id)->first()->offer_price }}
+                        {{ App\Models\Product::find($order_detail->product_id)->attribute->where('color_id',$order_detail->color_id)->where('size_id',$order_detail->size_id)->first()->offer_price.'/-' }}
                     </td>
                     <td>{{ $order_detail->quantity }}</td>
                     <td style="background-color: #57B223; color:#fff; font-size:15px">
-                        {{ App\Models\Product::find($order_detail->product_id)->attribute->where('color_id',$order_detail->color_id)->where('size_id',$order_detail->size_id)->first()->offer_price *$order_detail->quantity }}
+                        {{ App\Models\Product::find($order_detail->product_id)->attribute->where('color_id',$order_detail->color_id)->where('size_id',$order_detail->size_id)->first()->offer_price *$order_detail->quantity.'/-' }}
                     </td>
                 </tr>
             @endforeach
@@ -207,7 +208,7 @@
             <td colspan="6">DISCOUNT @if($order_summary->discount !=0) ( <span style="color: rgb(74, 74, 240); font-size:10px">{{ $order_summary->voucher_name }} Coupon Applied</span> ) @endif </td>
             <td class="total" style="background-color: #57B223; color:#fff; font-size:15px">
                 @if ($order_summary->discount)
-                    {{ $order_summary->discount }}
+                    {{ $order_summary->discount.'/-' }}
                 @else
                     0
                 @endif
@@ -216,12 +217,12 @@
           <tr>
             <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
             <td colspan="6">SHIPPING FEE</td>
-            <td class="total" style="background-color: #57B223; color:#fff; font-size:15px">{{ $order_summary->shipping_fee }}</td>
+            <td class="total" style="background-color: #57B223; color:#fff; font-size:15px">{{ $order_summary->shipping_fee.'/-' }}</td>
           </tr>
           <tr>
             <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
             <td colspan="6" class="grand total">GRAND TOTAL</td>
-            <td class="grand total" style="background-color: #1d2817; color:#fff; font-size:15px">{{ $order_summary->total_price }}</td>
+            <td class="grand total" style="background-color: #1d2817; color:#fff; font-size:15px">{{ $order_summary->total_price.'/-' }}</td>
           </tr>
         </tbody>
       </table>

@@ -258,6 +258,8 @@ class SslCommerzPaymentController extends Controller
             }else{
                 $order_summary->total_price = session()->get('s_subtotal') + 20;
             }
+            $order_summary->invoice_no = 'BK'.'-'.uniqid(); // Dyanmic Invoice
+            $order_summary->payment_status = 2; //Paid
 
             $order_summary->save();
             if(session()->get('s_voucher')){

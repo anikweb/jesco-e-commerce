@@ -21,6 +21,8 @@ class CreateOrderSummariesTable extends Migration
             $table->integer('shipping_fee')->nullable();
             $table->integer('sub_total');
             $table->integer('total_price');
+            $table->string('invoice_no');
+            $table->tinyInteger('current_status')->default(1)->comment('1=Picup in Progress, 2=Shipped, 3=Out for Delivery, 4=Delivered');
             $table->integer('payment_status')->nullable()->default(1)->comment('1=unpaid, 2=paid');
             $table->timestamps();
         });

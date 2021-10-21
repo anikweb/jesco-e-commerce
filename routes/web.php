@@ -91,7 +91,14 @@ Route::resource('/dashboard/voucher', VoucherController::class)->middleware('aut
 // Wishlist
 Route::get('/dashboard/wishlists',[WishlistController::class,'index'])->name('dashboard.wishlist')->middleware('auth');
 // Order
-Route::get('/dashboard/orders',[OrderController::class,'index'])->name('dashboard.orders.index')->middleware('auth');
+Route::get('/dashboard/orders/picup-in-progress/upgrade/shipped/{invoice_no}',[OrderController::class,'upgradeToShipped'])->middleware('auth');
+Route::get('/dashboard/orders/picup-in-progress',[OrderController::class,'index'])->name('dashboard.orders.index')->middleware('auth');
+Route::get('/dashboard/orders/shipped',[OrderController::class,'indexShipped'])->name('dashboard.orders.shipped')->middleware('auth');
+Route::get('/dashboard/orders/shipped/upgrade/out-for-delivery/{invoice_no}',[OrderController::class,'upgradeToOutForDelivery'])->middleware('auth');
+Route::get('/dashboard/orders/out-for-delivered',[OrderController::class,'indexOutForDelivered'])->name('dashboard.orders.outForDelivered')->middleware('auth');
+Route::get('/dashboard/orders/out-for-delivered/upgrade/delivered/{invoice_no}',[OrderController::class,'upgradeToDelivered'])->middleware('auth');
+Route::get('/dashboard/orders/delivered',[OrderController::class,'indexDelivered'])->name('dashboard.orders.delivered')->middleware('auth');
+
 // Socialite
 
 Route::get('github/redirect',[GithubController::class,'githubRedirect']);
