@@ -37,7 +37,7 @@ class MyAccountController extends Controller
     public function indexDeliveredOrder()
     {
        return view('frontend.pages.profile.delivered_order',[
-            'billings' => BillingDetails::where('user_id',Auth::user()->id)->paginate(5),
+            'billings' => BillingDetails::where('user_id',Auth::user()->id)->latest()->paginate(5),
        ]);
     }
     public function downloadInvoice($billing_id)

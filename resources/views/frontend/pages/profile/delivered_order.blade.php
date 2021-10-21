@@ -6,6 +6,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Invoice</th>
                         <th>Date</th>
                         <th>Amount</th>
                         <th>invoice</th>
@@ -13,16 +14,25 @@
                 </thead>
                 <tbody>
                     @forelse ($billings as $billing)
-                        <tr>
-                            <td>{{ $billings->firstItem() +$loop->index }}</td>
-                            <td>{{ $billing->created_at->format('D-M-y') }}</td>
-                            <td>
-                                @foreach ($billing->order_summary as $order_summary)
-                                {{ '৳'.$order_summary->total_price }}
-                                @endforeach
-                            </td>
-                            <td><a href="{{ route('my-account.invoice.download',$billing->id) }}" class="view"><i class="fa fa-download"></i> Download Invoice</a></td>
-                        </tr>
+                        @if ($billing->order_summary->first()->current_status == 4 )
+                            <tr>
+                                <td>{{ $billings->firstItem() +$loop->index }}</td>
+                                <td>{{ $billing->order_summary->first()->invoice_no }}</td>
+                                <td>{{ $billing->created_at->format('D-M-y') }}</td>
+                                <td>
+                                    @foreach ($billing->order_summary as $order_summary)
+                                    {{ '৳'.$order_summary->total_price }}
+                                    @endforeach
+                                </td>
+                                <td><a href="{{ route('my-account.invoice.download',$billing->id) }}" class="view"><i class="fa fa-download"></i> Download Invoice</a></td>
+                            </tr>
+                        @else
+                            @if ($loop->index ==0)
+                            <tr>
+                                <td colspan="5"> <i class="fa fa-exclamation-circle"></i> Empty</td>
+                            </tr>
+                            @endif
+                        @endif
                     @empty
                     <tr>
                         <td colspan="4"> <i class="fa fa-exclamation-circle"></i> Empty</td>

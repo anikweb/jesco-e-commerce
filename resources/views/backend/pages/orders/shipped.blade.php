@@ -54,7 +54,7 @@
                                                 Shipped
                                             </span></td>
                                             <td class="text-center">
-                                                <a href="#" class="btn btn-primary"><i class="fa fa-eye"></i> Details</a>
+                                                <a href="{{ route('dashboard.orders.details',$order->invoice_no) }}" class="btn btn-primary"><i class="fa fa-eye"></i> Details</a><a href="{{ route('dashboard.orders.details',$order->invoice_no) }}" class="btn btn-primary"><i class="fa fa-eye"></i> Details</a>
                                             </td >
                                             <td class="text-center">
                                                 <button data-invoice="{{ $order->invoice_no }}" class="btn btn-success up-status-btn"><i class="fa fa-dolly-flatbed"></i> Upgrade to Out for Delivery </button>

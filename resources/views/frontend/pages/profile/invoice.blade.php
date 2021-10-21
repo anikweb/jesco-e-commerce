@@ -149,6 +149,7 @@
         <p style="padding: 0; margin:0">Address: Mymensingh, Bangladesh</p>
         <p style="padding: 0; margin:0">Web: jesco.com, E-mail: info@jesco  .com </p>
         <p style="padding: 0; margin:0">Phone:  01783674575</p>
+        <p style="padding: 0; margin:0">Payment Method: {{ Str::title($billing_Details->payment_method) }} </p>
         <p style="padding: 0 0 10px 0; margin:0">Invoice No:  {{ $billing_Details->order_summary->first()->invoice_no }}</p>
       <h1>INVOICE </h1>
       <div id="project">
@@ -157,7 +158,8 @@
         <div><span>ADDRESS</span> @if ($billing_Details->street_adress1) {{ $billing_Details->street_adress1.',' }} @endif @if ($billing_Details->street_adress2) {{ $billing_Details->street_adress2.',' }} @endif{{ $billing_Details->upazila->name.','.$billing_Details->district->name.','.$billing_Details->division->name }}</div>
         <div><span>EMAIL</span> {{ $billing_Details->email }}</div>
         <div><span>PHONE</span> {{ $billing_Details->phone }}</div>
-        <div><span>DATE</span> {{ $billing_Details->created_at->format('d-M-Y') }}</div>
+        <div style="margin: 5px 0 5px 0"><span>ORDER DATE <br/> AND TIME</span> {{ $billing_Details->created_at->format('d-M-Y, h:i A') }}</div>
+        <div style="margin: 5px 0 5px 0"><span>DELIVERED DATE  <br/>AND TIME</span> {{ Carbon\Carbon::parse($billing_Details->order_summary->first()->delivered_date)->format('d-M-Y, h:i A') }}</div>
 
       </div>
     </header>
@@ -203,27 +205,44 @@
                     </td>
                 </tr>
             @endforeach
-          <tr>
-            <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
-            <td colspan="6">DISCOUNT @if($order_summary->discount !=0) ( <span style="color: rgb(74, 74, 240); font-size:10px">{{ $order_summary->voucher_name }} Coupon Applied</span> ) @endif </td>
-            <td class="total" style="background-color: #57B223; color:#fff; font-size:15px">
-                @if ($order_summary->discount)
-                    {{ $order_summary->discount.'/-' }}
-                @else
-                    0
-                @endif
-            </td>
-          </tr>
+            <tr>
+                <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
+                <td colspan="6">DISCOUNT @if($order_summary->discount !=0) ( <span style="color: rgb(74, 74, 240); font-size:10px">{{ $order_summary->voucher_name }} Coupon Applied</span> ) @endif </td>
+                <td class="total" style="background-color: #57B223; color:#fff; font-size:15px">
+                    @if ($order_summary->discount)
+                        {{ $order_summary->discount.'/-' }}
+                    @else
+                        0
+                    @endif
+                </td>
+            </tr>
           <tr>
             <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
             <td colspan="6">SHIPPING FEE</td>
             <td class="total" style="background-color: #57B223; color:#fff; font-size:15px">{{ $order_summary->shipping_fee.'/-' }}</td>
           </tr>
-          <tr>
-            <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
-            <td colspan="6" class="grand total">GRAND TOTAL</td>
-            <td class="grand total" style="background-color: #1d2817; color:#fff; font-size:15px">{{ $order_summary->total_price.'/-' }}</td>
-          </tr>
+          @if ($billing_Details->payment_method == 'cod')
+            <tr>
+                <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
+                <td colspan="6" class="grand total">Due</td>
+                <td class="grand total" style="background-color: #1d2817; color:#fff; font-size:15px">{{ $order_summary->total_price.'/-' }}</td>
+            </tr>
+          @endif
+            <tr>
+                <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
+                <td colspan="6" class="grand total">GRAND TOTAL</td>
+                <td class="grand total" style="background-color: #1d2817; color:#fff; font-size:15px">{{ $order_summary->total_price.'/-' }}</td>
+            </tr>
+            <tr>
+                <td style="background-color: #57B223; color:#fff; font-size:15px"></td>
+                <td colspan="6" class="grand total">Payment</td>
+                @if ($order_summary->payment_status == 1)
+                    <td class="grand total" style="background-color: #57B223; color:#fff; font-size:18px">Unpaid</td>
+                @elseif ($order_summary->payment_status == 2)
+                    <td class="grand total" style="background-color: #57B223; color:#fff; font-size:18px">Paid</td>
+                @endif
+            </tr>
+
         </tbody>
       </table>
       <div id="notices">

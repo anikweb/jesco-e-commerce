@@ -30,7 +30,8 @@
                                         <th width="20px">#</th>
                                         <th>Invoice No</th>
                                         <th>User</th>
-                                        <th>Date</th>
+                                        <th>Order Date</th>
+                                        <th>Delivered Date</th>
                                         <th>Payment Status</th>
                                         <th>Current Status</th>
                                         <th>Action</th>
@@ -43,6 +44,7 @@
                                             <td>{{ $order->invoice_no }}</td>
                                             <td>{{ $order->billing_details->user->name }}</td>
                                             <td>{{ $order->billing_details->created_at->format('M-D-Y') }}</td>
+                                            <td>{{ Carbon\Carbon::parse($order->delivered_date)->format('M-D-Y, h:i A') }}</td>
                                             <td><span class="badge badge-info">
                                                 @if ($order->billing_details->order_summary->first()->payment_status == 1)
                                                     Unpaid (COD)
@@ -54,7 +56,7 @@
                                                 Delivered
                                             </span></td>
                                             <td class="text-center">
-                                                <a href="#" class="btn btn-primary"><i class="fa fa-eye"></i> Details</a>
+                                                <a href="{{ route('dashboard.orders.details',$order->invoice_no) }}" class="btn btn-primary"><i class="fa fa-eye"></i> Details</a>
                                             </td >
                                         </tr>
                                     @empty

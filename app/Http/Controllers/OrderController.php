@@ -6,6 +6,7 @@ use App\Models\BillingDetails;
 use App\Models\Order_Summary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -26,7 +27,7 @@ class OrderController extends Controller
             $order_summary = Order_Summary::where('invoice_no',$invoice_no)->first();
             $order_summary->current_status = 2;
             $order_summary->save();
-            return 'success';
+            return redirect()->route('dashboard.orders.details',$invoice_no);
         }else{
             return abort(404);
         }
@@ -46,7 +47,7 @@ class OrderController extends Controller
             $order_summary = Order_Summary::where('invoice_no',$invoice_no)->first();
             $order_summary->current_status = 3;
             $order_summary->save();
-            return 'success';
+            return redirect()->route('dashboard.orders.details',$invoice_no);
         }else{
             return abort(404);
         }
@@ -65,8 +66,9 @@ class OrderController extends Controller
             // return $invoice_no;
             $order_summary = Order_Summary::where('invoice_no',$invoice_no)->first();
             $order_summary->current_status = 4;
+            $order_summary->delivered_date = Carbon::now();
             $order_summary->save();
-            return 'success';
+            return redirect()->route('dashboard.orders.details',$invoice_no);
         }else{
             return abort(404);
         }
@@ -76,6 +78,16 @@ class OrderController extends Controller
             return view('backend.pages.orders.delivered',[
                 'orders' => Order_Summary::where('current_status',4)->latest()->paginate(10),
                 ]);
+        }else{
+            return abort(404);
+        }
+    }
+    public function indexDetails($invoice_no){
+        if(auth()->user()->can('order management')){
+            // return $invoice_no;
+            return view('backend.pages.orders.details',[
+                'order' => Order_Summary::where('invoice_no',$invoice_no)->first(),
+            ]);
         }else{
             return abort(404);
         }
