@@ -64,19 +64,19 @@
                                 </li>
                                 <li class="dropdown "><a href="#">Blogs <i class="pe-7s-angle-down"></i></a>
                                     <ul class="sub-menu">
-                                        <li><a href="blog-grid.html">Blog Grid Page</a></li>
-                                        <li><a href="blog-single.html">Blog Single Page</a></li>
+                                        <li><a href="#">Blog Grid Page</a></li>
+                                        <li><a href="#">Blog Single Page</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="about.html">About us</a></li>
-                                <li><a href="contact.html">Contact us</a></li>
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Contact us</a></li>
                                 @auth
                                     <li class="dropdown "><a href="javascript:void(0)">Welcome, {{ Auth::user()->name }} <i class="pe-7s-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             @if (auth()->user()->roles->first()->name == 'Customer')
-                                                <li><a href="{{ route('my-account.personal.information') }}">Profile</a></li>
-                                                <li><a href="{{ route('my-account.delivered.order') }}">My Orders</a></li>
-                                                <li><a href="#">Track Order</a></li>
+                                                <li><a href="{{ route('my-account.index') }}">Profile</a></li>
+                                                <li><a href="{{ route('my-account.orders') }}">My Orders</a></li>
+                                                <li><a href="{{ route('my-account.orders.track') }}">Track Order</a></li>
                                                 <li><a href="#">Security</a></li>
                                             @else
                                                 <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -412,9 +412,9 @@
                                         <ul class="align-items-center">
                                             <li class="li"><a class="single-link" href="index.html">Jesco</a>
                                             </li>
-                                            <li class="li"><a class="single-link" href="shop-left-sidebar.html">Shop</a></li>
-                                            <li class="li"><a class="single-link" href="contact.html">Contact us</a></li>
-                                            <li class="li"><a class="single-link" href="login.html">Log in</a></li>
+                                            <li class="li"><a class="single-link" href="#">Shop</a></li>
+                                            <li class="li"><a class="single-link" href="#">Contact us</a></li>
+                                            <li class="li"><a class="single-link" href="#">Log in</a></li>
                                             <li class="li"><a class="single-link" href="#">Help</a></li>
                                         </ul>
                                     </div>
@@ -512,6 +512,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     <!-- Login Modal End -->
 

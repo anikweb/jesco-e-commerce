@@ -31,12 +31,15 @@ class MyAccountController extends Controller
      */
     public function index()
     {
-        return view('frontend.pages.profile.dashboard');
+        return view('frontend.pages.profile.personal_information',[
+            'personalInformation' => CustomerPersonalInformation::where('user_id',Auth::user()->id)->first(),
+        ]);
+
 
     }
     public function indexDeliveredOrder()
     {
-       return view('frontend.pages.profile.delivered_order',[
+       return view('frontend.pages.order.delivered_order',[
             'billings' => BillingDetails::where('user_id',Auth::user()->id)->latest()->paginate(5),
        ]);
     }
@@ -46,14 +49,14 @@ class MyAccountController extends Controller
         $order_summary = Order_Summary::where('billing_id',$billing_Details->id)->first();
         $order_details = Order_Deatail::where('order_summary_id',$order_summary->id)->get();
         // return  $order_details;s
-        $pdf = PDF::loadView('frontend.pages.profile.invoice', compact('billing_Details','order_details','order_summary'))->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('frontend.pages.order.invoice', compact('billing_Details','order_details','order_summary'))->setPaper('a4', 'portrait');
         return $pdf->download('invoice.pdf');
     }
 
-    public function indexPersonalOnfo()
+    public function indexOrders()
     {
-        return view('frontend.pages.profile.personal_information',[
-            'personalInformation' => CustomerPersonalInformation::where('user_id',Auth::user()->id)->first(),
+        return view('frontend.pages.order.index',[
+            'billings' => BillingDetails::where('user_id',Auth::user()->id)->latest()->paginate(5),
         ]);
     }
 
@@ -90,10 +93,14 @@ class MyAccountController extends Controller
         $CusPerInfo->gender = $request->gender;
         $CusPerInfo->save();
         return redirect()->route('my-account.personal.information.edit',$CusPerInfo->username);
-
-
     }
-
+    public function indexTrack(){
+        return view('frontend.pages.order.track');
+    }
+    public function TrackOrder($invoice){
+        $order_summary = Order_Summary::where('invoice_no',$invoice)->first();
+       return response()->json($order_summary);
+    }
 
     /**
      * Show the form for creating a new resource.

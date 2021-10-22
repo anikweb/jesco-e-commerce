@@ -53,12 +53,16 @@ Route::resource('checkout', CheckoutController::class)->middleware(['auth','isCu
 Route::get('/get/district/{division_id}',[CheckoutController::class,'getDistrict']);
 Route::get('/get/upazila/{district_id}',[CheckoutController::class,'getUpazila']);
 
-// Account
+// Customer Dashboard
 Route::get('/my-account/personal-information',[MyAccountController::class,'indexPersonalOnfo'])->name('my-account.personal.information')->middleware(['isCustomer','auth']);
 Route::get('/my-account/personal-information/{username}/edit',[MyAccountController::class,'editPersonalOnfo'])->name('my-account.personal.information.edit')->middleware(['isCustomer','auth']);
 Route::post('/my-account/personal-information/edit/update',[MyAccountController::class,'updatePersonalOnfo'])->name('my-account.personal.information.update')->middleware(['isCustomer','auth']);
+// Customer Orders
 Route::get('/my-account/orders/invoice/download/{billing_id}',[MyAccountController::class,'downloadInvoice'])->name('my-account.invoice.download')->middleware(['isCustomer','auth']);
-Route::get('/my-account/delivered/orders',[MyAccountController::class,'indexDeliveredOrder'])->name('my-account.delivered.order')->middleware(['isCustomer','auth']);
+Route::get('/my-account/orders/delivered',[MyAccountController::class,'indexDeliveredOrder'])->name('my-account.delivered.order')->middleware(['isCustomer','auth']);
+Route::get('/my-account/orders',[MyAccountController::class,'indexOrders'])->name('my-account.orders')->middleware(['isCustomer','auth']);
+Route::get('/my-account/orders/track',[MyAccountController::class,'indexTrack'])->name('my-account.orders.track')->middleware(['isCustomer','auth']);
+Route::get('/my-account/orders/track/search/{invoice}',[MyAccountController::class,'TrackOrder'])->middleware(['isCustomer','auth']);
 Route::resource('my-account', MyAccountController::class)->middleware(['isCustomer','auth']);
 // Dashboard
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');

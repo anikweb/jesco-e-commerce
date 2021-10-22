@@ -19,7 +19,7 @@ class DashboardController extends Controller
                 'users' =>User::all(),
             ]);
         }else{
-            return redirect()->route('my-account.index');
+            return redirect()->route('frontend');
         }
     }
 }
