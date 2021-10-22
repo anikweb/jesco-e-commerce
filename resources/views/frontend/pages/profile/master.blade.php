@@ -23,13 +23,10 @@
                     <div class="dashboard_tab_button" data-aos="fade-up" data-aos-delay="0">
                         <ul role="tablist" class="nav flex-column dashboard-list">
                             <li>
-                                <a href="{{ route('my-account.index') }}" class="nav-link @if (Route::is('my-account.index')) active @endif">Dashboard</a>
+                                <a href="{{ route('my-account.delivered.order') }}"  class="nav-link @if (Route::is('my-account.delivered.order')) active @endif" >My Orders</a>
                             </li>
                             <li>
                                 <a href="{{ route('my-account.delivered.order') }}"  class="nav-link @if (Route::is('my-account.delivered.order')) active @endif" >Delivered Orders</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('my-account.personal.information') }}"  class="nav-link @if (Route::is('my-account.personal.information')||Route::is('my-account.personal.information.edit')) active @endif">Personal Information</a>
                             </li>
                         </ul>
                     </div>

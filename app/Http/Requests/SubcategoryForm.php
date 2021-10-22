@@ -24,7 +24,7 @@ class SubcategoryForm extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|string|max:20|unique:subcategories,name",
+            "name" => "required|string|max:20",
             "category_id" => "required|integer",
         ];
     }

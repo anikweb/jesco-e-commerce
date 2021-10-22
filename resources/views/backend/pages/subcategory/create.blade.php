@@ -35,6 +35,12 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
+                                    @if(session('subcategory_duplicate'))
+                                        <div class="text-danger">
+                                            <i class="fa fa-exclamation-circle"></i>
+                                            {{ session('subcategory_duplicate') }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-12">
                                     <label for="name">Select Category <span>*</span></label>

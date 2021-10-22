@@ -58,6 +58,9 @@ class SubcategoryController extends Controller
     public function store(SubcategoryForm $request)
     {
         if(auth()->user()->can('subcategory add')){
+            if(Subcategory::where('name',$request->name)->where('category_id',$request->category_id)->exists()){
+                return back()->with('subcategory_duplicate','This subcatgory already added');
+            }
             $subcategory = new Subcategory;
             $subcategory->name =$request->name;
             $subcategory->slug = Str::slug($request->name);

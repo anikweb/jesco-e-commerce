@@ -74,10 +74,10 @@
                                     <li class="dropdown "><a href="javascript:void(0)">Welcome, {{ Auth::user()->name }} <i class="pe-7s-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             @if (auth()->user()->roles->first()->name == 'Customer')
-                                                <li><a href="{{ route('my-account.index') }}">Profile</a></li>
-                                                <li><a href="{{ route('my-account.index') }}">My Orders</a></li>
-                                                <li><a href="{{ route('my-account.index') }}">Track Order</a></li>
-                                                <li><a href="{{ route('my-account.index') }}">Security</a></li>
+                                                <li><a href="{{ route('my-account.personal.information') }}">Profile</a></li>
+                                                <li><a href="{{ route('my-account.delivered.order') }}">My Orders</a></li>
+                                                <li><a href="#">Track Order</a></li>
+                                                <li><a href="#">Security</a></li>
                                             @else
                                                 <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
 
