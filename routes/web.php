@@ -46,6 +46,7 @@ Route::get('cart/voucher/remove',[CartController::class, 'cartRemoveVoucher'])->
 Route::get('cart/delete/all',[CartController::class, 'cartDeleteAll'])->name('cart.all.delete');
 Route::get('cart/delete/{slug}',[CartController::class, 'cartDelete'])->name('cart.delete');
 Route::get('/cart/{voucher}',[CartController::class, 'index']);
+Route::get('/cart/quantity/update/{cart_id}/{quantity}',[CartController::class, 'quantityUpdate']);
 Route::resource('cart', CartController::class);
 // Checkout
 Route::resource('checkout', CheckoutController::class)->middleware(['auth','isCustomer']);

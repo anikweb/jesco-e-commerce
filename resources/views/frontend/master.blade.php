@@ -75,6 +75,9 @@
                                         <ul class="sub-menu">
                                             @if (auth()->user()->roles->first()->name == 'Customer')
                                                 <li><a href="{{ route('my-account.index') }}">Profile</a></li>
+                                                <li><a href="{{ route('my-account.index') }}">My Orders</a></li>
+                                                <li><a href="{{ route('my-account.index') }}">Track Order</a></li>
+                                                <li><a href="{{ route('my-account.index') }}">Security</a></li>
                                             @else
                                                 <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
 

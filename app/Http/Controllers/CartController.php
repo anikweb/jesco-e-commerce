@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CartAddForm;
 use App\Models\Cart;
 use App\Models\Voucher;
+use App\Models\Product;
+use App\Models\Product_Attribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Carbon\Carbon;
@@ -147,5 +149,17 @@ class CartController extends Controller
         session()->forget('s_discount');
         session()->forget('s_voucher');
         return redirect()->route('cart.index');
+    }
+    public function quantityUpdate($id,$quantity)
+    {
+        $cookieId = Cookie::get('jesco_ecommerce');
+        $cart = Cart::where('cookie_id',$cookieId)->find($id);
+        $cart->quantity = $quantity;
+        $cart->save();
+
+        $product = Product_Attribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price;
+        // $product = {'cart_id':1};
+
+        return response()->json($product);
     }
 }

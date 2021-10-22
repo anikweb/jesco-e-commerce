@@ -47,12 +47,12 @@
                                                 $offer_price = App\Models\Product_Attribute::where('product_id',$cart->product_id)->where('color_id',$cart->color_id)->where('size_id',$cart->size_id)->first()->offer_price;
                                             @endphp
                                             <td class="product-price-cart"><span class="amount">৳{{ $offer_price }}</span></td>
-                                            <td class="product-quantity">
+                                            <td class="product-quantity" data-id="{{ $cart->id }}" data-loop="{{ $loop->index }}">
                                                 <div class="cart-plus-minus"><div class="dec qtybutton">-</div>
-                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{$cart->quantity}}">
+                                                    <input class="cart-plus-minus-box qty-box{{$cart->id}}" type="text" name="qtybutton" value="{{$cart->quantity}}">
                                                 <div class="inc qtybutton">+</div></div>
                                             </td>
-                                            <td class="product-subtotal">৳{{ $subtotal =  $cart->quantity * $offer_price   }}</td>
+                                            <td class="product-subtotal proSubtotal{{$cart->id}}">৳{{ $subtotal =  $cart->quantity * $offer_price   }}</td>
                                             @php
                                                 $cartTotalPrice = $cartTotalPrice + $subtotal;
                                             @endphp
@@ -78,7 +78,7 @@
                                         <a href="{{ route('frontend.product') }}">Continue Shopping</a>
                                     </div>
                                     <div class="cart-clear">
-                                        <button>Update Shopping Cart</button>
+                                        <a href="{{ url()->current() }}" >Update Shopping Cart</a>
                                         <a href="{{ route('cart.all.delete') }}">Clear Shopping Cart</a>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@
                                 <div class="title-wrap">
                                     <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                                 </div>
-                                <h5>Sub-Total <span>৳{{ $cartTotalPrice }}</span></h5>
+                                <h5>Sub-Total <span class="grand-subtotal">৳{{ $cartTotalPrice }}</span></h5>
                                 @if ($voucher)
                                     <h5>Discount (<em class="text-primary"> {{ $voucher->name }} </em>) <span>৳{{ ($cartTotalPrice*$voucher->discount)/100 }}</span></h5>
                                     <h4 class="grand-totall-title">Total <span>৳{{ $cartTotalPrice - ($cartTotalPrice*$voucher->discount)/100  }}</span></h4>
@@ -162,5 +162,24 @@
         $("#remove_voucher_btn").click(function(){
             window.location.href = "{{ route('cart.remove.voucher') }}";
         });
+       $('.product-quantity').click(function(){
+        // /{id}
+        var cart_id = $(this).attr('data-id');
+        var quantity = $('.qty-box'+cart_id).val();
+        //    alert(cart_id);
+            $.ajax({
+                type: "GET",
+                url: "{{ url('cart/quantity/update') }}/"+cart_id+"/"+quantity,
+                success:function(res){
+                    if(res){
+                        console.log('.proSubtotal'+cart_id);
+                        $('.proSubtotal'+cart_id).html('৳'+res*quantity);
+                        // location.reload();
+
+                    }
+                }
+            });
+
+       });
     </script>
 @endsection

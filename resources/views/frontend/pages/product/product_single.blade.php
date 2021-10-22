@@ -678,8 +678,8 @@
                                     </span>
                                     <span class="rating-num">( 5 Review )</span>
                                 </span>
-                                <h5 class="title"><a href="single-product.html">Women's Elizabeth
-                                        Coat
+                                <h5 class="title">
+                                    <a href="single-product.html">Women's Elizabeth Coat
                                     </a>
                                 </h5>
                                 <span class="price">
