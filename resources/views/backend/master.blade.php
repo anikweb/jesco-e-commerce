@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @elseif(Route::is('subcategory.create')) Create Subcategory @elseif(Route::is('subcategory.edit')) Edit Subcategory @elseif(Route::is('subcategory.index')) Subcategories @elseif(Route::is('product.index')) Products @elseif(Route::is('product.edit')) Edit Product @elseif(Route::is('product.create')) Add Product @elseif(Route::is('product.show')) {{ $product->name }} @elseif(Route::is('products.image.gallery')) Image Gallery-{{ $product->name }} @elseif(Route::is('voucher.create')) Create Voucher @elseif(Route::is('voucher.deactivate.list')) Deactivated Vouchers @elseif(Route::is('voucher.edit')) Edit Voucher @elseif(Route::is('voucher.index')) Active Vouchers @elseif(Route::is('dashboard.orders.index')) Picup In Progress - Orders @elseif(Route::is('dashboard.orders.shipped')) Shipped - Orders @elseif(Route::is('dashboard.orders.outForDelivered')) Out for Delivery - Orders @elseif(Route::is('dashboard.orders.delivered')) Delivered - Orders @elseif(Route::is('dashboard.orders.details')) {{ $order->invoice_no }} - Orders @elseif(Route::is('dashboard.orders.canceled')) Canceled - Orders  @elseif(Route::is('dashboard.wishlist')) Active Wishlists  @endif @if(Route::is('dashboard')) Jesco | Dashboard @else | Dashboard @endif </title>
+  <title> @if (Route::is('role.create')) Create Role @elseif(Route::is('role.edit')) Edit Role @elseif(Route::is('role.index')) Roles @elseif(Route::is('role.show')) Role Details @elseif(Route::is('assign.user')) Assign User Role @elseif(Route::is('create.user')) Create User @elseif(Route::is('category.create')) Create Category @elseif(Route::is('category.edit')) Edit Category @elseif(Route::is('category.index')) Categories @elseif(Route::is('subcategory.create')) Create Subcategory @elseif(Route::is('subcategory.edit')) Edit Subcategory @elseif(Route::is('subcategory.index')) Subcategories @elseif(Route::is('product.index')) Products @elseif(Route::is('product.edit')) Edit Product @elseif(Route::is('product.create')) Add Product @elseif(Route::is('product.show')) {{ $product->name }} @elseif(Route::is('products.image.gallery')) Image Gallery-{{ $product->name }} @elseif(Route::is('voucher.create')) Create Voucher @elseif(Route::is('voucher.deactivate.list')) Deactivated Vouchers @elseif(Route::is('voucher.edit')) Edit Voucher @elseif(Route::is('voucher.index')) Active Vouchers @elseif(Route::is('dashboard.orders.index')) Picup In Progress - Orders @elseif(Route::is('dashboard.orders.shipped')) Shipped - Orders @elseif(Route::is('dashboard.orders.outForDelivered')) Out for Delivery - Orders @elseif(Route::is('dashboard.orders.delivered')) Delivered - Orders @elseif(Route::is('dashboard.orders.details')) {{ $order->invoice_no }} - Orders @elseif(Route::is('dashboard.orders.canceled')) Canceled - Orders  @elseif(Route::is('dashboard.wishlist')) Active Wishlists @elseif(Route::is('basic-settings.index')) Basic Settings  @endif @if(Route::is('dashboard')) {{basicSettings()->site_title}} | Dashboard @else | Dashboard @endif </title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -22,7 +22,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader -->{{  }}
+  <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{ asset('assets/images/favicon/'.basicSettings()->icon) }}" alt="{{ basicSettings()->site_title }}" height="100" width="100">
   </div>
@@ -168,11 +168,10 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{  r }}oute('dashboard') }}" class="brand-link">
+    <a href="{{  route('dashboard') }}" class="brand-link">
       <img src="{{ asset('assets/images/favicon/'.basicSettings()->icon) }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">{{  b }}asicSettings()->site_title }}</span>
+      <span class="brand-text font-weight-light">{{  basicSettings()->site_title }}</span>
     </a>
-
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
@@ -402,8 +401,26 @@
                     </ul>
                 </li>
              @endcan
-
-            {{-- @endif --}}
+            {{--  Sliders   --}}
+             {{--  @can('order management')  --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-sliders-h"></i>
+                    <p>
+                        Sliders
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('slider.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+             {{--  @endcan  --}}
             {{-- Role management --}}
             @can('role management')
                 <li class="nav-item @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')||Route::is('create.user')) menu-open @endif">
@@ -443,8 +460,8 @@
                 </li>
             @endcan
             {{-- Site Settings  --}}
-            <li class="nav-item">
-                <a href="#" class="nav-link">
+            <li class="nav-item @if(Route::is('basic-settings.index')) menu-open @endif">
+                <a href="#" class="nav-link @if(Route::is('basic-settings.index')) active @endif">
                 <i class="nav-icon fas fa-wrench"></i>
                 <p>
                     Settings
@@ -452,8 +469,8 @@
                 </p>
                 </a>
                 <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('basic-settings.index') }}" class="nav-link">
+                    <li class="nav-item @if(Route::is('basic-settings.index')) active @endif">
+                        <a href="{{ route('basic-settings.index') }}" class="nav-link @if(Route::is('basic-settings.index')) active @endif">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Basic Settings</p>
                         </a>

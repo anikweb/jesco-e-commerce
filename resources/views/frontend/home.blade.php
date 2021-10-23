@@ -1,4 +1,10 @@
 @extends('frontend.master')
+@section('inline_style')
+<style>
+
+
+</style>
+@endsection()
 @section('content')
         <!-- Hero/Intro Slider Start -->
         <div class="section ">
@@ -6,15 +12,14 @@
                 <!-- Hero slider Active -->
                 <div class="swiper-wrapper">
                     <!-- Single slider item -->
-                    <div class="hero-slide-item-2 slider-height swiper-slide d-flex bg-color1">
+                    <div class="hero-slide-item-2 slider-height swiper-slide d-flex bg-color">
                         <div class="container align-self-center">
                             <div class="row">
                                 <div class="col-xl-6 col-lg-5 col-md-5 col-sm-5 align-self-center sm-center-view">
                                     <div class="hero-slide-content hero-slide-content-2 slider-animated-1">
                                         <span class="category">Sale 45% Off</span>
-                                        <h2 class="title-1">Exclusive New<br> Offer 2021</h2>
-                                        <a href="#" class="btn btn-lg btn-primary btn-hover-dark"> Shop
-                                            Now <i class="fa fa-shopping-basket ml-15px" aria-hidden="true"></i></a>
+                                        <h2 class="title">Exclusive New<br> Offer 2021</h2>
+                                        <a href="#" class="btn btn-lg slider-btn btn-hover-dark"> Shop Now <i class="fa fa-shopping-basket ml-15px" aria-hidden="true"></i></a>
                                     </div>
                                 </div>
                                 <div
@@ -22,29 +27,6 @@
                                     <div class="show-case">
                                         <div class="hero-slide-image">
                                             <img src="{{ asset('assets/images/slider-image/slider-2-1.png') }}" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single slider item -->
-                    <div class="hero-slide-item-2 slider-height swiper-slide d-flex bg-color2">
-                        <div class="container align-self-center">
-                            <div class="row">
-                                <div class="col-xl-6 col-lg-5 col-md-5 col-sm-5 align-self-center sm-center-view">
-                                    <div class="hero-slide-content hero-slide-content-2 slider-animated-1">
-                                        <span class="category">Sale 45% Off</span>
-                                        <h2 class="title-1">Exclusive New<br> Offer 2021</h2>
-                                        <a href="#" class="btn btn-lg btn-primary btn-hover-dark"> Shop
-                                            Now <i class="fa fa-shopping-basket ml-15px" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div
-                                    class="col-xl-6 col-lg-7 col-md-7 col-sm-7 d-flex justify-content-center position-relative">
-                                    <div class="show-case">
-                                        <div class="hero-slide-image">
-                                            <img src="{{ asset('assets/images/slider-image/slider-2-2.png') }}" alt="" />
                                         </div>
                                     </div>
                                 </div>

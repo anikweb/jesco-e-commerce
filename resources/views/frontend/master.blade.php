@@ -105,6 +105,7 @@
                             <!-- Single Wedge Start -->
                             <a href="#offcanvas-wishlist" class="header-action-btn offcanvas-toggle">
                                 <i class="pe-7s-like"></i>
+                                <span class="header-action-num">{{ wishlistItem()->count() }}</span>
                             </a>
                             <!-- Single Wedge End -->
                             <a href="#offcanvas-cart"
@@ -135,33 +136,26 @@
             </div>
             <div class="body customScroll">
                 <ul class="minicart-product-list">
+
+                    @forelse (wishlistItem() as $wishlist)
                     <li>
-                        <a href="single-product.html" class="image"><img src="assets/images/product-image/1.jpg"
+                        <a href="single-product.html" class="image"><img src="{{ asset('assets/images/product').'/'.$wishlist->product->created_at->format('Y/m/d/').$wishlist->product->id.'/thumbnail/'.$wishlist->product->thumbnail }}" alt="{{ $wishlist->product->name }}"
                                 alt="Cart product Image"></a>
                         <div class="content">
-                            <a href="single-product.html" class="title">Women's Elizabeth Coat</a>
-                            <span class="quantity-price">1 x <span class="amount">$21.86</span></span>
+                            @php
+                                $offer_price = App\Models\Product_Attribute::where('product_id',$wishlist->product_id)->min('offer_price');
+                            @endphp
+                            <a href="single-product.html" class="title">{{ $wishlist->product->name }}</a>
+
+                            <span class="quantity-price">{{ $wishlist->quantity }} x <span class="amount">৳{{ $offer_price }}</span></span>
                             <a href="#" class="remove">×</a>
                         </div>
                     </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="assets/images/product-image/2.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Long sleeve knee length</a>
-                            <span class="quantity-price">1 x <span class="amount">$13.28</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image"><img src="assets/images/product-image/3.jpg"
-                                alt="Cart product Image"></a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Cool Man Wearing Leather</a>
-                            <span class="quantity-price">1 x <span class="amount">$17.34</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
+                    @empty
+                        <li class="bg-gray p-3 rounded"> <span class="lead"> <i class="fa fa-exclamation-circle"></i>  No wishlist to show!
+                        </span></li>
+                    @endforelse
+
                 </ul>
             </div>
             <div class="foot">
@@ -295,9 +289,7 @@
                                 <div class="footer-logo">
                                     <a href="{{ route('frontend') }}"><img src="{{ asset('assets/images/logo/'.basicSettings()->logo) }}" alt=""></a>
                                 </div>
-                                <p class="about-text">Lorem ipsum dolor sit amet consectet adipisicing elit, sed do
-                                    eiusmod templ incididunt ut labore et dolore magnaol aliqua Ut enim ad minim.
-                                </p>
+                                <p class="about-text">{{ basicSettings()->tagline }}</p>
                                 <ul class="link-follow">
                                     <li>
                                         <a class="m-0" title="Twitter" href="#"><i class="fa fa-twitter"
@@ -401,8 +393,8 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12 text-center">
-                            <p class="copy-text">&copy; {{ date('Y').'-'.(date('y')+1) }} <strong>Jesco E-commerce</strong> <i class="fa fa-heart"
+                        <div class="col-12 text-center " style="color:#002340">
+                            <p class="copy-text">&copy; {{ date('Y').'-'.(date('y')+1) }} <strong>{{ basicSettings()->site_title }}</strong> <i class="fa fa-heart"
                                     aria-hidden="true"></i> Developed By <a class="company-name" target="_blank" href="https:/aniknandi.com/">
                                     <strong> Anik Kumar Nandi</strong></a>.</p>
                         </div>

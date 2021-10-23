@@ -16,6 +16,7 @@ use App\Http\Controllers\{
     MyAccountController,
     OrderController,
     SslCommerzPaymentController,
+    SliderController,
 };
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Route;
@@ -108,6 +109,7 @@ Route::get('/dashboard/orders/details/{invoice_no}',[OrderController::class,'ind
 Route::get('/dashboard/orders/cancel/{invoice_no}',[OrderController::class,'cancelOrder'])->name('dashboard.orders.cancel')->middleware('auth');
 Route::get('/dashboard/orders/canceled',[OrderController::class,'indexCanceled'])->name('dashboard.orders.canceled')->middleware('auth');
 
+Route::resource('dashboard/slider', SliderController::class)->middleware('auth');
 // Socialite
 
 Route::get('github/redirect',[GithubController::class,'githubRedirect']);
