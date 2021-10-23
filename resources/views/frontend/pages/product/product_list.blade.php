@@ -44,10 +44,8 @@
                         <!-- Right Side End -->
                     </div>
                     <!-- Shop Top Area End -->
-
                     <!-- Shop Bottom Area Start -->
                     <div class="shop-bottom-area">
-
                         <!-- Tab Content Area Start -->
                         <div class="row">
                             <div class="col">
@@ -63,11 +61,6 @@
                                                             <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
                                                                 <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
                                                             </a>
-                                                            <span class="badges">
-                                                                @if ($product->attribute->sum('quantity') == 0)
-                                                                    <span class="new bg-danger">Sold</span>
-                                                                @endif
-                                                            </span>
                                                             <div class="actions">
                                                                 <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
                                                                         class="pe-7s-like"></i></a>
@@ -77,11 +70,7 @@
                                                                 <a href="compare.html" class="action compare" title="Compare"><i
                                                                         class="pe-7s-refresh-2"></i></a>
                                                             </div>
-                                                            @if ($product->attribute->sum('quantity') != 0)
-                                                                <button title="Add To Cart" class="add-to-cart">Add To Cart</button>
-                                                            @else
-                                                                <button title="Add To Cart" disabled class="add-to-cart">Out of Stock</button>
-                                                            @endif
+                                                            <button title="Add To Cart" class="add-to-cart">Add To Cart</button>
                                                         </div>
                                                         <div class="content">
                                                             <span class="ratings">

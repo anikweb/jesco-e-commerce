@@ -17,10 +17,9 @@ class CreateProductAttributesTable extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->string('color_id')->nullable();
-            $table->string('size_id')->nullable();
+            $table->string('uk_size_id')->nullable();
             $table->integer('regular_price');
             $table->integer('offer_price')->nullable();
-            $table->integer('quantity');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -71,17 +71,6 @@
                     @endforeach
 
                 </div>
-                <h4 class="mt-3">Total Stock</h4>
-                <div class="mt-2">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                            <span class="text-xl">{{ $product->attribute->sum('quantity') }}</span>
-                            <br>
-
-                        </label>
-                    </div>
-                </div>
             </div>
             </div>
                 <div class="row mt-4">

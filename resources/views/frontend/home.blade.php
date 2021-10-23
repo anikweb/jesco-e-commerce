@@ -152,20 +152,9 @@
                                             <!-- Single Prodect -->
                                             <div class="product">
                                                 <div class="thumb">
-                                                    @if ($product->attribute->sum('quantity') != 0)
-                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
-                                                            <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                        </a>
-                                                    @else
-                                                        <a href="javascript:void(0)" class="image">
-                                                            <img style="opacity: .5" src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                        </a>
-                                                    @endif
-                                                    <span class="badges">
-                                                        @if ($product->attribute->sum('quantity') == 0)
-                                                            <span class="new bg-danger">Sold</span>
-                                                        @endif
-                                                    </span>
+                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
+                                                        <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
+                                                    </a>
                                                     <div class="actions">
                                                         @php
                                                             $w = $wishlistProduct->where('cookie_id',Cookie::get('jesco_ecommerce'))->where('product_id',$product->id)->first();
@@ -185,12 +174,7 @@
                                                             <i class="pe-7s-refresh-2"></i>
                                                         </a>
                                                     </div>
-                                                    @if ($product->attribute->sum('quantity') != 0)
-
-                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart"  class="add-to-cart">Add To Cart</a>
-                                                    @else
-                                                        <button title="Add To Cart" disabled class="add-to-cart">Out of Stock</button>
-                                                    @endif
+                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart"  class="add-to-cart">Add To Cart</a>
                                                 </div>
                                                 <div class="content">
                                                     <span class="ratings">
@@ -223,21 +207,9 @@
                                             <!-- Single Prodect -->
                                             <div class="product">
                                                 <div class="thumb">
-                                                    @if ($product->attribute->sum('quantity') != 0)
-                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
-                                                            <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                        </a>
-                                                    @else
-                                                        <a href="javascript:void(0)" class="image">
-                                                            <img style="opacity: .5" src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                        </a>
-                                                    @endif
-
-                                                    <span class="badges">
-                                                        @if ($product->attribute->sum('quantity') == 0)
-                                                            <span class="new bg-danger">Sold</span>
-                                                        @endif
-                                                    </span>
+                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
+                                                        <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
+                                                    </a>
                                                     <div class="actions">
                                                         <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
                                                             <i class="pe-7s-like"></i>
@@ -248,11 +220,7 @@
                                                         <a href="compare.html" class="action compare" title="Compare"><i
                                                                 class="pe-7s-refresh-2"></i></a>
                                                     </div>
-                                                    @if ($product->attribute->sum('quantity') != 0)
-                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart" class="add-to-cart">Add To Cart</a>
-                                                    @else
-                                                        <button title="Add To Cart" disabled class="add-to-cart">Out of Stock</button>
-                                                    @endif
+                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart" class="add-to-cart">Add To Cart</a>
                                                 </div>
                                                 <div class="content">
                                                     <span class="ratings">
@@ -359,21 +327,9 @@
                                             <!-- Single Prodect -->
                                                 <div class="product">
                                                     <div class="thumb">
-                                                        @if ($product->attribute->sum('quantity') != 0)
-                                                            <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
-                                                                <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                            </a>
-                                                        @else
-                                                            <a href="javascript:void(0)" class="image">
-                                                                <img style="opacity: .5" src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                            </a>
-                                                        @endif
-
-                                                        <span class="badges">
-                                                            @if ($product->attribute->sum('quantity') == 0)
-                                                                <span class="new bg-danger">Sold</span>
-                                                            @endif
-                                                        </span>
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
+                                                            <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
+                                                        </a>
                                                         <div class="actions">
                                                             <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
                                                                 <i class="pe-7s-like"></i>
@@ -384,11 +340,7 @@
                                                             <a href="compare.html" class="action compare" title="Compare"><i
                                                                     class="pe-7s-refresh-2"></i></a>
                                                         </div>
-                                                        @if ($product->attribute->sum('quantity') != 0)
-                                                            <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart" class="add-to-cart">Add To Cart</a>
-                                                        @else
-                                                            <button title="Add To Cart" disabled class="add-to-cart">Out of Stock</button>
-                                                        @endif
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart" class="add-to-cart">Add To Cart</a>
                                                     </div>
                                                     <div class="content">
                                                         <span class="ratings">

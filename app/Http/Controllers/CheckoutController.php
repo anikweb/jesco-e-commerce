@@ -119,11 +119,6 @@ class CheckoutController extends Controller
             $order_detail->size_id = $cart->size_id;
             $order_detail->quantity = $cart->quantity;
             $order_detail->save();
-            Product_Attribute::where([
-                'product_id' => $cart->product_id,
-                'color_id' => $cart->color_id,
-                'size_id' => $cart->size_id,
-            ])->decrement('quantity',$cart->quantity);
             $cart->delete();
         }
         if($request->email){

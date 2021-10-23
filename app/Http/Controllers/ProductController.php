@@ -132,7 +132,6 @@ class ProductController extends Controller
                 $productAttribute->size_id =  $request->size[$key];
                 $productAttribute->regular_price = $rPrice;
                 $productAttribute->offer_price = $request->ofrPrice[$key];
-                $productAttribute->quantity = $request->quantities[$key];
                 $productAttribute->save();
             }
             return redirect()->route('product.index')->with('success','Product Added');
@@ -248,7 +247,6 @@ class ProductController extends Controller
                     $attr->size_id= $request->size[$key];
                     $attr->regular_price = $request->rPrice[$key];
                     $attr->offer_price = $request->ofrPrice[$key];
-                    $attr->quantity = $request->quantity[$key];
                     $attr->save();
                 }else{
                     $attr = new Product_Attribute;
@@ -257,7 +255,6 @@ class ProductController extends Controller
                     $attr->size_id = $request->size[$key];
                     $attr->regular_price = $request->rPrice[$key];
                     $attr->offer_price = $request->ofrPrice[$key];
-                    $attr->quantity = $request->quantity[$key];
                     $attr->save();
                 }
             }
@@ -338,18 +335,6 @@ class ProductController extends Controller
             return back();
         }else{
             return abort(404);
-        }
-    }
-    public function productStockout($id){
-        if(auth()->user()->can("product delete")){
-            // return $id;
-            $productAttrs = Product_Attribute::where('product_id',$id)->get();
-
-            foreach ($productAttrs as  $productAttr) {
-                echo $productAttr->quantity = 0;
-                echo $productAttr->save();
-            }
-
         }
     }
 }

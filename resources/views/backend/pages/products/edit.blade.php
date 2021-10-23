@@ -255,7 +255,7 @@
                                                         </div>
                                                         {{-- size end  --}}
                                                         {{-- regular price  start --}}
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="rPrice">Regular Price <span class="text-danger">*</span> </label>
                                                                 <input type="text" name="rPrice[]" value="{{ $product->regular_price }}" class="form-control @error('rPrice[]') is-invalid @enderror" id="rPrice">
@@ -266,7 +266,7 @@
                                                         </div>
                                                         {{-- regular price end --}}
                                                         {{-- offer price start --}}
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="ofrPrice">Offer Price</label>
                                                                 <input type="text" name="ofrPrice[]" value="{{ $product->offer_price }}" class="form-control @error('ofrPrice[]') is-invalid @enderror" id="ofrPrice">
@@ -276,18 +276,6 @@
                                                             </div>
                                                         </div>
                                                         {{-- offer price end --}}
-                                                        {{-- quantity start --}}
-                                                        <div class="col-md-2">
-                                                            <div class="form-group">
-                                                                <label for="quantity">Quantity <span class="text-danger">*</span> </label>
-                                                                <input type="number" name="quantity[]" value="{{ $product->quantity }}" class="form-control @error('quantity') is-invalid @enderror" id="quantity">
-                                                                @error('quantity')
-                                                                    <div class="text-danger fa fa py-2 pl-2"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                         {{-- quantity end --}}
-
                                                         <div class="col-md-2 remove-field outline-danger text-white my-auto">
                                                             <span class="text-danger"  style="cursor:pointer"><i class=" fas fa-minus-circle"></i> Remove </span>
                                                         </div>

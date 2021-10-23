@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="zxx">
-
-
-<!-- Mirrored from template.hasthemes.com/jesco/jesco/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 25 Sep 2021 07:19:34 GMT -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="robots" content="index, follow" />
-    <title>Jesco - Fashoin eCommerce HTML Template</title>
-    <meta name="description" content="Jesco - Fashoin eCommerce HTML Template" />
+    <title> @if(Route::is('frontend'))   Home @elseif(Route::is('frontend.product')) Products @elseif(Route::is('frontend.product.single')) {{ $product->name }} @elseif(Route::is('frontend.wishlist.index')) Wishlist @elseif(Route::is('cart.index')) Carts @elseif(Route::is('checkout.index')) Checkout @elseif(Route::is('my-account.index')) Profile @elseif(Route::is('my-account.personal.information.edit')) Update Profile @elseif(Route::is('my-account.orders')) Orders @elseif(Route::is('my-account.delivered.order')) Delevered Orders @elseif(Route::is('my-account.orders.track')) Track Orders @endif | {{ basicSettings()->site_title }}</title>
+    <meta name="description" content="{{ basicSettings()->tagline }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- Add site Favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon/'.basicSettings()->icon) }}" type="image/png">
 
 
     <!-- vendor css (Icon Font) -->
@@ -51,7 +48,7 @@
                 <div class="row">
                     <div class="col-auto align-self-center">
                         <div class="header-logo">
-                            <a href="{{ route('frontend') }}"><img src="assets/images/logo/logo.png" alt="Site Logo" /></a>
+                            <a href="{{ route('frontend') }}"><img src="{{ asset('assets/images/logo/'.basicSettings()->logo) }}" alt="{{ basicSettings()->site_title }}" /></a>
                         </div>
                     </div>
                     <div class="col align-self-center d-none d-lg-block">
@@ -97,7 +94,7 @@
                         </div>
                     </div>
                     <!-- Header Action Start -->
-                    <div class="col col-lg-auto align-self-center pl-0">
+                    <doffcanvas-menu mb-4iv class="col col-lg-auto align-self-center pl-0">
                         <div class="header-actions">
 
                             <!-- Single Wedge Start -->
@@ -122,7 +119,7 @@
                             </a>
                         </div>
                         <!-- Header Action End -->
-                    </div>
+                    </doffcanvas-menu>
                 </div>
             </div>
     </header>
@@ -223,84 +220,42 @@
 
             <div class="offcanvas-menu mb-4">
                 <ul>
-                    <li><a href="#"><span class="menu-text">Home</span></a>
+                    <li class="dropdown"><a href="{{ route('frontend') }}">Home </a>
+                    </li>
+                    <li class="dropdown position-static">
+                        <a href="{{ route('frontend.product') }}">Products </a>
+                    </li>
+                    <li class="dropdown "><a href="#">Blogs <i class="pe-7s-angle-down"></i></a>
                         <ul class="sub-menu">
-                            <li><a href="index.html"><span class="menu-text">Home 1</span></a></li>
-                            <li><a href="index-2.html"><span class="menu-text">Home 2</span></a></li>
+                            <li><a href="#">Blog Grid Page</a></li>
+                            <li><a href="#">Blog Single Page</a></li>
                         </ul>
                     </li>
-                    <li><a href="#"><span class="menu-text">Shop</span></a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="#"><span class="menu-text">Shop Page</span></a>
-                                <ul class="sub-menu">
-                                    <li class="title"><a href="#">Shop Page</a></li>
-                                    <li><a href="shop-3-column.html">Shop 3 Column</a></li>
-                                    <li><a href="shop-4-column.html">Shop 4 Column</a></li>
-                                    <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>
-                                    <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                                    <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a></li>
-                                    <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><span class="menu-text">product Details Page</span></a>
-                                <ul class="sub-menu">
-                                    <li><a href="single-product.html">Product Single</a></li>
-                                    <li><a href="single-product-variable.html">Product Variable</a></li>
-                                    <li><a href="single-product-affiliate.html">Product Affiliate</a></li>
-                                    <li><a href="single-product-group.html">Product Group</a></li>
-                                    <li><a href="single-product-tabstyle-2.html">Product Tab 2</a></li>
-                                    <li><a href="single-product-tabstyle-3.html">Product Tab 3</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><span class="menu-text">Single Product Page</span></a>
-                                <ul class="sub-menu">
-                                    <li><a href="single-product-slider.html">Product Slider</a></li>
-                                    <li><a href="single-product-gallery-left.html">Product Gallery Left</a>
-                                    </li>
-                                    <li><a href="single-product-gallery-right.html">Product Gallery Right</a>
-                                    </li>
-                                    <li><a href="single-product-sticky-left.html">Product Sticky Left</a></li>
-                                    <li><a href="single-product-sticky-right.html">Product Sticky Right</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><span class="menu-text">Other Shop Pages</span></a>
-                                <ul class="sub-menu">
-                                    <li><a href="cart.html">Cart Page</a></li>
-                                    <li><a href="checkout.html">Checkout Page</a></li>
-                                    <li><a href="compare.html">Compare Page</a></li>
-                                    <li><a href="wishlist.html">Wishlist Page</a></li>
-                                    <li><a href="my-account.html">Account Page</a></li>
-                                    <li><a href="login.html">Login & Register Page</a></li>
-                                    <li><a href="empty-cart.html">Empty Cart Page</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><span class="menu-text">Pages</span></a>
-                                <ul class="sub-menu">
-                                    <li><a href="404.html">404 Page</a></li>
-                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="faq.html">Faq Page</a></li>
-                                    <li><a href="coming-soon.html">Coming Soon Page</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#"><span class="menu-text">Blog</span></a>
-                        <ul class="sub-menu">
-                            <li><a href="blog-grid.html">Blog Grid Page</a></li>
-                            <li><a href="blog-grid-left-sidebar.html">Grid Left Sidebar</a></li>
-                            <li><a href="blog-grid-right-sidebar.html">Grid Right Sidebar</a></li>
-                            <li><a href="blog-single.html">Blog Single Page</a></li>
-                            <li><a href="blog-single-left-sidebar.html">Single Left Sidebar</a></li>
-                            <li><a href="blog-single-right-sidebar.html">Single Right Sidbar</a>
-                        </ul>
-                    </li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Contact us</a></li>
+                    @auth
+                        <li class="dropdown "><a href="javascript:void(0)">Welcome, {{ Auth::user()->name }} <i class="pe-7s-angle-down"></i></a>
+                            <ul class="sub-menu">
+                                @if (auth()->user()->roles->first()->name == 'Customer')
+                                    <li><a href="{{ route('my-account.index') }}">Profile</a></li>
+                                    <li><a href="{{ route('my-account.orders') }}">My Orders</a></li>
+                                    <li><a href="{{ route('my-account.orders.track') }}">Track Order</a></li>
+                                    <li><a href="#">Security</a></li>
+                                @else
+                                    <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+
+                                @endif
+                                <form id="logoutForm" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                                <li><a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a></li>
+
+                            </ul>
+                        </li>
+                    @else
+                    <li class="dropdown "><a href="{{ route('login') }}">Login</a></li>
+
+                    @endauth
                 </ul>
             </div>
             <!-- OffCanvas Menu End -->
@@ -338,7 +293,7 @@
                         <div class="col-md-6 col-lg-3 mb-md-30px mb-lm-30px">
                             <div class="single-wedge">
                                 <div class="footer-logo">
-                                    <a href="index.html"><img src="assets/images/logo/logo-white.png" alt=""></a>
+                                    <a href="{{ route('frontend') }}"><img src="{{ asset('assets/images/logo/'.basicSettings()->logo) }}" alt=""></a>
                                 </div>
                                 <p class="about-text">Lorem ipsum dolor sit amet consectet adipisicing elit, sed do
                                     eiusmod templ incididunt ut labore et dolore magnaol aliqua Ut enim ad minim.

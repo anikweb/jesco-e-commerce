@@ -251,7 +251,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="rPrice">Regular Price <span class="text-danger">*</span> </label>
                                                                 <input type="text" name="rPrice[]" class="form-control @error('rPrice[]') is-invalid @enderror" id="rPrice">
@@ -263,23 +263,10 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="ofrPrice">Offer Price</label>
                                                                 <input type="text" name="ofrPrice[]" class="form-control @error('ofrPrice[]') is-invalid @enderror" id="ofrPrice">
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <div class="form-group">
-                                                                <label for="quantity">Quantity <span class="text-danger">*</span> </label>
-                                                                <input type="number" name="quantities[]" class="form-control @error('quantity') is-invalid @enderror" id="quantity">
-                                                                @error('quantities[]')
-                                                                    <div class="text-danger">
-                                                                        <i class="fa fa-exclamation-circle"></i>
-                                                                        {{ $message }}
-                                                                    </div>
-                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>

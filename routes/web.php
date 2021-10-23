@@ -32,6 +32,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 // frontend
+
 Route::get('/',[FrontController::class, 'index'])->name('frontend');
 Route::get('/products',[FrontController::class, 'productView'])->name('frontend.product');
 Route::get('/product/{slug}',[FrontController::class, 'productSingle'])->name('frontend.product.single');
@@ -49,9 +50,9 @@ Route::get('/cart/{voucher}',[CartController::class, 'index']);
 Route::get('/cart/quantity/update/{cart_id}/{quantity}',[CartController::class, 'quantityUpdate']);
 Route::resource('cart', CartController::class);
 // Checkout
-Route::resource('checkout', CheckoutController::class)->middleware(['auth','isCustomer']);
 Route::get('/get/district/{division_id}',[CheckoutController::class,'getDistrict']);
 Route::get('/get/upazila/{district_id}',[CheckoutController::class,'getUpazila']);
+Route::resource('checkout', CheckoutController::class)->middleware(['auth','isCustomer']);
 
 // Customer Dashboard
 Route::get('/my-account/personal-information',[MyAccountController::class,'indexPersonalOnfo'])->name('my-account.personal.information')->middleware(['isCustomer','auth']);
