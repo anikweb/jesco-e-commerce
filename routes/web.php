@@ -109,6 +109,8 @@ Route::get('/dashboard/orders/details/{invoice_no}',[OrderController::class,'ind
 Route::get('/dashboard/orders/cancel/{invoice_no}',[OrderController::class,'cancelOrder'])->name('dashboard.orders.cancel')->middleware('auth');
 Route::get('/dashboard/orders/canceled',[OrderController::class,'indexCanceled'])->name('dashboard.orders.canceled')->middleware('auth');
 
+Route::get('dashboard/slider/active/{slider_id}',[SliderController::class,'sliderActive'])->name('slider.active')->middleware('auth');
+Route::get('dashboard/slider/deactivate/{slider_id}',[SliderController::class,'sliderDeactivate'])->name('slider.deactivate')->middleware('auth');
 Route::resource('dashboard/slider', SliderController::class)->middleware('auth');
 // Socialite
 

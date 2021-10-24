@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="robots" content="index, follow" />
-    <title> @if(Route::is('frontend'))   Home @elseif(Route::is('frontend.product')) Products @elseif(Route::is('frontend.product.single')) {{ $product->name }} @elseif(Route::is('frontend.wishlist.index')) Wishlist @elseif(Route::is('cart.index')) Carts @elseif(Route::is('checkout.index')) Checkout @elseif(Route::is('my-account.index')) Profile @elseif(Route::is('my-account.personal.information.edit')) Update Profile @elseif(Route::is('my-account.orders')) Orders @elseif(Route::is('my-account.delivered.order')) Delevered Orders @elseif(Route::is('my-account.orders.track')) Track Orders @endif | {{ basicSettings()->site_title }}</title>
+    <title> @if(Route::is('frontend'))   Home @elseif(Route::is('frontend.product')) Products @elseif(Route::is('frontend.product.single')) {{ $product->name }} @elseif(Route::is('frontend.wishlist.index')) Wishlist @elseif(Route::is('cart.index')) Carts @elseif(Route::is('checkout.index')) Checkout @elseif(Route::is('my-account.index')) Profile @elseif(Route::is('my-account.personal.information.edit')) Update Profile @elseif(Route::is('my-account.orders')) Orders @elseif(Route::is('my-account.delivered.order')) Delevered Orders @elseif(Route::is('my-account.orders.track')) Track Orders @elseif(Route::is('login'))Login @endif | {{ basicSettings()->site_title }}</title>
     <meta name="description" content="{{ basicSettings()->tagline }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 

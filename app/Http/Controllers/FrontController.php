@@ -8,6 +8,7 @@ use App\Models\{
     Category,
     Product,
     Product_Attribute,
+    Slider,
     Wishlist,
 };
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ class FrontController extends Controller
             'productAll' => Product::limit(8)->get(),
             'productNew' => Product::latest()->limit(8)->get(),
             'wishlistProduct' =>Wishlist::all(),
+            'sliders' =>Slider::where('status',1)->latest()->get(),
         ]);
     }
     public function productView(){
