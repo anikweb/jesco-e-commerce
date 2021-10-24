@@ -3,7 +3,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Invoice</title>
+    <title>{{ $order_summary->first()->invoice_no }}</title>
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon/'.basicSettings()->icon) }}" type="image/png">
     <style>
         .clearfix:after {
         content: "";
@@ -150,7 +151,7 @@
         <p style="padding: 0; margin:0">Web: jesco.com, E-mail: info@jesco  .com </p>
         <p style="padding: 0; margin:0">Phone:  01783674575</p>
         <p style="padding: 0; margin:0">Payment Method: {{ Str::title($billing_Details->payment_method) }} </p>
-        <p style="padding: 0 0 10px 0; margin:0">Invoice No:  {{ $billing_Details->order_summary->first()->invoice_no }}</p>
+        <p style="padding: 0 0 10px 0; margin:0">Invoice No:  {{$order_summary->first()->invoice_no }}</p>
       <h1>INVOICE </h1>
       <div id="project">
         <div><span style="color: rgb(2, 144, 226); font-size:12px">Bill to</span></div>
@@ -194,7 +195,7 @@
                         {{ App\Models\ProductColor::find($order_detail->color_id)->name }}
                     </td>
                     <td class="desc">
-                        {{ App\Models\ProductSize::find($order_detail->size_id)->name }}
+                        {{ $order_detail->size_id }}
                     </td>
                     <td>
                         {{ App\Models\Product::find($order_detail->product_id)->attribute->where('color_id',$order_detail->color_id)->where('size_id',$order_detail->size_id)->first()->offer_price.'/-' }}

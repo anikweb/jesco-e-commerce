@@ -8,8 +8,19 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                      <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                      <li class="breadcrumb-item active"> Orders</li>
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                      @if ($order->current_status ==1)
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard.orders.index') }}">Picup in Progress</a></li>
+                      @elseif($order->current_status ==2)
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard.orders.shipped') }}">Shipped</a></li>
+                      @elseif($order->current_status ==3)
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard.orders.outForDelivered') }}">Out for Delivery</a></li>
+                      @elseif($order->current_status ==4)
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard.orders.delivered') }}">Delivered</a></li>
+                      @elseif($order->current_status ==5)
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard.orders.canceled') }}">Canceled</a></li>
+                        @endif
+                      <li class="breadcrumb-item active">Details</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -98,7 +109,7 @@
                                                    </td>
                                                 <td>{{ $order_details->product->summary }}</td>
                                                 <td>{{ Str::title($order_details->product->attribute->first()->color->name )}}</td>
-                                                <td>{{ $order_details->product->attribute->first()->size->name}}</td>
+                                                <td>{{ $order_details->product->attribute->first()->size_id}}</td>
                                                 <td>{{ $order_details->product->attribute->first()->offer_price.'/-' }}</td>
                                                 <td>20/-</td>
                                                 <td>{{ $order_details->quantity }}</td>

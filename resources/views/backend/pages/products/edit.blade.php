@@ -8,8 +8,9 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                      <li class="breadcrumb-item"><a href="#">Home</a></li>
-                      <li class="breadcrumb-item active">Add Product</li>
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                      <li class="breadcrumb-item"><a href="{{ route('product.index') }}">Products</a></li>
+                      <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -242,14 +243,10 @@
                                                             <div class="form-group">
                                                                 <label for="size">Size</label>
                                                                 <select name="size[]" class="form-control" id="size">
-                                                                    <option value="7" class="text-muted">None</option>
-                                                                    @forelse ($sizes as $size)
-                                                                        @if($size->name != 'none')
-                                                                            <option @if ($product->size_id ==  $size->id )selected @endif value="{{ $size->id }}">{{  $size->name }}</option>
-                                                                        @endif
-                                                                    @empty
-                                                                        <option value class="text-danger">empty</option>
-                                                                    @endforelse
+                                                                    <option value="">None</option>
+                                                                    @for ($i = 34; $i < 50; $i++)
+                                                                        <option @if ($product->size_id == $i) selected @endif value="{{$i}}">{{$i}}</option>
+                                                                    @endfor
                                                                 </select>
                                                             </div>
                                                         </div>

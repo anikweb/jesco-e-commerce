@@ -8,7 +8,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('product.index') }}">Products</a></li>
                         <li class="breadcrumb-item active">{{ $product->name }}</li>
                     </ol>
                 </div>
@@ -65,7 +66,7 @@
                     @foreach ($data1 as $attribute)
                         <label class="btn btn-default text-center">
                             <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                            <span class="text-xl">{{ Str::title($attribute->size->name) }}</span>
+                            <span class="text-xl">{{ $attribute->size_id }}</span>
                             <br>
                         </label>
                     @endforeach

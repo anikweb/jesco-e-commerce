@@ -8,7 +8,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                      <li class="breadcrumb-item"><a href="#">Home</a></li>
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                       <li class="breadcrumb-item active">Products</li>
                     </ol>
                 </div><!-- /.col -->
@@ -34,7 +34,6 @@
                                         <th>Subcategory</th>
                                         <th>Created</th>
                                         <th>Last Update</th>
-                                        <th>Status</th>
                                         <th colspan="3" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -48,22 +47,16 @@
                                             <td>{{ $product->subcategory->name }}</td>
                                             <td>{{ $product->created_at->format('d-M-Y, h:i:s A') }}</td>
                                             <td>{{ $product->updated_at->diffForHumans() }}</td>
-                                            <td> @if ($product->attribute->sum('quantity') > 0) <span class="badge badge-info">active</span> @else <span class="badge badge-danger">Stock Out</span>@endif</td>
                                             <td>
                                                 @can('product edit')
                                                     <a href="{{ route('product.edit',$product->slug) }}" class="btn btn-primary text-center"><i class="fa fa-edit"></i> Edit</a>
                                                 @endcan
+                                            </td>
+                                            <td>
                                                 <a href="{{ route('products.image.gallery',$product->slug) }}" class="btn btn-warning text-center"><i class="fa fa-image"></i> Image Gallery </a>
                                             </td>
                                             <td>
                                                 <a href="{{ route('product.show',$product->slug) }}" class="btn btn-info text-center"><i class="fa fa-eye"></i> Details</a>
-                                            </td>
-                                            <td>
-                                                @can('product edit')
-
-                                                    <a href="#" class="btn btn-danger text-center"> <i class="fa fa-dot-circle"></i>Force Unable</a>
-
-                                                @endcan
                                             </td>
                                         </tr>
                                     @empty

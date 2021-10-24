@@ -8,8 +8,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                      <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                      <li class="breadcrumb-item active">Wishlist</li>
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                      <li class="breadcrumb-item active">Wishlists</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -32,7 +32,6 @@
                                         <th>Product Name</th>
                                         <th>Category</th>
                                         <th>Subcategory</th>
-                                        <th>Stock</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,7 +44,6 @@
                                             <td>{{ $wishlist->product->name }}</td>
                                             <td>{{ $wishlist->product->category->name }}</td>
                                             <td>{{ $wishlist->product->subcategory->name}}</td>
-                                            <td>{{ $wishlist->product->attribute->sum('quantity') }}</td>
                                         </tr>
                                     @empty
                                         <tr class="text-center">

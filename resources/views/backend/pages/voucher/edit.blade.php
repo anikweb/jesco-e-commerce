@@ -8,9 +8,9 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                      <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                      <li class="breadcrumb-item"><a href="{{ route('voucher.index') }}">Active Vouchers</a></li>
-                      <li class="breadcrumb-item active">Edit Voucher</li>
+                      <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                      <li class="breadcrumb-item"><a href="{{ route('voucher.index') }}">Activated Vouchers</a></li>
+                      <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->

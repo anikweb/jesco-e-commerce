@@ -56,7 +56,7 @@
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <div class="pricing-meta">
                                 <ul>
-                                    <li class="old-price not-cut"><del class="rPrice">৳{{ $product->attribute->max('regular_price') }}</del> <span class="text-primary offer_price">৳{{ $product->attribute->min('offer_price') }}</span></li>
+                                    <li class="old-price not-cut"> @if($product->attribute->min('offer_price')!=$product->attribute->max('regular_price')) <del class="rPrice">৳{{ $product->attribute->max('regular_price') }}</del> @endif <span class="text-primary offer_price">৳{{ $product->attribute->min('offer_price') }}</span></li>
                                 </ul>
                             </div>
                             <div class="pro-details-rating-wrap">
@@ -105,12 +105,7 @@
                                     <input class="cart-plus-minus-box" type="text" name="quantity" value="1">
                                 <div class="inc qtybutton">+</div></div>
                                 <div class="pro-details-cart">
-                                    @if ($product->attribute->sum('quantity') != 0)
-                                        <button type="submit" class="add-cart" href="#">Add To Cart</button>
-                                    @else
-                                        <button class="stockout-btn" style="hover:none;" href="#"> Out of Stock</button>
-                                    @endif
-
+                                    <button type="submit" class="add-cart" href="#">Add To Cart</button>
                                 </div>
                                 <div class="pro-details-compare-wishlist pro-details-wishlist ">
                                     <a href="wishlist.html"><i class="pe-7s-like"></i></a>
@@ -872,13 +867,13 @@
             $('.color_id').change(function(){
                 var colorId = $(this).val();
                 var productId = $(this).attr('data-product');
-                // alert(colorId);
+                // alert(productId);
                 $.ajax({
                     type: "GET",
                     url: "{{ url('get/color/size') }}/"+colorId+'/'+productId,
                     success:function(res){
                         if(res){
-                            // console.log(res);
+                            console.log(res);
                             // if(res !='none'){
                                 $('.size').empty();
                                 $('.sizeName').empty();
@@ -889,7 +884,7 @@
                                     var price = $(this).attr('data-price');
                                     var quantity = $(this).attr('data-quantity');
                                     var rPrice = $(this).attr('data-rPrice');
-                                    $('.offer_price').html(price);
+                                    $('.offer_price').html('৳'+price);
                                     $('.rPrice').html(rPrice);
                                 });
                             // }
