@@ -402,31 +402,35 @@
                 </li>
              @endcan
             {{--  Sliders   --}}
-             {{--  @can('order management')  --}}
+             @can('slider view')
                 <li class="nav-item @if(Route::is('slider.create')||Route::is('slider.edit')||Route::is('slider.index')) menu-open @endif">
                     <a href="#" class="nav-link @if(Route::is('slider.create')||Route::is('slider.edit')||Route::is('slider.index')) active @endif">
-                    <i class="nav-icon fas fa-sliders-h"></i>
+                    <i class="nav-icon fa fa-sliders-h"></i>
                     <p>
                         Sliders
                         <i class="fas fa-angle-left right"></i>
                     </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('slider.create') }}" class="nav-link @if(Route::is('slider.create')) active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Create</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('slider.index') }}" class="nav-link @if(Route::is('slider.index')||Route::is('slider.edit')) active @endif">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>View List</p>
-                            </a>
-                        </li>
+                        @can('slider add')
+                            <li class="nav-item">
+                                <a href="{{ route('slider.create') }}" class="nav-link @if(Route::is('slider.create')) active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create</p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('slider view')
+                            <li class="nav-item">
+                                <a href="{{ route('slider.index') }}" class="nav-link @if(Route::is('slider.index')||Route::is('slider.edit')) active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>View List</p>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
-             {{--  @endcan  --}}
+             @endcan
             {{-- Role management --}}
             @can('role management')
                 <li class="nav-item @if(Route::is('role.create')||Route::is('role.edit')||Route::is('role.index')||Route::is('role.show')||Route::is('assign.user')||Route::is('create.user')) menu-open @endif">

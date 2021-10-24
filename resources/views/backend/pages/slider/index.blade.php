@@ -20,7 +20,7 @@
            <div class="col-md-12">
                <div class="card card-primary">
                    <div class="card-header">
-                        <h3 class="card-title"><i class="fa fa-tags"></i> Sliders</h3>
+                        <h3 class="card-title"><i class="fa fa-sliders-h"></i> Sliders</h3>
                    </div>
                    <div class="card-body">
                         <div class="table-responsive">
@@ -34,7 +34,9 @@
                                         <th>URL</th>
                                         <th>Status</th>
                                         <th>Created</th>
-                                        <th colspan="3" class="text-center">Action</th>
+                                        @if (auth()->user()->can('slider deactivate')||auth()->user()->can('slider activate')||auth()->user()->can('slider trash'))
+                                            <th colspan="3" class="text-center">Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,21 +57,27 @@
                                             @endif
                                         </td>
                                         <td>{{ $slider->created_at->format('d-M-Y, h:i A') }}</td>
-                                        {{-- @can('voucher edit') --}}
+                                        @can('slider edit')
                                             <td class="text-center">
                                                 <a href="{{ route('slider.edit',$slider->id) }}" class="btn btn-primary"> <i class="fa fa-edit"></i> Edit</a>
                                             </td>
-                                        {{-- @endcan --}}
-                                        {{-- @can('voucher deactivate') --}}
-                                            <td class="text-center">
-                                                @if ($slider->status == 1)
-                                                    <a href="{{ route('slider.deactivate',$slider->id) }}" class="btn btn-danger"> <i class="fab fa-creative-commons-zero"></i> Deactive</a>
-                                                @elseif ($slider->status == 2)
-                                                    <a href="{{ route('slider.active',$slider->id) }}" class="btn btn-success"> <i class="fa fa-check-circle"></i> Active</a>
-                                                @endif
-                                            </td>
-                                        {{-- @endcan --}}
-                                        {{-- @can('voucher trash') --}}
+                                        @endcan
+                                            @if (auth()->user()->can('slider deactivate')||auth()->user()->can('slider activate'))
+                                                <td class="text-center">
+
+                                                    @if ($slider->status == 1)
+                                                        @can('slider deactivate')
+                                                            <a href="{{ route('slider.deactivate',$slider->id) }}" class="btn btn-danger"> <i class="fab fa-creative-commons-zero"></i> Deactive</a>
+                                                        @endcan
+                                                    @elseif ($slider->status == 2)
+                                                        @can('slider activate')
+                                                            <a href="{{ route('slider.active',$slider->id) }}" class="btn btn-success"> <i class="fa fa-check-circle"></i> Active</a>
+                                                        @endcan
+                                                    @endif
+                                                </td>
+                                            @endif
+
+                                        @can('slider trash')
                                             <td class="text-center">
                                                 <form action="{{ route('slider.destroy',$slider->id) }}" method="POST">
                                                     @csrf
@@ -77,7 +85,7 @@
                                                     <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Trash </button>
                                                 </form>
                                             </td>
-                                        {{-- @endcan --}}
+                                        @endcan
                                     </tr>
                                     @empty
                                     <tr>

@@ -18,9 +18,13 @@ class SliderController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.slider.index',[
-            'sliders' => Slider::latest()->paginate('10'),
-        ]);
+        if(auth()->user()->can('slider view')){
+            return view('backend.pages.slider.index',[
+                'sliders' => Slider::latest()->paginate('10'),
+            ]);
+        }else{
+            return abort(404);
+        }
     }
 
     /**
@@ -30,7 +34,11 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return view('backend.pages.slider.create');
+        if(auth()->user()->can('slider add')){
+            return view('backend.pages.slider.create');
+        }else{
+            return abort(404);
+        }
     }
 
     /**
@@ -41,23 +49,27 @@ class SliderController extends Controller
      */
     public function store(SliderAddForm $request)
     {
-        // return $request;
-        $slider = new Slider;
-        $slider->title = $request->title;
-        $slider->promotions = $request->promotions;
-        $slider->url = $request->url;
-        $slider->save();
-        if($request->hasFile('image')){
-            $image = $request->file('image');
-            $newImageName = Str::slug($slider->title).'-'.date('Y_m_d_h_i_s').time().'.'.$image->getClientOriginalExtension();
-            // Create Dynamic Folder Start
-            $path = public_path('assets/images/slider-image/');
-            // Create Dynamic Folder End
-            Image::make($image)->save($path.$newImageName);
-            $slider->image = $newImageName;
+        if(auth()->user()->can('slider add')){
+            $slider = new Slider;
+            $slider->title = $request->title;
+            $slider->promotions = $request->promotions;
+            $slider->url = $request->url;
             $slider->save();
-            return redirect()->route('slider.index')->with('success','New Slider Created!');
+            if($request->hasFile('image')){
+                $image = $request->file('image');
+                $newImageName = Str::slug($slider->title).'-'.date('Y_m_d_h_i_s').time().'.'.$image->getClientOriginalExtension();
+                // Create Dynamic Folder Start
+                $path = public_path('assets/images/slider-image/');
+                // Create Dynamic Folder End
+                Image::make($image)->save($path.$newImageName);
+                $slider->image = $newImageName;
+                $slider->save();
+                return redirect()->route('slider.index')->with('success','New Slider Created!');
+            }
+        }else{
+            return abort(404);
         }
+
 
     }
 
@@ -80,8 +92,11 @@ class SliderController extends Controller
      */
     public function edit(Slider $slider)
     {
-        // return $slider;
-        return view('backend.pages.slider.edit',compact('slider'));
+        if(auth()->user()->can('slider edit')){
+            return view('backend.pages.slider.edit',compact('slider'));
+        }else{
+            return abort(404);
+        }
     }
     /**
      * Update the specified resource in storage.
@@ -92,25 +107,29 @@ class SliderController extends Controller
      */
     public function update(Request $request, Slider $slider)
     {
-        $slider->title = $request->title;
-        $slider->promotions = $request->promotions;
-        $slider->url = $request->url;
-        $slider->save();
-        if($request->hasFile('image')){
-            $oldImage = public_path('assets/images/slider-image/'.$slider->image);
-            if(file_exists($oldImage)){
-                unlink($oldImage);
-            }
-            $image = $request->file('image');
-            $newImageName = Str::slug($slider->title).'-'.date('Y_m_d_h_i_s').time().'.'.$image->getClientOriginalExtension();
-            // Create Dynamic Folder Start
-            $path = public_path('assets/images/slider-image/');
-            // Create Dynamic Folder End
-            Image::make($image)->save($path.$newImageName);
-            $slider->image = $newImageName;
+        if(auth()->user()->can('slider edit')){
+            $slider->title = $request->title;
+            $slider->promotions = $request->promotions;
+            $slider->url = $request->url;
             $slider->save();
+            if($request->hasFile('image')){
+                $oldImage = public_path('assets/images/slider-image/'.$slider->image);
+                if(file_exists($oldImage)){
+                    unlink($oldImage);
+                }
+                $image = $request->file('image');
+                $newImageName = Str::slug($slider->title).'-'.date('Y_m_d_h_i_s').time().'.'.$image->getClientOriginalExtension();
+                // Create Dynamic Folder Start
+                $path = public_path('assets/images/slider-image/');
+                // Create Dynamic Folder End
+                Image::make($image)->save($path.$newImageName);
+                $slider->image = $newImageName;
+                $slider->save();
+            }
+            return redirect()->route('slider.index')->with('success','Slider Updated!');
+        }else{
+            return abort(404);
         }
-        return redirect()->route('slider.index')->with('success','Slider Updated!');
     }
 
     /**
@@ -121,26 +140,38 @@ class SliderController extends Controller
      */
     public function destroy(Slider $slider)
     {
-        $oldImage = public_path('assets/images/slider-image/'.$slider->image);
-        if(file_exists($oldImage)){
-            unlink($oldImage);
+        if(auth()->user()->can('slider trash')){
+            $oldImage = public_path('assets/images/slider-image/'.$slider->image);
+            if(file_exists($oldImage)){
+                unlink($oldImage);
+            }
+            $slider->delete();
+            return back()->with('success','Slider deleted!');
+        }else{
+            return abort(404);
         }
-        $slider->delete();
-        return back()->with('success','Slider deleted!');
     }
     public function sliderDeactivate($slider_id)
     {
-        $slider = Slider::find($slider_id);
-        $slider->status = 2;
-        $slider->save();
-        return back()->with('success','Slider Deactivated!');
+        if(auth()->user()->can('slider deactivate')){
+            $slider = Slider::find($slider_id);
+            $slider->status = 2;
+            $slider->save();
+            return back()->with('success','Slider Deactivated!');
+        }else{
+            return abort(404);
+        }
     }
     public function sliderActive($slider_id)
     {
-        $slider = Slider::find($slider_id);
-        $slider->status = 1;
-        $slider->save();
-        return back()->with('success','Slider Activated!');
+        if(auth()->user()->can('slider activate')){
+            $slider = Slider::find($slider_id);
+            $slider->status = 1;
+            $slider->save();
+            return back()->with('success','Slider Activated!');
+        }else{
+            return abort(404);
+        }
     }
 
 }
