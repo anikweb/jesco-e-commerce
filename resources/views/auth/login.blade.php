@@ -11,9 +11,11 @@
                         <a class="active" data-bs-toggle="tab" href="#lg1">
                             <h4>login</h4>
                         </a>
-                        <a data-bs-toggle="tab" href="#lg2">
-                            <h4>register</h4>
-                        </a>
+                        @if (basicSettings()->new_registration==2)
+                            <a data-bs-toggle="tab" href="#lg2">
+                                <h4>register</h4>
+                            </a>
+                        @endif
                     </div>
                     <div class="tab-content">
                         <div id="lg1" class="tab-pane active">

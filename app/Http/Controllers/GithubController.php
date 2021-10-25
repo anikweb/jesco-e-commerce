@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Auth\Events\Registered;
+
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -17,6 +18,7 @@ class GithubController extends Controller
         // return 'aschi';
 
         return Socialite::driver('github')->redirect();
+        
     }
     public function githubCallback()
     {

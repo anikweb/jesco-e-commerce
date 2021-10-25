@@ -58,16 +58,16 @@
                                         @endcan
                                         @can('voucher deactivate')
                                             <td class="text-center">
-                                                <a href="{{ route('voucher.deactivate',$voucher->id) }}" class="btn btn-danger"> <i class="fab fa-creative-commons-zero"></i> Deactive</a>
+                                                <button data-voucher="{{ $voucher->id }}" class="btn btn-danger voucher-deactive_btn"> <i class="fab fa-creative-commons-zero"></i> Deactive</button>
                                             </td>
                                         @endcan
                                         @can('voucher trash')
                                             <td class="text-center">
-                                                <form action="{{ route('voucher.destroy',$voucher->id) }}" method="POST">
+                                                <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Trash </button>
+                                                {{--  <form id="voucher_id{{ $voucher->id }}" action="{{ route('voucher.destroy',$voucher->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Trash </button>
-                                                </form>
+                                                </form>  --}}
                                             </td>
                                         @endcan
                                     </tr>
@@ -98,5 +98,45 @@
         @elseif(session('error'))
             toastr["error"]("{{ session('error') }}");
         @endif
+        $('.voucher-deactive_btn').click(function(){
+            var voucher_id = $(this).attr('data-voucher');
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to deactivate this voucher?',
+                // text: 'Invoice No:',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, deactivate it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                'Deactivated!',
+                'This voucher is now deactivated.',
+                'success'
+                )
+                setTimeout(function(){
+                    window.location.href = '{{ url("dashboard/voucher/deactive") }}/'+voucher_id;
+                }, 1300);
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'This voucher steel now active',
+                'error',
+                )
+            }
+            })
+        });
     </script>
 @endsection

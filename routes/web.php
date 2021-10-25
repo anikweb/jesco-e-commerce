@@ -68,6 +68,7 @@ Route::get('/my-account/orders/track/search/{invoice}',[MyAccountController::cla
 Route::resource('my-account', MyAccountController::class)->middleware(['isCustomer','auth']);
 // Dashboard
 Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::get('/dashboard/get/color/size/{cid}/{pid}',[DashboardController::class, 'getColorSizeId'])->middleware('auth');
 // Role Controller
 Route::get('/dashboard/role/assign/user',[RoleController::class, 'assignUser'])->name('assign.user')->middleware('auth');
 Route::post('/dashboard/role/assign/user/post',[RoleController::class, 'assignUserPost'])->name('assign.user.post')->middleware('auth');

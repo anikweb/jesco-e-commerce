@@ -53,10 +53,10 @@
                                                                 <a class="btn btn-info" href="{{ route('subcategory.edit',$subcategory->slug) }}"><i class="fa fa-edit"></i></a>
                                                             @endcan
                                                             @can("subcategory delete")
-                                                                <form class="d-inline-block" action="{{ route('subcategory.destroy',$subcategory->id) }}" method="POST">
+                                                            <button data-id="{{ $subcategory->id }}" type="submit" class="btn btn-danger subcategory_delete_btn"><i class="fa fa-trash"></i></button>
+                                                                <form id="subcategory_delete_form{{$subcategory->id}}" class="d-inline-block" action="{{ route('subcategory.destroy',$subcategory->id) }}" method="POST">
                                                                     @csrf
                                                                     @method("DELETE")
-                                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                                                 </form>
                                                             @endcan
                                                         </td>
@@ -84,5 +84,42 @@
         @elseif(session('error'))
             toastr["error"]("{{ session('error') }}");
         @endif
+
+        $('.subcategory_delete_btn').click(function(){
+            var subcategory_id = $(this).attr('data-id');
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to delete this category?',
+                // text: 'Invoice No:',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+
+                // setTimeout(function(){
+                    $("#subcategory_delete_form"+subcategory_id).submit();
+                // }, 1300);
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'This category steel now active',
+                'error',
+                )
+            }
+            })
+        });
     </script>
 @endsection

@@ -6,6 +6,7 @@ use App\Http\Requests\categoryForm;
 use Illuminate\Http\Request;
 use App\Models\{
     Category,
+    Subcategory,
 };
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\{
@@ -134,11 +135,16 @@ class CategoryController extends Controller
     {
         if(auth()->user()->can("category delete")){
             $category = Category::where('slug',$slug)->first();
-            if($category->delete()){
-                return back()->with('success','Category Deleted!');
+            if(!Subcategory::where('category_id',$category->id)->exists()){
+                if($category->delete()){
+                    return back()->with('success','Category Deleted!');
+                }else{
+                    return back()->with('error','Failed!');
+                }
             }else{
-                return back()->with('error','Failed!');
+                return back()->with('error','Failed! you have created subcategory by using this category');
             }
+
         }else{
             return abort(404);
         }

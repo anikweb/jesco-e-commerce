@@ -25,5 +25,11 @@ class Product extends Model
     public function wishlist(){
         return $this->hasMany(Wishlist::class,'product_id');
     }
+    public function warranty_name(){
+        return $this->belongsTo(productWarranty::class,'warranty');
+    }
+    public function return_name(){
+        return $this->belongsTo(ProductReturn::class,'return');
+    }
 
 }

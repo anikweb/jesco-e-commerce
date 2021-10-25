@@ -108,10 +108,7 @@
                     <!-- Section Title Start -->
                     <div class="col-12">
                         <div class="section-title text-center mb-0">
-                            <h2 class="title">
-                                #Product
-
-                        </h2>
+                            <h2 class="title">#Product</h2>
                             <!-- Tab Start -->
                             <div class="nav-center">
                                 <ul class="product-tab-nav nav align-items-center justify-content-center">
@@ -136,99 +133,103 @@
                             <!-- All tab start -->
                             <div class="tab-pane fade show active" id="tab-product--all">
                                 <div class="row">
-                                    @foreach ($productAll as $product)
-                                        <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up"
-                                            data-aos-delay="200">
-                                            <!-- Single Prodect -->
-                                            <div class="product">
-                                                <div class="thumb">
-                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
-                                                        <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                    </a>
-                                                    <div class="actions">
-                                                        @php
-                                                            $w = $wishlistProduct->where('cookie_id',Cookie::get('jesco_ecommerce'))->where('product_id',$product->id)->first();
-                                                        @endphp
-
-                                                        @if ($w)
-                                                            <button type="button" style='background:#fb5d5d;color:#ffffff' data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
-                                                                <i class="pe-7s-like"></i>
-                                                            </button>
-                                                        @else
-                                                            <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
-                                                                <i class="pe-7s-like"></i>
-                                                            </button>
-                                                        @endif
-                                                        <a href="#" class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
-                                                        <a href="compare.html" class="action compare" title="Compare">
-                                                            <i class="pe-7s-refresh-2"></i>
+                                    @if ($productAll)
+                                        @foreach ($productAll as $product)
+                                            <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up"
+                                                data-aos-delay="200">
+                                                <!-- Single Prodect -->
+                                                <div class="product">
+                                                    <div class="thumb">
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
+                                                            <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
                                                         </a>
+                                                        <div class="actions">
+                                                            @php
+                                                                $w = $wishlistProduct->where('cookie_id',Cookie::get('jesco_ecommerce'))->where('product_id',$product->id)->first();
+                                                            @endphp
+
+                                                            @if ($w)
+                                                                <button type="button" style='background:#fb5d5d;color:#ffffff' data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
+                                                                    <i class="pe-7s-like"></i>
+                                                                </button>
+                                                            @else
+                                                                <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
+                                                                    <i class="pe-7s-like"></i>
+                                                                </button>
+                                                            @endif
+                                                            <a href="#" class="action quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
+                                                            <a href="compare.html" class="action compare" title="Compare">
+                                                                <i class="pe-7s-refresh-2"></i>
+                                                            </a>
+                                                        </div>
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart"  class="add-to-cart">Add To Cart</a>
                                                     </div>
-                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart"  class="add-to-cart">Add To Cart</a>
-                                                </div>
-                                                <div class="content">
-                                                    <span class="ratings">
-                                                        <span class="rating-wrap">
-                                                            <span class="star" style="width: 100%"></span>
+                                                    <div class="content">
+                                                        <span class="ratings">
+                                                            <span class="rating-wrap">
+                                                                <span class="star" style="width: 100%"></span>
+                                                            </span>
+                                                            <span class="rating-num">( 5 Review )</span>
+                                                            <span style="position: absolute; right:0" class="badge rounded bg-primary text-white">{{ $product->category->name }}</span>
+
                                                         </span>
-                                                        <span class="rating-num">( 5 Review )</span>
-                                                        <span style="position: absolute; right:0" class="badge rounded bg-primary text-white">{{ $product->category->name }}</span>
+                                                        <h5 class="title" ><a href="#">{{ $product->name }}</a>
+                                                        </h5>
 
-                                                    </span>
-                                                    <h5 class="title" ><a href="#">{{ $product->name }}</a>
-                                                    </h5>
-
-                                                    <span class="price">
-                                                        <span class="new">৳{{ $product->attribute->min('offer_price') }}</span>
-                                                    </span>
+                                                        <span class="price">
+                                                            <span class="new">৳{{ $product->attribute->min('offer_price') }}</span>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                             <!-- All tab end -->
                             <!-- New tab start -->
                             <div class="tab-pane fade" id="tab-product--new">
                                 <div class="row">
-                                    @foreach ($productNew as $product)
-                                        <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up"
-                                            data-aos-delay="200">
-                                            <!-- Single Prodect -->
-                                            <div class="product">
-                                                <div class="thumb">
-                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
-                                                        <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                    </a>
-                                                    <div class="actions">
-                                                        <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
-                                                            <i class="pe-7s-like"></i>
-                                                        </button>
-                                                        <a href="#" class="action quickview" data-link-action="quickview"
-                                                            title="Quick view" data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
-                                                        <a href="compare.html" class="action compare" title="Compare"><i
-                                                                class="pe-7s-refresh-2"></i></a>
+                                    @if ($productNew)
+                                        @foreach ($productNew as $product)
+                                            <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up"
+                                                data-aos-delay="200">
+                                                <!-- Single Prodect -->
+                                                <div class="product">
+                                                    <div class="thumb">
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
+                                                            <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
+                                                        </a>
+                                                        <div class="actions">
+                                                            <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
+                                                                <i class="pe-7s-like"></i>
+                                                            </button>
+                                                            <a href="#" class="action quickview" data-link-action="quickview"
+                                                                title="Quick view" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
+                                                            <a href="compare.html" class="action compare" title="Compare"><i
+                                                                    class="pe-7s-refresh-2"></i></a>
+                                                        </div>
+                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart" class="add-to-cart">Add To Cart</a>
                                                     </div>
-                                                    <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart" class="add-to-cart">Add To Cart</a>
-                                                </div>
-                                                <div class="content">
-                                                    <span class="ratings">
-                                                        <span class="rating-wrap">
-                                                            <span class="star" style="width: 100%"></span>
+                                                    <div class="content">
+                                                        <span class="ratings">
+                                                            <span class="rating-wrap">
+                                                                <span class="star" style="width: 100%"></span>
+                                                            </span>
+                                                            <span class="rating-num">( 5 Review )</span>
+                                                            <span style="position: absolute; right:0" class="badge rounded bg-primary text-white">{{ $product->category->name }}</span>
                                                         </span>
-                                                        <span class="rating-num">( 5 Review )</span>
-                                                        <span style="position: absolute; right:0" class="badge rounded bg-primary text-white">{{ $product->category->name }}</span>
-                                                    </span>
-                                                    <h5 class="title"><a href="single-product.html">{{ $product->name }}</a>
-                                                    </h5>
-                                                    <span class="price">
-                                                        <span class="new">৳{{ $product->attribute->min('regular_price') }}</span>
-                                                    </span>
+                                                        <h5 class="title"><a href="single-product.html">{{ $product->name }}</a>
+                                                        </h5>
+                                                        <span class="price">
+                                                            <span class="new">৳{{ $product->attribute->min('regular_price') }}</span>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                             <!-- New tab end -->
@@ -312,44 +313,46 @@
                             <div class="tab-pane fade show active" id="tab-product-all">
                                 <div class="new-product-slider swiper-container slider-nav-style-1 small-nav">
                                     <div class="new-product-wrapper swiper-wrapper">
-                                        @foreach ($productNew as $product)
-                                            <div class="new-product-item swiper-slide">
-                                            <!-- Single Prodect -->
-                                                <div class="product">
-                                                    <div class="thumb">
-                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
-                                                            <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
-                                                        </a>
-                                                        <div class="actions">
-                                                            <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
-                                                                <i class="pe-7s-like"></i>
-                                                            </button>
-                                                            <a href="#" class="action quickview" data-link-action="quickview"
-                                                                title="Quick view" data-bs-toggle="modal"
-                                                                data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
-                                                            <a href="compare.html" class="action compare" title="Compare"><i
-                                                                    class="pe-7s-refresh-2"></i></a>
-                                                        </div>
-                                                        <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart" class="add-to-cart">Add To Cart</a>
-                                                    </div>
-                                                    <div class="content">
-                                                        <span class="ratings">
-                                                            <span class="rating-wrap">
-                                                                <span class="star" style="width: 100%"></span>
-                                                            </span>
-                                                            <span class="rating-num">( 5 Review )</span>
-                                                            <span style="position: absolute; right:0" class="badge rounded bg-primary text-white">{{ $product->category->name }}</span>
-                                                        </span>
-                                                        <h5 class="title"><a href="single-product.html">{{ $product->name }}</a>
-                                                        </h5>
-                                                        <span class="price">
-                                                            <span class="new">৳{{ $product->attribute->min('regular_price') }}</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                        @if ($productNew)
+                                            @foreach ($productNew as $product)
+                                                <div class="new-product-item swiper-slide">
                                                 <!-- Single Prodect -->
-                                            </div>
-                                        @endforeach
+                                                    <div class="product">
+                                                        <div class="thumb">
+                                                            <a href="{{ route('frontend.product.single',$product->slug) }}" class="image">
+                                                                <img src="{{ asset('assets/images/product').'/'.$product->created_at->format('Y/m/d/').$product->id.'/thumbnail/'.$product->thumbnail }}" alt="{{ $product->name }}" />
+                                                            </a>
+                                                            <div class="actions">
+                                                                <button type="button" data-id="{{ $product->id }}" href="javascript:void(0)" class="action wishlist add-wishlist wishlist-product{{$product->id}}"  title="Wishlist">
+                                                                    <i class="pe-7s-like"></i>
+                                                                </button>
+                                                                <a href="#" class="action quickview" data-link-action="quickview"
+                                                                    title="Quick view" data-bs-toggle="modal"
+                                                                    data-bs-target="#exampleModal"><i class="pe-7s-search"></i></a>
+                                                                <a href="compare.html" class="action compare" title="Compare"><i
+                                                                        class="pe-7s-refresh-2"></i></a>
+                                                            </div>
+                                                            <a href="{{ route('frontend.product.single',$product->slug) }}" title="Add To Cart" class="add-to-cart">Add To Cart</a>
+                                                        </div>
+                                                        <div class="content">
+                                                            <span class="ratings">
+                                                                <span class="rating-wrap">
+                                                                    <span class="star" style="width: 100%"></span>
+                                                                </span>
+                                                                <span class="rating-num">( 5 Review )</span>
+                                                                <span style="position: absolute; right:0" class="badge rounded bg-primary text-white">{{ $product->category->name }}</span>
+                                                            </span>
+                                                            <h5 class="title"><a href="single-product.html">{{ $product->name }}</a>
+                                                            </h5>
+                                                            <span class="price">
+                                                                <span class="new">৳{{ $product->attribute->min('regular_price') }}</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Single Prodect -->
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     </div>
                                     <!-- Add Arrows -->
                                     <div class="swiper-buttons">
@@ -482,25 +485,26 @@
 @endsection
 @section('footer_js')
 <script>
-    $(document).ready(function(){
-        $('.add-wishlist').click(function(){
-            var product_id = $(this).attr('data-id');
-            $.ajax({
-                type: "GET",
-                url: "{{ url('wishlist/add') }}/"+product_id,
-                success:function(res){
-                    console.log(res);
-                    if(res.product_id == product_id){
-                        var buttonWishlist = "<button type='button' href='javascript:void(0)' style='background:#fb5d5d;color:#ffffff'  class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
-                        $(".wishlist-product"+res.product_id).html(buttonWishlist);
-                    }else{
-                        var buttonWishlist = "<button type='button' href='javascript:void(0)' class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
-                        $(".wishlist-product"+product_id).html(buttonWishlist);
+        $(document).ready(function(){
+            $('.add-wishlist').click(function(){
+                var product_id = $(this).attr('data-id');
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('wishlist/add') }}/"+product_id,
+                    success:function(res){
+                        console.log(res);
+                        if(res.product_id == product_id){
+                            var buttonWishlist = "<button type='button' href='javascript:void(0)' style='background:#fb5d5d;color:#ffffff'  class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
+                            $(".wishlist-product"+res.product_id).html(buttonWishlist);
+                        }else{
+                            var buttonWishlist = "<button type='button' href='javascript:void(0)' class='action wishlist' data-id='{{ $product->id }}' title='Wishlist'><i class='pe-7s-like'></i></button>";
+                            $(".wishlist-product"+product_id).html(buttonWishlist);
+                        }
                     }
-                }
+                });
             });
-        });
 
-    });
+        });
 </script>
 @endsection
+

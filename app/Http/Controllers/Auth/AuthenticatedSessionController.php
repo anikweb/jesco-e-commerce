@@ -17,7 +17,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
+        if(basicSettings()->new_login ==2){
+            return view('auth.login');
+        }else{
+                return abort(404);
+        }
+        // return view('auth.login');
     }
 
     /**
@@ -28,11 +33,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        if(basicSettings()->new_login ==2){
+            $request->authenticate();
 
-        $request->session()->regenerate();
+            $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended(RouteServiceProvider::HOME);
+
+        }else{
+                return abort(404);
+        }
+
     }
 
     /**

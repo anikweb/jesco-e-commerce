@@ -24,7 +24,7 @@
                         <h3 class="card-title">Edit Product</h3>
                    </div>
                    <div class="card-body">
-                    <form action="{{ route('product.update',$product->id) }}" method="POST" enctype="multipart/form-data">
+                    <form id="product_update_form" action="{{ route('product.update',$product->id) }}" method="POST" enctype="multipart/form-data">
                         @method("PUT")
                         @csrf
 
@@ -290,7 +290,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Save Changes</button>
+                                <button type="button" class="btn btn-info submit_btn"><i class="fa fa-save"></i> Save Changes</button>
                             </div>
                         </div>
                     </form>
@@ -340,7 +340,45 @@
                 }
             });
         });
+        $('.submit_btn').click(function(){
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
 
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to edit this product?',
+                // text: 'Invoice No:',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Save Change!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                'Succcess!',
+                'This order is product updated.',
+                'success'
+                )
+                setTimeout(function(){
+                    $("#product_update_form").submit();
+                }, 1300);
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Cancel to edit',
+                'error',
+                )
+            }
+            })
+        });
 
 
     </script>

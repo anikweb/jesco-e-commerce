@@ -45,6 +45,8 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <h3 class="my-3">{{ $product->name }}</h3>
+                    <h4>Regular Price : <del class="text-danger regular_price">৳{{ $product->attribute->max('regular_price') }}</del>, Offer Price: <span class="text-success offer_price">৳{{ $product->attribute->min('offer_price') }}</span></h4>
+                    <p class="m-0 font-weight-bold">Summary</p>
                     <p>{{ $product->summary }}</p>
 
                     <hr>
@@ -54,7 +56,7 @@
                     @endphp
                     @foreach ($data as $attribute)
                         <label class="btn btn-default text-center">
-                            <span class="text-xl">{{ Str::title($attribute->color->name) }}</span>
+                            <span class="colorId" data-product="{{ $product->id }}" data-color="{{ $attribute->color_id }}" class="text-xl">{{ Str::title($attribute->color->name) }}</span>
                             <br>
                         </label>
                     @endforeach
@@ -62,15 +64,64 @@
                 @php
                     $data1 = $product->attribute->unique('size_id');
                 @endphp
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    @foreach ($data1 as $attribute)
-                        <label class="btn btn-default text-center">
-                            <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
-                            <span class="text-xl">{{ $attribute->size_id }}</span>
-                            <br>
-                        </label>
-                    @endforeach
-
+                <div class="btn-group btn-group-toggle size_btn" data-toggle="buttons">
+                   <div class="row">
+                       <div class="col-md-12">
+                            @foreach ($data1 as $attribute)
+                                <label class="btn btn-default text-center">
+                                    <input class="d-none" type="radio" name="color_option" id="color_option_b1" autocomplete="off">
+                                    <span class="text-xl">{{ $attribute->size_id }}</span>
+                                    <br>
+                                </label>
+                            @endforeach
+                       </div>
+                   </div>
+                </div>
+                <div class="table-responsive pt-2">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold">Category:</td>
+                                <td>{{ $product->category->name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Subcategory:</td>
+                                <td>{{ $product->subcategory->name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Gender:</td>
+                                <td>{{ Str::title($product->gender) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Warrenty:</td>
+                                <td>{{ Str::title($product->warranty_name->warranty) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Return:</td>
+                                <td>{{ Str::title($product->return_name->name) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Promotions:</td>
+                                <td>--</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Main Upper Material:</td>
+                                <td>{{ Str::title($product->main_upper_material) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Outsole Material:</td>
+                                <td>{{ Str::title($product->outsole_material) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Brand:</td>
+                                <td>{{ Str::title($product->brand) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Authenticity:</td>
+                                <td>{{ Str::title($product->authentic).'%' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             </div>
@@ -93,4 +144,39 @@
         <!-- /.card -->
 
         </section>
+@endsection
+@section('footer_js')
+<script>
+     $(document).ready(function(){
+            $('.colorId').click(function(){
+                var colorId = $(this).attr('data-color');
+                var productId = $(this).attr('data-product');
+                // alert(productId);
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('/dashboard/get/color/size') }}/"+colorId+'/'+productId,
+                    success:function(res){
+                        if(res){
+                            console.log(res);
+                                // $('.size').empty();
+                                $('.size_btn').empty();
+                                // $('.sizeName').append('<div class="badge text-white bg-info">Sizes</div>');
+                                // $('.sizeAdd').empty();
+                                $('.size_btn').html(res);
+                                $('.sizeCheck').change(function(){
+                                    var rprice = $(this).attr('data-rprice');
+                                    var ofrPrice = $(this).attr('data-ofrPrice');
+                                    // alert(ofrPrice);
+                                    $('.offer_price').empty();
+                                    $('.regular_price').empty();
+                                    $('.offer_price').html('৳'+ofrPrice);
+                                    $('.regular_price').html('৳'+rprice);
+                                });
+
+                        }
+                    }
+                });
+            });
+        });
+</script>
 @endsection

@@ -141,10 +141,7 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         if(auth()->user()->can('slider trash')){
-            $oldImage = public_path('assets/images/slider-image/'.$slider->image);
-            if(file_exists($oldImage)){
-                unlink($oldImage);
-            }
+
             $slider->delete();
             return back()->with('success','Slider deleted!');
         }else{

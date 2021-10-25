@@ -64,14 +64,13 @@
                                         @endcan
                                             @if (auth()->user()->can('slider deactivate')||auth()->user()->can('slider activate'))
                                                 <td class="text-center">
-
                                                     @if ($slider->status == 1)
                                                         @can('slider deactivate')
-                                                            <a href="{{ route('slider.deactivate',$slider->id) }}" class="btn btn-danger"> <i class="fab fa-creative-commons-zero"></i> Deactive</a>
+                                                            <button data-slider="{{$slider->id}}" type="button" class="btn btn-danger slider-deactive_btn"> <i class="fab fa-creative-commons-zero"></i> Deactive</button>
                                                         @endcan
                                                     @elseif ($slider->status == 2)
                                                         @can('slider activate')
-                                                            <a href="{{ route('slider.active',$slider->id) }}" class="btn btn-success"> <i class="fa fa-check-circle"></i> Active</a>
+                                                            <button type="button"  data-slider="{{$slider->id}}" class="btn btn-success slider-active_btn"> <i class="fa fa-check-circle"></i> Active</button>
                                                         @endcan
                                                     @endif
                                                 </td>
@@ -79,10 +78,10 @@
 
                                         @can('slider trash')
                                             <td class="text-center">
-                                                <form action="{{ route('slider.destroy',$slider->id) }}" method="POST">
+                                                <button data-slider="{{$slider->id}}" type="button" class="btn btn-danger trash_btn"><i class="fa fa-trash"></i> Trash </button>
+                                                <form id="slider_trash_form{{ $slider->id }}" action="{{ route('slider.destroy',$slider->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Trash </button>
                                                 </form>
                                             </td>
                                         @endcan
@@ -114,5 +113,128 @@
         @elseif(session('error'))
             toastr["error"]("{{ session('error') }}");
         @endif
+        $('.slider-deactive_btn').click(function(){
+            var slider_id = $(this).attr('data-slider');
+            // alert(slider_id);
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to deactive this voucher?',
+                // text: 'Invoice No:',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, deactive it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                'Deactivate!',
+                'This voucher is now deactivate.',
+                'success'
+                )
+                setTimeout(function(){
+                    window.location.href = '{{ url("dashboard/slider/deactivate") }}/'+slider_id;
+                }, 1300);
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'This voucher steel now deactivated',
+                'error',
+                )
+            }
+            })
+        });
+        $('.slider-active_btn').click(function(){
+            var slider_id = $(this).attr('data-slider');
+            // alert(slider_id);
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to active this voucher?',
+                // text: 'Invoice No:',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, active it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                'Activated!',
+                'This voucher is now activated.',
+                'success'
+                )
+                setTimeout(function(){
+                    window.location.href = '{{ url("dashboard/slider/active") }}/'+slider_id;
+                }, 1300);
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'This voucher steel now deactivated',
+                'error',
+                )
+            }
+            })
+        });
+        $('.trash_btn').click(function(){
+            var slider_id = $(this).attr('data-slider');
+            // alert(slider_id);
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to delete this voucher?',
+                // text: 'Invoice No:',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                'Deleted!',
+                'This voucher is now in trash box.',
+                'success'
+                )
+                setTimeout(function(){
+                    $("#slider_trash_form"+slider_id).submit();
+                }, 1300);
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Cancel to delete!',
+                'error',
+                )
+            }
+            })
+        });
     </script>
 @endsection

@@ -67,6 +67,7 @@
                                 </li>
                                 <li><a href="#">About us</a></li>
                                 <li><a href="#">Contact us</a></li>
+
                                 @auth
                                     <li class="dropdown "><a href="javascript:void(0)">Welcome, {{ Auth::user()->name }} <i class="pe-7s-angle-down"></i></a>
                                         <ul class="sub-menu">
@@ -87,8 +88,9 @@
                                         </ul>
                                     </li>
                                 @else
-                                <li class="dropdown "><a href="{{ route('login') }}">Login</a></li>
-
+                                    @if (basicSettings()->new_login ==2)
+                                        <li class="dropdown "><a href="{{ route('login') }}">Login  @if (basicSettings()->new_registration ==2)/ Register @endif </a></li>
+                                    @endif
                                 @endauth
                             </ul>
                         </div>

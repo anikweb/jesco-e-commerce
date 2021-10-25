@@ -43,11 +43,11 @@
 
                                                 <a href="{{ route('role.show',$role->name) }}" class="btn btn-info"> <i class="fa fa-eye"></i> Details</a>
                                                 <a href="{{ route('role.edit',$role->name) }}" class="btn btn-primary"> <i class="fa fa-edit"></i> Edit</a>
+                                                <button type="button" data-role="{{ $role->id }}" class="btn btn-danger trash_btn"><i class="fa fa-trash"></i> Delete</button>
                                                 {{-- Delete By POST Method Start --}}
-                                                <form class="d-inline-block" action="{{ route('role.destroy',$role->id) }}" method="POST">
+                                                <form id="role_delete_form{{ $role->id }}" class="d-inline-block" action="{{ route('role.destroy',$role->id) }}" method="POST">
                                                     @csrf
                                                     @method("DELETE")
-                                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
                                                 </form>
                                                 {{-- Delete By POST Method End  --}}
                                             </td>
@@ -72,5 +72,45 @@
         @elseif(session('error'))
             toastr["error"]("{{ session('error') }}")
         @endif
+        $('.trash_btn').click(function(){
+            var role_id = $(this).attr('data-role');
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to delete this role?',
+                // text: 'Invoice No:',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                'Delete!',
+                'This voucher is now deleted.',
+                'success'
+                )
+                setTimeout(function(){
+                    $("#role_delete_form"+role_id).submit();
+                }, 1300);
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'This voucher is safe',
+                'error',
+                )
+            }
+            })
+        });
     </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\{
     Category,
+    Product,
     Subcategory
 };
 use Illuminate\Http\Request;
@@ -147,11 +148,16 @@ class SubcategoryController extends Controller
      */
     public function destroy(Subcategory $subcategory)
     {
+
         if(auth()->user()->can('subcategory delete')){
-            if($subcategory->delete()){
-                return back()->with('success','Subcategory Deleted!');
+            if(!Product::where('subcategory_id',$subcategory->id)->exists()){
+                if($subcategory->delete()){
+                    return back()->with('success','Subcategory Deleted!');
+                }else{
+                    return back()->with('error','Failed');
+                }
             }else{
-                return back()->with('error','Failed');
+                return back()->with('error','Failed! you have created product by using this subcategory');
             }
         }else{
             return abort(404);

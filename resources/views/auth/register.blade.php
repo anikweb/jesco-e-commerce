@@ -1,61 +1,105 @@
+@extends('frontend.master')
 
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@section('content')
+ <!-- login area start -->
+ <div class="login-register-area pt-100px pb-100px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                        @if (basicSettings()->new_registration==2)
+                            <a  data-bs-toggle="tab" href="#lg1">
+                                <h4>login</h4>
+                            </a>
+                        @endif
+                        <a class="active" data-bs-toggle="tab" href="#lg2">
+                            <h4>register</h4>
+                        </a>
+                    </div>
+                    <div class="tab-content">
+                        <div id="lg1" class="tab-pane ">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form action="{{ route('login') }}" method="post">
+                                        @csrf
+                                        @error('email')
+                                            <div class="text-danger">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                        <input type="text" name="email" class="@error('email') is-invalid @enderror" placeholder="E-mail" />
+                                        @error('password')
+                                            <div class="text-danger">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                        <input type="password" class="@error('password')is-invalid @enderror" name="password" placeholder="Password" autocomplete="current-password"  />
+                                        <div class="button-box">
+                                            <div class="login-toggle-btn">
+                                                <input type="checkbox" id="remember" name="remember"/>
+                                                <label class="flote-none" for="remember">Remember me</label>
+                                                <a href="#">Forgot Password?</a>
+                                            </div>
+                                            <button type="submit"><span>Login</span></button>
+                                        </div>
+                                    </form>
+                                    <div class="row mt-3">
+                                        {{-- Github Login --}}
+                                            <div class="col-md-5 mx-auto mt-2 bg-dark p-2 ">
+                                                <a href="{{ url('github/redirect') }}" class="d-inline-block">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <img  width="20px" src="{{ asset('assets/images/socail-login/255-2558173_github-logo-png-transparent-png.png') }}" alt="github">
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <p class="text-white">Continue With Github</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        {{-- Gmail Login
+                                        <div class="col-md-5 mt-2 mx-auto bg-primary p-2 ">
+                                            <a href="" class="d-inline-block">
+                                                <div class="row">
+                                                    <div class="col-md-2 bg">
+                                                        <img width="20px" src="{{ asset('assets/images/socail-login/gmail.png') }}" alt="github">
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <p class="text-white">Continue With Gmail</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="lg2" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form action="{{ route('register') }}" method="post">
+                                        @csrf
+                                        <input type="text" name="name" placeholder="Full Name" />
+                                        <input type="email" name="email" placeholder="Email" />
+                                        <input type="password" name="password" placeholder="Password" autocomplete="new-password" />
+                                        <input type="password" name="password_confirmation" placeholder="Confirm Password" />
+                                        <div class="button-box">
+                                            <button type="submit"><span>Register now</span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- login area end -->
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
-
+@endsection

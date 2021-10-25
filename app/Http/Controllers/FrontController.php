@@ -81,8 +81,7 @@ class FrontController extends Controller
             $outpot =  $outpot.'<input class="sizeCheck @error("size_id") is-invalid @enderror" style="margin:5px; cursor: pointer; width: auto; height:auto" data-rPrice="'.$size->regular_price.'" data-price="'.$size->offer_price.'" data-quantity="'.$size->quantity.'" id="size" type="radio" value="'.$size->size_id.'" name="size_id"><label style="cursor: pointer;" for="size">'.' '. $size->size_id .'</label>';
         }
         return response()->json($outpot);
-        // return response()->json($outpot);
-        // echo $outpot;
+
     }
 
 }

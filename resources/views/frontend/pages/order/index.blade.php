@@ -51,7 +51,7 @@
                                             @if ($billing->order_summary->first()->current_status < 4 )
                                                 <tr>
                                                     <td>{{ $billing->order_summary->first()->invoice_no }}</td>
-                                                    <td>{{ $billing->created_at->format('D-M-y') }}</td>
+                                                    <td>{{ $billing->created_at->format('D-M-y, h:i') }}</td>
                                                     <td>
                                                         @foreach ($billing->order_summary as $order_summary)
                                                         {{ '৳'.$order_summary->total_price }}

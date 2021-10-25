@@ -190,12 +190,6 @@ class ProductController extends Controller
     {
         if(auth()->user()->can('product edit')){
             $product->name =  $request->name;
-            $slugName  = Str::slug($request->name);
-            if(Product::where('slug',$slugName)->first()){
-                $product->slug = $slugName.'-'.time();
-            }else{
-                $product->slug = $slugName;
-            }
             $product->category_id = $request->category_id;
             $product->subcategory_id = $request->subcategory_id;
             $product->brand = $request->brand;

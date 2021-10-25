@@ -9,4 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class productWarranty extends Model
 {
     use HasFactory, SoftDeletes;
+    public function product(){
+        return $this->hasMany(Product::class,'warranty');
+    }
 }
