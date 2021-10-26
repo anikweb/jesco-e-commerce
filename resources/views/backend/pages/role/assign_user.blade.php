@@ -82,6 +82,7 @@
                                         <th>Name of user</th>
                                         <th>Email</th>
                                         <th>Role</th>
+                                        <th>Email Verification</th>
                                         <th>Created</th>
                                     </tr>
                                     @foreach ($usersV as $user)
@@ -95,6 +96,7 @@
                                                         {{ Str::title($role->name) }}
                                                     @endforeach
                                                 </td>
+                                                <td>{{ $user->email_verified_at ? $user->email_verified_at : 'None'  }}</td>
                                                 <td>{{ $user->created_at->format('d-M-Y, h:i:s A') }}</td>
                                             </tr>
                                         {{--  @endif  --}}

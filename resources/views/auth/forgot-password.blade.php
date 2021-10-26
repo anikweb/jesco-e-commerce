@@ -1,36 +1,58 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('frontend.master')
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+@section('content')
+ <!-- login area start -->
+ <div class="login-register-area pt-100px pb-100px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a>
+                            <h4>Forgot Password</h4>
+                        </a>
+                    </div>
+                    <div class="tab-content">
+                        <div id="lg1" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <p>Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
+                                    @if (session('status'))
+                                        <div class="alert alert-success">
+                                            <i class="fa fa-check"></i>
+                                            {{ session('status') }}
+                                        </div>
+                                        @endif
+                                       @error('email')
+                                       <div class="alert alert-danger">
+                                        {{ $message }}
+                                       </div>
+                                       @enderror
+                                    <form action="{{ route('password.email') }}" method="post">
+                                        @csrf
+
+                                        @error('password')
+                                            <div class="text-danger">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                        <input type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter your email" autofocus  />
+                                        <div class="button-box">
+                                            <button type="submit"><span>Reset password</span></button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+@endsection
 
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
