@@ -32,18 +32,75 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <h5>Name: <strong>{{ $personalInformation->user->name }}</strong></h5>
-                                                    <h6>Username: <strong>{{ $personalInformation->username }}</strong> </h6>
-                                                    <h6>Mobile: <strong>{{ $personalInformation->mobile }}</strong> </h6>
-                                                    <h6>Email: <strong>{{ $personalInformation->user->email }}</strong> </h6>
+                                                    <h5>Name:
+                                                        <strong>
+                                                        @if (isset($personalInformation->user->name))
+                                                        {{ $personalInformation->user->name }}
+                                                        @endif
+                                                        </strong></h5>
+                                                    <h6>Username:
+                                                        <strong>
+                                                        @if (isset($personalInformation->username))
+                                                        {{ $personalInformation->username }}
+                                                        @endif
+                                                    </strong> </h6>
+                                                    <h6>Mobile:
+                                                        <strong>
+                                                            @if (isset($personalInformation->mobile))
+                                                            {{ $personalInformation->mobile }}
+                                                            @endif
+                                                        </strong> </h6>
+                                                    <h6>Email:
+                                                        <strong>
+                                                            @if (isset($personalInformation->user->email))
+                                                            {{ $personalInformation->user->email }}
+                                                            @endif
+                                                        </strong> </h6>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <h6>Date of Birth: <strong>{{ $personalInformation->birth_date }}</strong></h6>
-                                                    <h6>Gender: <strong>{{ Str::title($personalInformation->gender) }}</strong> </h6>
-                                                    <h6>Street Address: <strong>@if ($personalInformation->street_address1) {{ Str::title($personalInformation->street_address1) }} @endif @if ($personalInformation->street_address2) {{ ','.$personalInformation->street_address2 }} @endif </strong> </h6>
-                                                    <h6>Upazila: <strong>{{ $personalInformation->upazila->name }}</strong> </h6>
-                                                    <h6>District: <strong>{{ $personalInformation->district->name }}</strong> </h6>
-                                                    <h6>Division: <strong>{{ $personalInformation->region->name }}</strong> </h6>
+                                                    <h6>Date of Birth:
+                                                        <strong>
+                                                            @if (isset($personalInformation->birth_date))
+                                                            {{ $personalInformation->birth_date }}
+                                                            @endif
+                                                        </strong></h6>
+                                                    <h6>Gender:
+                                                        <strong>
+                                                            @if (isset($personalInformation->gender))
+                                                            {{ $personalInformation->gender }}
+                                                            @endif
+                                                        </strong></h6>
+                                                    <h6>Street Address:
+                                                        <strong>
+                                                            @if (isset($personalInformation->street_address1))
+                                                            {{ $personalInformation->street_address1 }}
+                                                            @endif
+                                                        </strong>
+                                                        <strong>
+                                                            @if (isset($personalInformation->street_address2))
+                                                            {{ ','.$personalInformation->street_address2 }}
+                                                            @endif
+                                                        </strong>
+
+                                                    </h6>
+                                                    <h6>Upazila:
+                                                        <strong>
+                                                            @if (isset($personalInformation->upazila->name))
+                                                            {{ $personalInformation->upazila->name }}
+                                                            @endif
+                                                        </strong></h6>
+                                                    <h6>District:
+                                                        <strong>
+                                                            @if (isset($personalInformation->district->name))
+                                                            {{ $personalInformation->district->name }}
+                                                            @endif
+                                                        </strong></h6>
+                                                    <h6>Division:
+                                                        <strong>
+                                                            @if (isset($personalInformation->region->name))
+                                                            {{ $personalInformation->region->name }}
+                                                            @endif
+                                                        </strong></h6>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <a href="{{ route('my-account.personal.information.edit',$personalInformation->username) }}" class="btn-sm btn-primary">Edit</a>

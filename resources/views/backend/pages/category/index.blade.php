@@ -20,7 +20,7 @@
            <div class="col-md-12">
                <div class="card card-primary">
                    <div class="card-header">
-                        <h3 class="card-title">Category List</h3>
+                        <h3 class="card-title">Category List {{ session('security_check') }} </h3>
                    </div>
                    <div class="card-body">
                         <div class="row">
@@ -99,9 +99,8 @@
             }).then((result) => {
             if (result.isConfirmed) {
 
-                // setTimeout(function(){
-                    $("#category_delete_form"+category_id).submit();
-                // }, 1300);
+                $("#category_delete_form"+category_id).submit();
+
             } else if (
                 /* Read more about handling dismissals below */
                 result.dismiss === Swal.DismissReason.cancel

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerPersonalInformation;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -51,6 +53,14 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             $user->assignRole('Customer');
+            $personalInfo = new CustomerPersonalInformation;
+            $personalInfo->user_id = $user->id;
+            if(!$personalInfo->where('username',Str::slug($request->name))->exists()){
+                $personalInfo->username = Str::slug($request->name);
+            }else{
+                $personalInfo->username = Str::slug($request->name).Str::random(5);
+            }
+                $personalInfo->save();
             event(new Registered($user));
 
             Auth::login($user);

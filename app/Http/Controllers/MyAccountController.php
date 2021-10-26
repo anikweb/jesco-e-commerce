@@ -78,10 +78,10 @@ class MyAccountController extends Controller
         $user = User::find(Auth::user()->id);
 
         $user->name = $request->name;
-        $user->email = $request->email;
+        // $user->email = $request->email;
         $user->save();
 
-        $CusPerInfo = CustomerPersonalInformation::find($request->personal_information_id);
+        $CusPerInfo = CustomerPersonalInformation::where('user_id',Auth::user()->id);
         $CusPerInfo->username = $request->username;
         $CusPerInfo->mobile = $request->mobile;
         $CusPerInfo->birth_date = $request->birth_date;

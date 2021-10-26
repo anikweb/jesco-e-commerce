@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
             $request->authenticate();
 
             $request->session()->regenerate();
-
+            session()->put('security_check',false);
             return redirect()->intended(RouteServiceProvider::HOME);
 
         }else{
