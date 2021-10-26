@@ -29,8 +29,7 @@ use Auth;
 class CheckoutController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
-        $this->middleware('isCustomer');
+        $this->middleware(['auth','verified','isCustomer']);
     }
     /**
      * Display a listing of the resource.

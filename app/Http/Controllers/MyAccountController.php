@@ -21,7 +21,7 @@ class MyAccountController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','isCustomer']);
+        $this->middleware(['auth','isCustomer','verified']);
     }
 
     /**
