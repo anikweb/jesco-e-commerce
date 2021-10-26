@@ -80,8 +80,7 @@ class MyAccountController extends Controller
         $user->name = $request->name;
         // $user->email = $request->email;
         $user->save();
-
-        $CusPerInfo = CustomerPersonalInformation::where('user_id',Auth::user()->id);
+        $CusPerInfo = CustomerPersonalInformation::where('user_id',Auth::user()->id)->first();
         $CusPerInfo->username = $request->username;
         $CusPerInfo->mobile = $request->mobile;
         $CusPerInfo->birth_date = $request->birth_date;

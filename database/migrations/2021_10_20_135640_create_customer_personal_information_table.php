@@ -17,7 +17,7 @@ class CreateCustomerPersonalInformationTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('username');
-            $table->string('mobile');
+            $table->string('mobile')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('gender')->nullable();
             $table->integer('region_id')->nullable();

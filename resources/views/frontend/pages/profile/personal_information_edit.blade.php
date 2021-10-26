@@ -52,7 +52,7 @@
                                             </div>
                                             <div class="default-form-box mb-20">
                                                 <label for="mobile">Mobile</label>
-                                                <input type="text" name="mobile" id="mobile" @error('mobile') style="border: 1px solid red" @enderror value="{{ $personalInformation->mobile }}">
+                                                <input type="text" name="mobile" id="mobile" @error('mobile') style="border: 1px solid red" @enderror value="@if(isset($personalInformation->mobile)){{$personalInformation->mobile}}@endif">
                                                 @error('mobile')
                                                     <div class="text-danger">
                                                         <i class="fa fa-exclamation-circle"></i>
@@ -61,18 +61,8 @@
                                                 @enderror
                                             </div>
                                             <div class="default-form-box mb-20">
-                                                <label for="email">Email</label>
-                                                <input type="text" name="email" @error('email') style="border: 1px solid red" @enderror id="email" value="{{ $personalInformation->user->email }}">
-                                                @error('email')
-                                                    <div class="text-danger">
-                                                        <i class="fa fa-exclamation-circle"></i>
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                            <div class="default-form-box mb-20">
                                                 <label>Birthdate</label>
-                                                <input type="date" name="birth_date" value="{{ $personalInformation->birth_date }}">
+                                                <input type="date" name="birth_date" value="@if(isset($personalInformation->birth_date)){{$personalInformation->birth_date}}@endif">
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
@@ -87,13 +77,13 @@
                                                 <div class="col-md-4">
                                                     <label for="district_id">District</label>
                                                     <select name="district_id" class="form-control" id="district_id">
-                                                        <option  value="{{ $personalInformation->district_id }}">{{ $personalInformation->district->name }}</option>
+                                                        <option  value="{{ $personalInformation->district_id }}">@if(isset($personalInformation->district->name)){{$personalInformation->district->name}}@endif</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="upazila_id">Upazila</label>
                                                     <select name="upazila_id" class="form-control" id="upazila_id">
-                                                        <option value="{{ $personalInformation->upazila_id }}">{{ $personalInformation->upazila->name }}</option>
+                                                        <option value="{{ $personalInformation->upazila_id }}">@if(isset($personalInformation->upazila->name)){{ $personalInformation->upazila->name }}@endif</option>
                                                     </select>
                                                 </div>
                                             </div>
